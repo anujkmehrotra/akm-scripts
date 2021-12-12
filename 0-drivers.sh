@@ -102,7 +102,7 @@ echo "==========================================================================
 echo 'Disabling journaling .... (Backup file : /etc/systemd/journald.conf.bak)'
 echo "============================================================================"
 sleep 3
-    sudo cp -f /etc/systemd/journald.conf /etc/systemd/journald.conf.bakdir
+    sudo cp -f /etc/systemd/journald.conf /etc/systemd/journald.conf.bak
     sudo sed -e 's|Storage=volatile|Storage=none|g' -i /etc/systemd/journald.conf
 echo
 echo "============================================================================"
