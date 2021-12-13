@@ -239,10 +239,7 @@ sleep 3
 
     echo 'tmpfs									  /tmp			tmpfs   defaults,noatime,mode=1777 0 0
     tmpfs									  /var/log		tmpfs   defaults,noatime,mode=0755 0 0
-    tmpfs									  /var/tmp		tmpfs   defaults,noatime,mode=1777 0 0
-    UUID=5b51fb2c-0dfc-4c5e-a01a-216ba35d1f15 /mnt/Personal auto nosuid,nodev,nofail,x-gvfs-show 0 0
-    UUID=29d249ad-e900-49c8-8ffc-921317aab84a /mnt/Recovery auto nosuid,nodev,nofail,x-gvfs-show 0 0
-    UUID=dab2547a-a5b8-4560-969d-6201e1aa5e4a /mnt/Data auto nosuid,nodev,nofail,x-gvfs-show 0 0' | sudo tee -a /etc/fstab
+    tmpfs									  /var/tmp		tmpfs   defaults,noatime,mode=1777 0 0' | sudo tee -a /etc/fstab
 echo
 echo "============================================================================"
 echo 'To revert back, please restore from (.bak) file and reboot.'
