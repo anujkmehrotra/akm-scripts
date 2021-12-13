@@ -7,7 +7,7 @@ set -e
 ###########################################################################################################
 # Author            : AKM                                                                                 #
 # Disribution 		: ArchLinux (Tested on ArcoLinux only)                                                #
-# Condition         : After Fresh Installation                                                            #
+# Condition         : After Fresh Installation on NVME-SSD (Some changes are only for NVME)               #
 ###########################################################################################################
 
 ############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ####################################
@@ -193,7 +193,7 @@ echo "==========================================================================
 
 sleep 3
 echo
-    sudo pacman -S --noconfirm --needed reflector rate-mirrors-bin powerpill gnome-disk-utility ufw wd719x-firmware upd72020x-fw amd-ucode-git aic94xx-firmware
+    sudo pacman -S --noconfirm --needed reflector rate-mirrors-bin powerpill gnome-disk-utility amd-ucode-git
 
 
 # Enable/Disable services
@@ -253,10 +253,3 @@ echo "All apps & changes applied."
 echo "Please review and CONFIRM the above changes and then reboot."
 echo "Revert back, if you need, as mentioned above."
 echo "============================================================================"
-echo
-echo "============================================================================"
-echo 'Loading Nvidia script .... Press (Ctrl+C) to cancel if you do not need.'
-echo "============================================================================"
-
-sleep 5
-    sh /mnt/Data/POS/nvidia.sh
