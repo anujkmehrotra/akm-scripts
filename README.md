@@ -11,6 +11,8 @@ Condition : After fresh installation.
 
 Usage     : System tuning according your need after fresh installation.
 
+-----------------------------------------------------------------------------------------
+
 Script2#  : backup.sh
 
 Condition : Always creates fresh backup not incremental.
