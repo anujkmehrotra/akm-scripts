@@ -25,7 +25,7 @@ set -e
 
 ############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ####################################
 
-package="linux-xanmod-edge"
+package="linux-xanmod"
 #   GIT address for cloning or pulluing
 source=https://aur.archlinux.org/${package}.git
 #   Use "tmps" file sysyem based location like : /var/tmp or Ramdisk or any other to build package faster
