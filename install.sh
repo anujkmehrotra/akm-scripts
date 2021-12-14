@@ -21,7 +21,7 @@ rate-mirrors --allow-root arch | sudo tee /etc/pacman.d/mirrorlist
     echo "Installing Terminal apps ...."
     echo "============================================================================"
 sleep 3
-    sudo pacman -S --noconfirm --needed git gitg python3 python-pip lshw wttr lolcat ufetch-git sfetch-git pacui
+    sudo pacman -S --noconfirm --needed git tk gitfriend python3 python-pip lshw wttr lolcat ufetch-git sfetch-git pacui rebuild-detector
 
 # Multimedia apps
     echo "============================================================================"
@@ -68,7 +68,7 @@ sleep 3
 
 # Ramdisk installation
     echo "============================================================================"
-    echo "Installing Ramdisk ...."
+    echo "Installing RamDisk ...."
     echo "============================================================================"
 sleep 3
     rm -Rf /mnt/Recovery/ramdisk

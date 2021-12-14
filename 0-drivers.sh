@@ -82,7 +82,7 @@ echo "==========================================================================
 sleep 3
     echo
     sudo sed -e 's|GRUB_TIMEOUT=5|GRUB_TIMEOUT=3|g' -i /etc/default/grub
-    sudo sed -e 's|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=5 audit=0"|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 audit=0 nvme_load=YES nvme_core.default_ps_max_latency_us=0|g' -i /etc/default/grub
+    sudo sed -e 's|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=5 audit=0"|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 audit=0 nvme_core.default_ps_max_latency_us=0|g' -i /etc/default/grub
 
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 echo
