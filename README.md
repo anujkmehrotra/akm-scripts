@@ -22,13 +22,6 @@ Usage     : Takes backup of '/' with 'timeshift' and
 
 -----------------------------------------------------------------------------------------
 
-Script3   : buildmykernel.sh
-
-Usage     : Build any Kernel (change package name in the script) according your hardware.
-
-
------------------------------------------------------------------------------------------
-
 Script4   : install.sh
 
 Usage     : Some packages for your System. (Other than ArcoLinux installation ISO)
@@ -63,3 +56,9 @@ On terminal : rmpkg packagename
 Script7   : nvidia.sh
 
 Usage     : Nvidia driver installation script with some extra options.
+
+-----------------------------------------------------------------------------------------
+
+Script3   : xanmod-kernel.sh
+
+Usage     : Build Xanmod Kernel (Edge/Stable/tt/other) according your hardware.
