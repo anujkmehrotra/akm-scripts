@@ -25,7 +25,7 @@ set -e
 
 ############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ####################################
 
-package="linux-xanmod"
+package="linux-xanmod-edge"
 #   GIT address for cloning or pulluing
 source=https://aur.archlinux.org/${package}.git
 #   Use "tmps" file sysyem based location like : /var/tmp or Ramdisk or any other to build package faster
@@ -51,11 +51,11 @@ proc="$(cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uni
 #   Auto Processor architecture detection
 procarch="$(gcc -c -Q -march=native --help=target | grep march | awk '{print $2}' | head -1)"
 #   Kernel building helper
-helper="modprobed-db"
+helper="modprobed"
 #   To check existing build directory with PKGBUILD
 FILE=$pulldir/${package}/PKGBUILD
 #   To check "modprobed-db" file in $HOME/.config
-FILE1=$HOME/.config/${helper}
+FILE1=$XDG_CONFIG_HOME/${helper}.db
 
 #   Checking required package
 if pacman -Qi ${handler} &> /dev/null; then
@@ -140,13 +140,13 @@ elif [ -z "${check}" ] ; then
 
     if test -f "${FILE1}"; then
 
-    sleep 5
+    sleep 2
         echo
         echo "======================================================================================="
         echo "Updating modprobe moudules ....."
         echo "======================================================================================="
         echo
-        ${helper} store
+        ${helper}-db store
     sleep 5
         echo
         echo "======================================================================================="
@@ -155,7 +155,7 @@ elif [ -z "${check}" ] ; then
         echo
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
     else
-    sleep 5
+    sleep 2
         echo
         echo "======================================================================================="
         echo "Installing and listing modprobe moudules ....."
@@ -163,9 +163,9 @@ elif [ -z "${check}" ] ; then
         echo
         sudo pacman -S --noconfirm ${helper}
         systemctl --user enable --now ${helper}.service
-        ${helper} list
+        ${helper}-db list
         echo
-    sleep 5
+    sleep 2
         echo
         echo "======================================================================================="
         echo "Building Kernel '${package}' Version '${nver}' . Please wait ....."
@@ -293,13 +293,13 @@ else
 #   Checking for modprobed-db file in HOME/.config (Updating available moudules list)
     if test -f "${FILE1}"; then
 
-    sleep 5
+    sleep 2
         echo
         echo "======================================================================================="
         echo "Updating modprobe moudules ....."
         echo "======================================================================================="
 
-        ${helper} store
+        ${helper}-db store
         echo
         echo "======================================================================================="
         echo "Building Kernel '${package}' Version '${nver}' . Please wait ....."
@@ -308,23 +308,23 @@ else
         echo
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
     else
-    sleep 5
+    sleep 2
 #   In case of missing modprobed-db file (Installing & Preparing)
         echo
         echo "======================================================================================="
         echo "Installing and listing modprobe moudules ....."
         echo "======================================================================================="
         echo
-    sleep 5
+    sleep 2
         echo
         sudo pacman -S --noconfirm --needed ${helper}
         systemctl --user enable --now ${helper}.service
-        ${helper} list
+        ${helper}-db list
         echo
         echo "======================================================================================="
         echo "Building Kernel '${package}' Version '${nver}' . Please wait ....."
         echo "======================================================================================="
-    sleep 5
+    sleep 2
         echo
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
     fi
