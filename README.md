@@ -63,4 +63,8 @@ Script3   : xanmod-kernel.sh
 
 Usage     : Build Xanmod Kernel (edge / stable / tt / other available in aur) according your hardware.
 
-Reason    :  
+Question  : Why should I build the Kernel by my own ?
+
+All available prebuilt kernel packages are mostly Generic build. But if you want to build any specific
+hardware based like mine ( AMD Ryzen [zenver2] ) or ( Intel Xeon [Cooper Lake] ) then you must build
+your own.
