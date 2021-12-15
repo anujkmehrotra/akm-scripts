@@ -62,3 +62,5 @@ Usage     : Nvidia driver installation script with some extra options.
 Script3   : xanmod-kernel.sh
 
 Usage     : Build Xanmod Kernel (edge / stable / tt / other available in aur) according your hardware.
+
+Reason    :  
