@@ -1,8 +1,9 @@
 # akm-scripts
 Useful shell scripts for daily use based on Arch Linux tested on ArcoLinux only.
 
-PLEASE READ THE SCRIPT BEFORE RUNNING & USE AT YOUR OWN RISK
-ALSO CHANGE ACCORDINGLY WHERE IT REQUIRES LIKE (locations/packages)
+PLEASE READ THE SCRIPT BEFORE RUNNING &
+USE AT YOUR OWN RISK
+ALSO CHANGE ACCORDINGLY WHERE IT REQUIRES LIKE (location path / package name)
 -----------------------------------------------------------------------------------------
 
 Script1   : 0-drivers.sh
@@ -10,6 +11,16 @@ Script1   : 0-drivers.sh
 Condition : After fresh installation.
 
 Usage     : System tuning according your need after fresh installation.
+
+-----------------------------------------------------------------------------------------
+
+Script2   : backup-pkgs.sh
+
+Usage     : Take backup all repo installed packages to a list.
+
+Command   : Make alias (bakpkg) in '.bashrc-personal' file. and call the script.
+
+            alias bakpkg="sh (location of script file)/backup-pkgs.sh"
 
 -----------------------------------------------------------------------------------------
 
@@ -37,7 +48,7 @@ How to use: Make alias (ckpkg) in '.bashrc-personal' file. and call the script.
 
             alias ckpkg="sh (location of script file)/is_installed.sh"
 
-On terminal : ckpkg packagename
+Command : ckpkg packagename
 
 -----------------------------------------------------------------------------------------
 
@@ -49,13 +60,23 @@ How to use: Make alias (rmpkg) in '.bashrc-personal' file. and call the script.
 
             alias rmpkg="sh (location of script file)/is_removed.sh"
 
-On terminal : rmpkg packagename
+Command : rmpkg packagename
 
 -----------------------------------------------------------------------------------------
 
 Script7   : nvidia.sh
 
 Usage     : Nvidia driver installation script with some extra options.
+
+-----------------------------------------------------------------------------------------
+
+Script2   : restore-pkgs.sh
+
+Usage     : Take restore all repo installed packages from already backup-ed list.
+
+Command   : Make alias (rstpkg) in '.bashrc-personal' file. and call the script.
+
+            alias rstpkg="sh (location of script file)/restore-pkgs.sh"
 
 -----------------------------------------------------------------------------------------
 
@@ -68,3 +89,7 @@ Question  : Why should I build the Kernel by my own ?
 All available prebuilt kernel packages are mostly Generic build. But if you want to build any specific
 hardware based like mine ( AMD Ryzen [zenver2] ) or ( Intel Xeon [Cooper Lake] ) then you must build
 your own.
+
+-----------------------------------------------------------------------------------------
+
+ALL ALIASES MENTIONED ABOVE ARE JUST THE EXAMPLE. YOU CAN CHOOSE YOUR OWN NAME FOR AN ALIAS.
