@@ -59,11 +59,10 @@ FILE1=$XDG_CONFIG_HOME/${helper}.db
 
 #   Checking required package
 if pacman -Qi ${handler} &> /dev/null; then
-        echo
         echo "Please wait while we check the status of '${package}' for you."
 else
         echo "No specific AUR Handler found in the system."
-        echo "Installing ${handler} ...."
+        echo "Installing AUR Handler '${handler}' ...."
         sudo pacman -S ${handler} --noconfirm --needed
         echo "AUR Handler '${handler}' installed."
         echo
