@@ -2,8 +2,11 @@
 Useful shell scripts for daily use based on Arch Linux tested on ArcoLinux only.
 
 PLEASE READ THE SCRIPT BEFORE RUNNING &
+
 USE AT YOUR OWN RISK
+
 ALSO CHANGE ACCORDINGLY WHERE IT REQUIRES LIKE (location path / package name)
+
 -----------------------------------------------------------------------------------------
 
 Script1   : 0-drivers.sh
