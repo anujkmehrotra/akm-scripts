@@ -1,15 +1,14 @@
 # akm-scripts
+
 Useful shell scripts for daily use based on Arch Linux tested on ArcoLinux only.
 
-PLEASE READ THE SCRIPT BEFORE RUNNING &
-
-USE AT YOUR OWN RISK
+PLEASE READ THE SCRIPT BEFORE RUNNING & USE AT YOUR OWN RISK
 
 ALSO CHANGE ACCORDINGLY WHERE IT REQUIRES LIKE (location path / package name)
 
 -----------------------------------------------------------------------------------------
 
-Script1   : 0-drivers.sh
+Script-1  : 0-drivers.sh
 
 Condition : After fresh installation.
 
@@ -17,7 +16,7 @@ Usage     : System tuning according your need after fresh installation.
 
 -----------------------------------------------------------------------------------------
 
-Script2   : backup-pkgs.sh
+Script-2  : backup-pkgs.sh
 
 Usage     : Take backup all repo installed packages to a list.
 
@@ -25,24 +24,32 @@ Command   : Make alias (bakpkg) in '.bashrc-personal' file. and call the script.
 
             alias bakpkg="sh (location of script file)/backup-pkgs.sh"
 
+Command   : bakpkg
+
 -----------------------------------------------------------------------------------------
 
-Script2   : backup.sh
+Script-3  : backup.sh
 
 Condition : Always creates fresh backup not incremental.
 
 Usage     : Takes backup of '/' with 'timeshift' and
             '/home' directories with some important System files.
 
+How to use: Make alias (bakup) in '.bashrc-personal' file. and call the script.
+
+            alias bakup="sh (location of script file)/backup.sh"
+
+Command   : bakup
+
 -----------------------------------------------------------------------------------------
 
-Script4   : install.sh
+Script-4  : install.sh
 
-Usage     : Some packages for your System. (Other than ArcoLinux installation ISO)
+Usage     : Some packages for your newly installed System. (Other than ArcoLinux installation ISO)
 
 -----------------------------------------------------------------------------------------
 
-Script5   : is_installed.sh
+Script-5  : is_installed.sh
 
 Usage     : To check for any installed package in your System. Also it will offer you
             to install the package if it is not.
@@ -51,11 +58,11 @@ How to use: Make alias (ckpkg) in '.bashrc-personal' file. and call the script.
 
             alias ckpkg="sh (location of script file)/is_installed.sh"
 
-Command : ckpkg packagename
+Command   : ckpkg packagename
 
 -----------------------------------------------------------------------------------------
 
-Script6   : is_removed.sh
+Script-6  : is_removed.sh
 
 Usage     : To remove any installed package with or without its dependencies.
 
@@ -63,29 +70,43 @@ How to use: Make alias (rmpkg) in '.bashrc-personal' file. and call the script.
 
             alias rmpkg="sh (location of script file)/is_removed.sh"
 
-Command : rmpkg packagename
+Command   : rmpkg packagename
 
 -----------------------------------------------------------------------------------------
 
-Script7   : nvidia.sh
+Script-7  : nvidia.sh
 
 Usage     : Nvidia driver installation script with some extra options.
 
+How to use: Make alias (tonvd) in '.bashrc-personal' file. and call the script.
+
+            alias tonvd="sh (location of script file)/nvidia.sh"
+
+Command   : tonvd
+
 -----------------------------------------------------------------------------------------
 
-Script2   : restore-pkgs.sh
+Script-8  : restore-pkgs.sh
 
-Usage     : Take restore all repo installed packages from already backup-ed list.
+Usage     : Restore all repo installed packages from already backup-ed list.
 
-Command   : Make alias (rstpkg) in '.bashrc-personal' file. and call the script.
+How to use: Make alias (rstpkg) in '.bashrc-personal' file. and call the script.
 
             alias rstpkg="sh (location of script file)/restore-pkgs.sh"
 
+Command   : rstpkg
+
 -----------------------------------------------------------------------------------------
 
-Script3   : xanmod-kernel.sh
+Script-9  : xanmod-kernel.sh
 
 Usage     : Build Xanmod Kernel (edge / stable / tt / other available in aur) according your hardware.
+
+How to use: Make alias (toxan) in '.bashrc-personal' file. and call the script.
+
+            alias toxan="sh (location of script file)/xanmod-kernel.sh"
+
+Command   : toxan
 
 Question  : Why should I build the Kernel by my own ?
 
