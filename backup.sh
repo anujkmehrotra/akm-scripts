@@ -1,10 +1,13 @@
 #!/bin/bash
 set -e
-##################################################################################################################
-# Author        :   AKM
-# Distribution  :   ArcoLinux only
-# Pkgs Reuired  :   grive (paru -a -S grive), timeshift (paru -S timeshift)
-##################################################################################################################
+###########################################################################################################
+###############################   PLEASE READ THE SCRIPT BEFORE USING  ####################################
+###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
+###########################################################################################################
+# Author            : AKM
+# Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)
+# Pkgs Required     : grive, timeshift and AUR Handler
+###########################################################################################################
 
 #   Backup location for home (other than /home) folder
 bakhome=/mnt/Recovery/Backup/KBak
@@ -24,28 +27,28 @@ package1="timeshift"
 #   AUR Handler (yay / paru)
 package2="paru"
 
+#######  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ######################
+
+#   Ignore temporarily packages
+ignpkg="$(du -h /var/cache/pacman/pkg | cut -c '1-4')"
+
 echo
 tput setaf 1
-echo "============================================================================"
-echo "          This script assumes that you have already configured"
-echo "            '${package}' and '${package1}'before running it."
-echo "         If not, it will install them. Kindly configure by yourself."
-echo
-echo "WARNING : This is NOT an incremental backup process."
-echo "          It will delete all the previous backups including timeshift."
-echo "============================================================================"
+    echo "=============================================================================="
+    echo "          This script assumes that you have already configured"
+    echo "            '${package}' and '${package1}'before running it."
+    echo "         If not, it will install them. Kindly configure by yourself."
+    echo
+    echo "WARNING : This is NOT an incremental backup process."
+    echo "          It will delete all the previous backups including timeshift."
+    echo "=============================================================================="
 tput sgr0
 
 if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
     echo "=============================================================================="
-    echo "Enter password to continue. Ctrl+C to cancel ...."
+    echo "Enter password to remove old backups and snapshots. Ctrl+C to cancel."
     echo "=============================================================================="
-    echo
         sudo timeshift --delete-all
-    echo
-    echo "=============================================================================="
-    echo "Removing previous backup and timeshift snapshot ...."
-    echo "=============================================================================="
         rm -f ${bakremote}/Backup.tar.gz
         rm -Rf ${bakremote}/POS
         rm -Rf ${bakhome}
@@ -56,8 +59,11 @@ sleep 3
     echo "=============================================================================="
     echo
 sleep 3
-        pacman -Qqe > ${bakdir}/pkglist.txt && echo 'All packages list backuped.'
-        pacman -Qqem > ${bakdir}/localpkglist.txt && echo 'All local packages list backuped.'
+    echo
+    echo "INFO : Ignoring '${ignpkg}' temporarily packages from backup process ...."
+    echo
+        pacman -Qqen > ${bakdir}/pkglist.txt && echo 'All packages list backuped.'
+        pacman -Qqem > ${bakdir}/localpkglist.txt && echo 'All AUR/Manual packages list backuped.'
         cp -f /etc/mkinitcpio.d/* ${bakdir} && echo 'Files preset backuped.'
         cp -f /etc/sddm.conf.d/kde_settings.conf ${bakdir}/kde_settings.conf && echo 'File kde_settings.conf backuped.'
         cp -f /etc/sddm.conf.d/hidpi.conf ${bakdir}/hidpi.conf && echo 'File hidpi.conf backuped.'
@@ -102,11 +108,12 @@ else
 sleep 3
     echo
     echo "=============================================================================="
-    echo "Installing required packages ${package} & ${package1} ...."
+    echo "Installing required packages '${package}' & '${package1}' ...."
     echo "=============================================================================="
     echo
         sudo pacman -S --noconfirm --needed ${package1} ${package2}
-        paru -a -S --noconfirm ${package}
+sleep 2
+        ${package2} -a -S --noconfirm ${package}
 
 sleep 3
     echo
@@ -116,11 +123,5 @@ sleep 3
     echo "For the fast and better response, use ' alias ' mentioned in the script."
     echo "After all configurations and changes, re-run this backup script."
     echo "=============================================================================="
-    echo
 
 fi
-
-#   To run this script from terminal directly, create the following alias in bashrc
-#   or in bashrc-personal.
-#   Replace the words (location of this file) with real location.
-#   alias bakup="sh location of this file [ backup.sh ]
