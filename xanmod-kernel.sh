@@ -5,7 +5,7 @@ set -e
 ###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
 ###########################################################################################################
 # Author            : AKM                                                                                 #
-# Disribution 		: ArchLinux with AUR (Tested on ArcoLinux only)                                       #
+# Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
 # Requirement #1    : AMD/Intel Processor (You can change your Processor type (proc) in the script too.   #
 #             #2    : File 'myconfig' (Whole configuration of Kernel according the Processor)             #
 #                   : If 'myconfig' is not available then it will be created after package build.         #
