@@ -116,26 +116,26 @@ elif [ -z "${check}" ] ; then
         mv -f ${pulldir}/${package} ${tmpdir}
         cd ${tmpdir}/${package}
         rm -Rf src
-		rm -f ${package}*
-		echo
+	rm -f ${package}*
+	echo
         echo "======================================================================================="
         echo "Found PKGBUILD. Pulling Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
         echo
     sleep 2
-		git pull ${source}
+	git pull ${source}
     else
     	cd ${tmpdir}
     	echo
-		echo "======================================================================================="
+	echo "======================================================================================="
         echo "Cloning Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
         echo
     sleep 2
         rm -Rf ${package}
-		git clone ${source}
-		cp -f ${bakdir}/myconfig ${package}/myconfig
-		cd ${package}
+	git clone ${source}
+	cp -f ${bakdir}/myconfig ${package}/myconfig
+	cd ${package}
     fi
 
     if pacman -Qi ${package1} &> /dev/null; then
@@ -158,7 +158,7 @@ elif [ -z "${check}" ] ; then
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
 
 #   Suggested by AUR package maintainer
-    #env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
+    	#env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
 
     else
     sleep 2
@@ -191,9 +191,9 @@ elif [ -z "${check}" ] ; then
         echo "Building process for Kernel '${package}' Version '${nver}' completed."
         echo "======================================================================================="
     sleep 3
-		rm -f ${insdir}/* && cp -f ${tmpdir}/${package}/${package}* ${insdir}
+	rm -f ${insdir}/* && cp -f ${tmpdir}/${package}/${package}* ${insdir}
         mv -f config.last myconfig
-		cp -f myconfig ${bakdir}/myconfig
+	cp -f myconfig ${bakdir}/myconfig
         echo
         echo "======================================================================================="
         echo "Installing Kernel '${package}' Version '${nver}' ...."
@@ -201,25 +201,25 @@ elif [ -z "${check}" ] ; then
     sleep 3
 #   Kernel installation
         echo
-		cd ${insdir} && sudo pacman -U --noconfirm ${package}*
-		echo
+	cd ${insdir} && sudo pacman -U --noconfirm ${package}*
+	echo
         echo "======================================================================================="
         echo "Kernel "${package}" Version "${nver}" installed. Updating grub ...."
         echo "======================================================================================="
     sleep 1
 #   Updating Grub
         echo
-		sudo grub-mkconfig -o /boot/grub/grub.cfg
+	sudo grub-mkconfig -o /boot/grub/grub.cfg
 #   Setting the FQ-PIE Queuing Discipline
-		echo
-		echo "======================================================================================="
+	echo
+	echo "======================================================================================="
         echo "Applying tweaks (FQ-PIE Queuing Discipline)."
         echo "======================================================================================="
     sleep 3
         echo
         echo 'net.core.default_qdisc = fq_pie' | sudo tee /etc/sysctl.d/90-override.conf
         echo
-		echo "======================================================================================="
+	echo "======================================================================================="
         echo "Tweaks (FQ-PIE Queuing Discipline) applied."
         echo "======================================================================================="
         echo
@@ -283,26 +283,26 @@ else
         mv -f ${pulldir}/${package} ${tmpdir}
         cd ${tmpdir}/${package}
         rm -Rf src
-		rm -f ${package}*
+	rm -f ${package}*
         echo
         echo "======================================================================================="
         echo "Found PKGBUILD. Pulling Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
     sleep 2
         echo
-		git pull ${source}
+	git pull ${source}
     else
     	cd ${tmpdir}
         echo
-		echo "======================================================================================="
+	echo "======================================================================================="
         echo "Cloning Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
     sleep 2
         echo
         rm -Rf ${package}
-		git clone ${source}
-		cp -f ${bakdir}/myconfig ${package}/myconfig
-		cd ${package}
+	git clone ${source}
+	cp -f ${bakdir}/myconfig ${package}/myconfig
+	cd ${package}
     fi
 
 #   Checking for package modprobed-db (Updating available moudules list)
@@ -327,7 +327,7 @@ else
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
 
 #   Suggested by AUR package maintainer
-    #env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
+    	#env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
 
     else
     sleep 2
@@ -353,7 +353,7 @@ else
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
 
 #   Suggested by AUR package maintainer
-    #env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
+    	#env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
 
     fi
 #   Preparing installation with local 'myconfig' file in tmpdir
@@ -363,9 +363,9 @@ else
         echo "======================================================================================="
     sleep 3
 #   Preparing installation
-		rm -f ${insdir}/* && cp -f ${tmpdir}/${package}/${package}* ${insdir}
-		mv -f config.last myconfig
-		cp -f myconfig ${bakdir}/myconfig
+	rm -f ${insdir}/* && cp -f ${tmpdir}/${package}/${package}* ${insdir}
+	mv -f config.last myconfig
+	cp -f myconfig ${bakdir}/myconfig
         echo
         echo "======================================================================================="
         echo "Updating Kernel '${package}' Version '${nver}' ...."
@@ -373,21 +373,21 @@ else
     sleep 3
 #   Kernel installation
         echo
-		cd ${insdir} && sudo pacman -U --noconfirm --needed ${package}*
+	cd ${insdir} && sudo pacman -U --noconfirm --needed ${package}*
 #   Updating Grub
     sleep 3
         echo
-		sudo grub-mkconfig -o /boot/grub/grub.cfg
+	sudo grub-mkconfig -o /boot/grub/grub.cfg
         echo
-		echo "======================================================================================="
+	echo "======================================================================================="
         echo "Please, DO NOT DELETE the build directory."
         echo "It will be used to update the Kernel '${package} in future."
         echo "======================================================================================="
         cd $HOME
-		rm -Rf ${pulldir}/${package}
-		mv -f ${tmpdir}/${package} ${pulldir}
+	rm -Rf ${pulldir}/${package}
+	mv -f ${tmpdir}/${package} ${pulldir}
     sleep 2
-		echo
+	echo
         echo "======================================================================================="
         echo "Kernel '${package}' Version '${nver}' updated. Please reboot."
         echo "======================================================================================="
