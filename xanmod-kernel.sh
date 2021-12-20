@@ -46,16 +46,16 @@ prockbc=14
 
 #####################  DO NOT EDIT THE FOLLOWING UNITL YOU KNOW WHAT YOU DOING  ###########################
 
+
 #   Auto Processor type detection
 proc="$(cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-24)"
 #   Auto Processor architecture detection
 procarch="$(gcc -c -Q -march=native --help=target | grep march | awk '{print $2}' | head -1)"
-#   Kernel building helper
-helper="modprobed"
+#   Custom kernel building helper
+package1="modprobed-db"
 #   To check existing build directory with PKGBUILD
 FILE=$pulldir/${package}/PKGBUILD
-#   To check "modprobed-db" file in $HOME/.config
-FILE1=$XDG_CONFIG_HOME/${helper}.db
+
 
 #   Checking required package
 if pacman -Qi ${handler} &> /dev/null; then
@@ -92,11 +92,11 @@ elif [ -z "${check}" ] ; then
         echo
         echo "Detected CPU is '${proc}' and Architecture is '${procarch}'"
         echo "Your choosen 'Kernel Build Category' is '${prockbc}' in the script."
-        echo "Kindly change if it does not match according with the file"
+        echo "Kindly change if it does not match according with the below mentioned file"
         echo "'${tmpdir}/${package}/choose-gcc-optimization.sh'"
         echo
         echo "WARNING :"
-        echo "Wrong selection of 'Kernel Build Category' can HANG your system during Kernel building."
+        echo "Wrong selection of 'Kernel Build Category' may HANG your system during Kernel building."
         echo
         echo "Do you want to install? (y/n)"; read CHOICE
         echo "======================================================================================="
@@ -110,7 +110,7 @@ elif [ -z "${check}" ] ; then
         echo "======================================================================================="
         echo "Preparing Kernel '${package}' Version '${nver}' to install ...."
         echo "======================================================================================="
-    sleep 5
+    sleep 2
     if test -f "${FILE}"; then
 
         mv -f ${pulldir}/${package} ${tmpdir}
@@ -122,7 +122,7 @@ elif [ -z "${check}" ] ; then
         echo "Found PKGBUILD. Pulling Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
         echo
-    sleep 5
+    sleep 2
 		git pull ${source}
     else
     	cd ${tmpdir}
@@ -131,13 +131,14 @@ elif [ -z "${check}" ] ; then
         echo "Cloning Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
         echo
-    sleep 5
+    sleep 2
+        rm -Rf ${package}
 		git clone ${source}
 		cp -f ${bakdir}/myconfig ${package}/myconfig
 		cd ${package}
     fi
 
-    if test -f "${FILE1}"; then
+    if pacman -Qi ${package1} &> /dev/null; then
 
     sleep 2
         echo
@@ -145,14 +146,20 @@ elif [ -z "${check}" ] ; then
         echo "Updating modprobe moudules ....."
         echo "======================================================================================="
         echo
-        ${helper}-db store
-    sleep 5
+        ${package1} store
+    sleep 2
         echo
         echo "======================================================================================="
         echo "Building Kernel '${package}' Version '${nver}' . Please wait ....."
         echo "======================================================================================="
         echo
+
+#   Added use_pds=n & use_cachy=y to enhance the package building process
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
+
+#   Suggested by AUR package maintainer
+    #env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
+
     else
     sleep 2
         echo
@@ -160,9 +167,9 @@ elif [ -z "${check}" ] ; then
         echo "Installing and listing modprobe moudules ....."
         echo "======================================================================================="
         echo
-        sudo pacman -S --noconfirm ${helper}
-        systemctl --user enable --now ${helper}.service
-        ${helper}-db list
+        sudo pacman -S --noconfirm ${package1}
+        systemctl --user enable --now ${package1}.service
+        ${package1} list
         echo
     sleep 2
         echo
@@ -170,7 +177,13 @@ elif [ -z "${check}" ] ; then
         echo "Building Kernel '${package}' Version '${nver}' . Please wait ....."
         echo "======================================================================================="
         echo
+
+#   Added use_pds=n & use_cachy=y to enhance the package building process
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
+
+#   Suggested by AUR package maintainer
+    #env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
+
     fi
 #   Preparing installation with local 'myconfig' file in tmpdir
         echo
@@ -217,7 +230,7 @@ elif [ -z "${check}" ] ; then
         cd $HOME
         rm -Rf ${pulldir}/${package}
         mv -f ${tmpdir}/${package} ${pulldir}
-    sleep 5
+    sleep 2
         echo
         echo "======================================================================================="
         echo "Kernel '${package}' Version '${nver}' Installed. Please reboot."
@@ -262,8 +275,10 @@ else
         echo "======================================================================================="
         echo "Preparing Kernel '${package}' Version '${nver}' to update ...."
         echo "======================================================================================="
-    sleep 5
+    sleep 2
+
 #   Preparing and pulling git repo
+
     if test -f "${FILE}"; then
         mv -f ${pulldir}/${package} ${tmpdir}
         cd ${tmpdir}/${package}
@@ -273,7 +288,7 @@ else
         echo "======================================================================================="
         echo "Found PKGBUILD. Pulling Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
-    sleep 5
+    sleep 2
         echo
 		git pull ${source}
     else
@@ -282,15 +297,17 @@ else
 		echo "======================================================================================="
         echo "Cloning Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
-    sleep 5
+    sleep 2
         echo
+        rm -Rf ${package}
 		git clone ${source}
 		cp -f ${bakdir}/myconfig ${package}/myconfig
 		cd ${package}
     fi
 
-#   Checking for modprobed-db file in HOME/.config (Updating available moudules list)
-    if test -f "${FILE1}"; then
+#   Checking for package modprobed-db (Updating available moudules list)
+
+    if pacman -Qi ${package1} &> /dev/null; then
 
     sleep 2
         echo
@@ -298,14 +315,20 @@ else
         echo "Updating modprobe moudules ....."
         echo "======================================================================================="
 
-        ${helper}-db store
+        ${package1} store
         echo
         echo "======================================================================================="
         echo "Building Kernel '${package}' Version '${nver}' . Please wait ....."
         echo "======================================================================================="
-    sleep 5
+    sleep 2
         echo
+
+#   Added use_pds=n & use_cachy=y to enhance the package building process
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
+
+#   Suggested by AUR package maintainer
+    #env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
+
     else
     sleep 2
 #   In case of missing modprobed-db file (Installing & Preparing)
@@ -316,16 +339,22 @@ else
         echo
     sleep 2
         echo
-        sudo pacman -S --noconfirm --needed ${helper}
-        systemctl --user enable --now ${helper}.service
-        ${helper}-db list
+        sudo pacman -S --noconfirm --needed ${package1}
+        systemctl --user enable --now ${package1}.service
+        ${package1} list
         echo
         echo "======================================================================================="
         echo "Building Kernel '${package}' Version '${nver}' . Please wait ....."
         echo "======================================================================================="
     sleep 2
         echo
+
+#   Added use_pds=n & use_cachy=y to enhance the package building process
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_pds=n use_ns=y use_cachy=y makepkg -sc
+
+#   Suggested by AUR package maintainer
+    #env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
+
     fi
 #   Preparing installation with local 'myconfig' file in tmpdir
         echo
@@ -357,7 +386,7 @@ else
         cd $HOME
 		rm -Rf ${pulldir}/${package}
 		mv -f ${tmpdir}/${package} ${pulldir}
-    sleep 5
+    sleep 2
 		echo
         echo "======================================================================================="
         echo "Kernel '${package}' Version '${nver}' updated. Please reboot."
