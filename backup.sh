@@ -64,6 +64,8 @@ sleep 3
     echo
         pacman -Qqen > ${bakdir}/pkglist.txt && echo 'All packages list backuped.'
         pacman -Qqem > ${bakdir}/localpkglist.txt && echo 'All AUR/Manual packages list backuped.'
+#   Removing my custom  build xanmod kernel from the list
+        sed -i '/linux-xanmod/d' ${bakdir}/localpkglist.txt
         cp -f /etc/mkinitcpio.d/* ${bakdir} && echo 'Files preset backuped.'
         cp -f /etc/sddm.conf.d/kde_settings.conf ${bakdir}/kde_settings.conf && echo 'File kde_settings.conf backuped.'
         cp -f /etc/sddm.conf.d/hidpi.conf ${bakdir}/hidpi.conf && echo 'File hidpi.conf backuped.'

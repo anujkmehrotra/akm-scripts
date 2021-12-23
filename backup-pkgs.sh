@@ -11,7 +11,9 @@ bakdir=/mnt/Recovery/Backup
 echo "################################################################"
 echo "##########         Backing up packages ....          ###########"
 echo "################################################################"
-sudo pacman -Qqe > ${bakdir}/pkglist.txt
+    sudo pacman -Qqen > ${bakdir}/pkglist.txt
+    sudo pacman -Qqem > ${bakdir}/localpkglist.txt
+    sed -i '/linux-xanmod/d' ${bakdir}/localpkglist.txt
 echo
 echo 'All packages list backuped.'
 echo
