@@ -28,7 +28,7 @@ sleep 3
     echo "Installing Multimedia apps ...."
     echo "============================================================================"
 sleep 3
-    sudo pacman -S --noconfirm --needed mpv smplayer-svn smplayer-skins smplayer-themes qtwebflix-git freetube yt-dlp youtube-dl youtube-dl-gui-git mediainfo mediainfo-gui krita krita-plugin-gmic meld inkscape simplescreenrecorder
+     sudo pacman -S --noconfirm --needed mpv smplayer-svn smplayer-skins smplayer-themes qtwebflix-git freetube yt-dlp youtube-dl youtube-dl-gui-git mediainfo mediainfo-gui krita libmypaint meld inkscape simplescreenrecorder
 
 # GPU (Intel & AMD) Support apps & tools
     echo "============================================================================"
@@ -42,7 +42,7 @@ sleep 3
     echo "Installing additional apps ...."
     echo "============================================================================"
 sleep 3
-    sudo pacman -S --noconfirm --needed gnome-disk-utility gsmartcontrol xterm latte-dock kdenlive xdman flameshot ungoogled-chromium chromium-widevine webapp-manager ktorrent qbittorrent-enhanced-git bitwarden thunar thunar-volman thunar-archive thunar-archive-plugin thunar-media-tags libreoffice-fresh libreoffice-fresh-en-gb pstoedit libmythes protonvpn-gui hunspell sonnet aspell hspell libvoikko hunspell-en_gb hunspell-en_us bpytop opencv gst-plugin-opencv gst-plugin-gtk gst-plugin-qmlgl gst-plugin-wpe wpewebkit timeshift dialect ferdi kaccounts-providers kcolorchooser kolourpaint konqueror kalendar-git
+    sudo pacman -S --noconfirm --needed gnome-disk-utility gsmartcontrol xterm latte-dock kdenlive xdman flameshot ungoogled-chromium chromium-widevine webapp-manager ktorrent qbittorrent-enhanced-git bitwarden libreoffice-fresh libreoffice-fresh-en-gb pstoedit libmythes protonvpn-gui hunspell sonnet aspell hspell libvoikko hunspell-en_gb hunspell-en_us bpytop opencv gst-plugin-opencv gst-plugin-gtk gst-plugin-qmlgl gst-plugin-wpe wpewebkit timeshift dialect ferdi kaccounts-providers kcolorchooser kolourpaint konqueror kalendar
 
     pip install httpx[http2]
 
@@ -50,7 +50,7 @@ sleep 3
     echo "Installing Icons and Themes ...."
     echo "============================================================================"
 sleep 3
-    sudo pacman -S --noconfirm --needed gtk-engine-murrine numix-circle-icon-theme-git numix-circle-icon-theme-git gnome-theme-extra gnome-icon-theme arcolinux-wallpapers-submicron1-1920x1080-1080hd-git arcolinux-wallpapers-submicron2-1920x1080-1080hd-git
+    sudo pacman -S --noconfirm --needed gtk-engine-murrine sassc numix-circle-icon-theme-git numix-circle-icon-theme-git gnome-theme-extra gnome-icon-theme arcolinux-wallpapers-submicron1-1920x1080-1080hd-git arcolinux-wallpapers-submicron2-1920x1080-1080hd-git
 
 # Hindi font
     echo "============================================================================"
@@ -61,25 +61,35 @@ sleep 3
 
 # AUR packages to build
     echo "============================================================================"
-    echo "Installing Google Drive and KDE apps ...."
+    echo "Installing AUR apps ...."
     echo "============================================================================"
 sleep 3
-    paru -a -S --noconfirm grive kalk zramd
+    paru -a -S --noconfirm grive zramd system-monitoring-center colorpicker
 
 # Ramdisk installation
     echo "============================================================================"
-    echo "Installing RamDisk ...."
+    echo "Installing RamDisk and others .... (Optional)"
     echo "============================================================================"
 sleep 3
     rm -Rf /mnt/Recovery/ramdisk
     cd /mnt/Recovery
-    git clone https://github.com/estarq/ramdisk && rm -Rf /mnt/Data/Gdrive/RamDisk && cp -Rf ramdisk /mnt/Data/Gdrive/RamDisk && cd ramdisk && sudo python3 install.py && cd ~
-    cp -f /mnt/Recovery/Backup/.chromecache ~/ && cp -f /mnt/Recovery/Backup/.config/autostart/chromecache.desktop ~/.config/autostart/chromecache.desktop && echo " RamDisk successfully installed."
+    git clone https://github.com/estarq/ramdisk
+    rm -Rf /mnt/Data/Gdrive/RamDisk
+    cp -Rf ramdisk /mnt/Data/Gdrive/RamDisk
+    cd ramdisk
+    sudo python3 install.py
+    cd $HOME
+    cp -f /mnt/Recovery/Backup/.chromecache ~/
+    cp -f /mnt/Recovery/Backup/.config/autostart/chromecache.desktop $XDG_CONFIG_HOME/autostart
+    echo " RamDisk successfully installed."
 
 # Some Extra Work
-    cd /mnt/Data && tar -zxf /mnt/Data/Pictures.tar.gz && mv -f /mnt/Data/*.jpg ~/Pictures && mv -f /mnt/Data/*.png ~/Pictures && cd ~
+    cd /mnt/Data && tar -zxf /mnt/Data/Pictures.tar.gz
+    mv -f /mnt/Data/*.jpg ~/Pictures
+    mv -f /mnt/Data/*.png ~/Pictures
+    cd $HOME
     sudo systemctl enable --now zramd
 echo
 echo "============================================================================"
-echo "                                  Done"
+echo "                          Done. Please reboot."
 echo "============================================================================"
