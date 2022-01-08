@@ -28,7 +28,7 @@ sleep 3
     echo "Installing Multimedia apps ...."
     echo "============================================================================"
 sleep 3
-     sudo pacman -S --noconfirm --needed mpv smplayer-svn smplayer-skins smplayer-themes qtwebflix-git freetube yt-dlp youtube-dl youtube-dl-gui-git mediainfo mediainfo-gui krita libmypaint meld inkscape simplescreenrecorder
+     sudo pacman -S --noconfirm --needed mpv smplayer-svn smplayer-skins smplayer-themes qtwebflix-git freetube yt-dlp youtube-dl mediainfo mediainfo-gui krita libmypaint meld inkscape simplescreenrecorder
 
 # GPU (Intel & AMD) Support apps & tools
     echo "============================================================================"
@@ -42,7 +42,7 @@ sleep 3
     echo "Installing additional apps ...."
     echo "============================================================================"
 sleep 3
-    sudo pacman -S --noconfirm --needed gnome-disk-utility gsmartcontrol xterm latte-dock kdenlive xdman flameshot ungoogled-chromium chromium-widevine webapp-manager ktorrent qbittorrent-enhanced-git bitwarden libreoffice-fresh libreoffice-fresh-en-gb pstoedit libmythes protonvpn-gui hunspell sonnet aspell hspell libvoikko hunspell-en_gb hunspell-en_us bpytop opencv gst-plugin-opencv gst-plugin-gtk gst-plugin-qmlgl gst-plugin-wpe wpewebkit timeshift dialect ferdi kaccounts-providers kcolorchooser kolourpaint konqueror kalendar
+    sudo pacman -S --noconfirm --needed gnome-disk-utility gsmartcontrol xterm latte-dock kdenlive xdman flameshot ungoogled-chromium chromium-widevine webapp-manager ktorrent bitwarden libreoffice-fresh libreoffice-fresh-en-gb pstoedit libmythes protonvpn-gui hunspell sonnet aspell hspell libvoikko hunspell-en_gb hunspell-en_us bpytop opencv gst-plugin-opencv gst-plugin-gtk gst-plugin-qmlgl gst-plugin-wpe wpewebkit timeshift dialect ferdi kaccounts-providers kcolorchooser kolourpaint konqueror kalendar kdialog bcprov java-commons-lang pdftk leptonica tesseract tesseract-data-eng tesseract-data-ind
 
     pip install httpx[http2]
 
@@ -50,7 +50,7 @@ sleep 3
     echo "Installing Icons and Themes ...."
     echo "============================================================================"
 sleep 3
-    sudo pacman -S --noconfirm --needed gtk-engine-murrine sassc numix-circle-icon-theme-git numix-circle-icon-theme-git gnome-theme-extra gnome-icon-theme arcolinux-wallpapers-submicron1-1920x1080-1080hd-git arcolinux-wallpapers-submicron2-1920x1080-1080hd-git
+    sudo pacman -S --noconfirm --needed gtk-engine-murrine sassc numix-circle-icon-theme-git numix-circle-icon-theme-git gnome-theme-extra gnome-icon-theme arcolinux-wallpapers-submicron1-1920x1080-1080hd-git arcolinux-wallpapers-submicron2-1920x1080-1080hd-git adwaita-icon-theme adwaita-qt adwaita-qt6 libadwaita gtk3-nocsd-git
 
 # Hindi font
     echo "============================================================================"

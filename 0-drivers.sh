@@ -79,14 +79,18 @@ echo "==========================================================================
 echo 'Updating mkinticpio and grub .... (Backup file : /etc/default/grub.bak)'
 echo "============================================================================"
     sudo cp -f /etc/default/grub /etc/default/grub.bak
-    sudo cp -f /etc/mkinticpio.conf /etc/mkinticpio.conf.bak
+    #sudo cp -f /etc/mkinitcpio.conf /etc/mkinitcpio.conf.bak
 sleep 3
     echo
-    sudo sed -e 's|MOUDULES=""|MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)|g' -i /etc/mkinticpio.conf
-    sudo mkinitcpio -P linux
+
+    #sudo sed -e 's|MOUDULES=""|MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)|g' -i /etc/mkinitcpio.conf
+    #sudo mkinitcpio -P linux
 
     sudo sed -e 's|GRUB_TIMEOUT=5|GRUB_TIMEOUT=3|g' -i /etc/default/grub
-    sudo sed -e 's|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=5 audit=0"|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 audit=0 nvidia-drm.modeset=1 nvme_core.default_ps_max_latency_us=0"|g' -i /etc/default/grub
+
+    sudo sed -e 's|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=5 audit=0"|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 audit=0 nvme_core.default_ps_max_latency_us=0"|g' -i /etc/default/grub
+
+    #sudo sed -e 's|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=5 audit=0"|GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 audit=0 nvidia-drm.modeset=1 nvme_core.default_ps_max_latency_us=0"|g' -i /etc/default/grub
 
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 echo
