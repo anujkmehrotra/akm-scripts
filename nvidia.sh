@@ -3,7 +3,7 @@
 ###########################################################################################################
 # Author            : AKM
 # Disribution 	    : Arch Linux only
-# required Pkg      : paru (sudo pacman -S paru-bin)
+# required Pkg      : paru (sudo pacman -S paru / paru-bin)
 ###########################################################################################################
 ###############################   PLEASE READ THE SCRIPT BEFORE USING  ####################################
 ###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
@@ -27,6 +27,7 @@ echo
 tput setaf 1
 echo "============================================================================"
 echo "               Choose only ONE Nvidia driver at a time."
+echo "                     AUR support is required."
 echo "============================================================================"
 tput sgr0
 echo
@@ -66,7 +67,7 @@ case $CHOICE in
         echo
         sudo pacman -S ${package2}
         sudo pacman -S --needed ${package1}
-        echo " Nvidia has successfully installed in the system."
+        echo "Nvidia has successfully installed in the system."
 
     fi
     ;;
@@ -93,8 +94,9 @@ case $CHOICE in
         echo
         sudo pacman -S --needed ${package2}
         sudo pacman -S --needed ${package1}
-        paru -a -S ${package3}
-        echo " Nvidia Tweaks has successfully installed in the system."
+        sudo pacman -S --needed cuda
+        ${handler} -a -S ${package3}
+        echo "Nvidia Tweaks and others packages have successfully installed in the system."
 
     fi
     ;;
@@ -125,7 +127,7 @@ case $CHOICE in
 		echo "============================================================================"
         sudo pacman -Rcns ${package2} --noconfirm
         sudo pacman -R ${package1} --noconfirm
-        echo " Nvidia package has successfully removed from the system."
+        echo "Nvidia package has successfully removed from the system."
         tput sgr0
     ;;
 
