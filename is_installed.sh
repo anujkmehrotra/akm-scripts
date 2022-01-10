@@ -19,7 +19,7 @@
 
 package="$1";
 
-check="$(pacman -Qs --color always "${package}" | grep "local" | grep "${package} ")";
+check="$(pacman -Qs --color always "${package}" | grep "local" | grep "${package}")";
 
 if [ -n "${check}" ] ; then
     sleep 3
@@ -30,23 +30,24 @@ if [ -n "${check}" ] ; then
 elif [ -z "${check}" ] ; then
     sleep 3
         echo "============================================================================"
-        echo "${package} is NOT installed. Do you want to install? (y/n)"; read CHOICE
+        echo "${package} is NOT installed. Do you want to install? (y/n)";
         echo "============================================================================"
 fi
 
+read CHOICE
 case $CHOICE in
 
     y )
         echo "============================================================================"
-        echo "Installing $package..."
+        echo "Installing ${package}..."
         echo "============================================================================"
-        paru -S $package
+        paru -S ${package}
 
     ;;
 
     n )
         echo "============================================================================"
-        echo "You chose not to install $package."
+        echo "You chose not to install ${package}."
         echo "============================================================================"
     ;;
 
