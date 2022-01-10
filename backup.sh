@@ -12,12 +12,12 @@ set -e
 #   Backup location for home (other than /home) folder
 bakhome=/mnt/Recovery/Backup/KBak
 #   Backup location of some System files ( Do not set same as bakhome )
-bakdir=/mnt/Recovery/Backup
-#   Backup Remote location on local storage that syncs with your favourite remote server
+bakloc=/mnt/Recovery
+#   Backup Remote location on local storage that syncs with your favourite Cloud storage
 bakremote=/mnt/Data/Gdrive
-#   Location of any other/personal folder to backup on bakdir or bakremote
+#   Location of any other/personal folder to backup on bakloc/Backup or bakremote
 bakother=/mnt/Data/POS
-#   Timeshift's comment
+#   Timeshift's commentt
 tsc="Created by AKM"
 #   Required packages
 #   You can use any remote drive's package (Dropbox, Google Drive or other)
@@ -50,6 +50,7 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
     echo "=============================================================================="
         sudo timeshift --delete-all
         rm -f ${bakremote}/Backup.tar.gz
+        rm -f ${bakloc}/Backup.tar.gz
         rm -Rf ${bakremote}/POS
         rm -Rf ${bakhome}
 sleep 3
@@ -62,26 +63,26 @@ sleep 3
     echo
     echo "INFO : Ignoring '${ignpkg}' temporarily packages from backup process ...."
     echo
-        pacman -Qqen > ${bakdir}/pkglist.txt && echo 'All packages list backuped.'
-        pacman -Qqem > ${bakdir}/localpkglist.txt && echo 'All AUR/Manual packages list backuped.'
+        pacman -Qqen > ${bakloc}/Backup/pkglist.txt && echo 'All packages list backuped.'
+        pacman -Qqem > ${bakloc}/Backup/localpkglist.txt && echo 'All AUR/Manual packages list backuped.'
 #   Removing my custom  build xanmod kernel from the list
-        sed -i '/linux-xanmod/d' ${bakdir}/localpkglist.txt
-        cp -f /etc/mkinitcpio.d/* ${bakdir} && echo 'Files preset backuped.'
-        cp -f /etc/sddm.conf.d/kde_settings.conf ${bakdir}/kde_settings.conf && echo 'File kde_settings.conf backuped.'
-        cp -f /etc/sddm.conf.d/hidpi.conf ${bakdir}/hidpi.conf && echo 'File hidpi.conf backuped.'
-        cp -f /etc/sddm.conf ${bakdir}/sddm.conf && echo 'File sddm.conf backuped.'
-        cp -f /etc/fstab ${bakdir}/fstab && echo 'File fstab backuped.'
-        cp -f /etc/pacman.conf ${bakdir}/pacman.conf && echo 'File pacman backuped.'
-        cp -f /etc/default/grub ${bakdir}/grub && echo 'File grub backuped.'
-        cp -f /etc/hosts ${bakdir}/hosts && echo 'File hosts backuped.'
-        cp -f /etc/hblock/allow.list ${bakdir}/allow.list && echo 'File allowlist backuped.'
-        cp -f /etc/hblock/deny.list ${bakdir}/deny.list && echo 'File denylist backuped.'
-        cp -f /mnt/Data/linux-xanmod-edge/myconfig ${bakdir}/myconfig && echo 'File myconfig backuped.'
+        sed -i '/linux-xanmod/d' ${bakloc}/Backup/localpkglist.txt
+        cp -f /etc/mkinitcpio.d/* ${bakloc}/Backup && echo 'Files preset backuped.'
+        cp -f /etc/sddm.conf.d/kde_settings.conf ${bakloc}/Backup/kde_settings.conf && echo 'File kde_settings.conf backuped.'
+        cp -f /etc/sddm.conf.d/hidpi.conf ${bakloc}/Backup/hidpi.conf && echo 'File hidpi.conf backuped.'
+        cp -f /etc/sddm.conf ${bakloc}/Backup/sddm.conf && echo 'File sddm.conf backuped.'
+        cp -f /etc/fstab ${bakloc}/Backup/fstab && echo 'File fstab backuped.'
+        cp -f /etc/pacman.conf ${bakloc}/Backup/pacman.conf && echo 'File pacman backuped.'
+        cp -f /etc/default/grub ${bakloc}/Backup/grub && echo 'File grub backuped.'
+        cp -f /etc/hosts ${bakloc}/Backup/hosts && echo 'File hosts backuped.'
+        cp -f /etc/hblock/allow.list ${bakloc}/Backup/allow.list && echo 'File allowlist backuped.'
+        cp -f /etc/hblock/deny.list ${bakloc}/Backup/deny.list && echo 'File denylist backuped.'
+        cp -f /mnt/Data/linux-xanmod-edge/myconfig ${bakloc}/Backup/myconfig && echo 'File myconfig backuped.'
         cp -Rf /home/* ${bakhome} && echo 'Folder HOME backuped.'
         cp -Rf ${bakother} ${bakremote}/POS && echo 'Folder POS backuped.'
     echo
     echo "=============================================================================="
-    echo "Local backup completed in '${bakdir}'."
+    echo "Local backup completed in '${bakloc}/Backup'."
     echo "=============================================================================="
 sleep 3
     echo
@@ -96,7 +97,7 @@ sleep 3
     echo "=============================================================================="
 sleep 3
     echo
-        tar -zcf ${bakremote}/Backup.tar.gz ${bakdir}
+    cd ${bakloc} && tar -zcf Backup.tar.gz Backup && mv -f Backup.tar.gz ${bakremote}
     cd ${bakremote}
     grive
 sleep 3
@@ -105,7 +106,7 @@ sleep 3
     echo "Backup process completed."
     echo "=============================================================================="
     echo
-    cd $HOME
+    cd "$HOME"
 else
 sleep 3
     echo
