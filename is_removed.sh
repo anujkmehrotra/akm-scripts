@@ -18,7 +18,7 @@
 #   Check pkg is installed or not, then remove.
 
 package="$1"
-check="$(pacman -Qs --color always "${package}" | grep "local" | grep "${package} ")"
+check="$(pacman -Qs --color always "${package}" | grep "local" | grep "${package}")"
 
 if [ -n "${check}" ] ; then
     sleep 1
