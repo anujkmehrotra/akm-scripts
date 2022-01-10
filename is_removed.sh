@@ -21,21 +21,22 @@ package="$1"
 check="$(pacman -Qs --color always "${package}" | grep "local" | grep "${package} ")"
 
 if [ -n "${check}" ] ; then
-    sleep 3
+    sleep 1
     tput setaf 1
         echo "============================================================================"
-        echo "Do you want to remove $package with its all dependencies?"
-        echo "Proceed with cautions!! (y/n)"; read CHOICE
+        echo "Do you want to remove ${package} with its all dependencies?"
+        echo "Proceed with cautions!! (y/n)";
         echo "============================================================================"
-
+echo
+read CHOICE
 case $CHOICE in
 
     y )
-        sudo pacman -Rcns $package
+        sudo pacman -Rcns ${package}
     ;;
 
     n )
-        sudo pacman -Rdd $package
+        sudo pacman -Rdd ${package}
     ;;
 
     * )
@@ -48,7 +49,7 @@ esac
         echo "Done."
 
 elif [ -z "${check}" ] ; then
-    sleep 3
+    sleep 1
         echo "============================================================================"
         echo "${package} is NOT installed."
         echo "Please type pkg name correctly or choose installed pkg only."
