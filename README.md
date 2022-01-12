@@ -100,7 +100,8 @@ Command   : rstpkg
 
 Script-9  : xanmod-kernel.sh
 
-Usage     : Build Xanmod Kernel (edge / stable / tt / other available in aur) according your hardware.
+Usage     : Build Xanmod Kernel (edge / stable / tt / other available in aur) according
+            your hardware.
 
 How to use: Make alias (toxan) in '.bashrc-personal' file. and call the script.
 
@@ -108,10 +109,26 @@ How to use: Make alias (toxan) in '.bashrc-personal' file. and call the script.
 
 Command   : toxan
 
+
+-----------------------------------------------------------------------------------------
+
+Script-10  : xanmod-kernel-remove.sh
+
+Usage      : Remove installed Xanmod Kernel (edge / stable / tt / other).
+
+How to use : Make alias (toxan) in '.bashrc-personal' file. and call the script.
+
+            alias rmxan="sh (location of script file)/xanmod-kernel-remove.sh"
+
+Command    : rmxan
+
+-----------------------------------------------------------------------------------------
+
 Question  : Why should I build the Kernel by my own ?
 
-Answer    : All available prebuilt kernel packages are mostly Generic build. But if you want to build any specific
-            hardware based like mine ( AMD Ryzen [zenver2] ) or ( Intel Xeon [Cooper Lake] ) then you must build
+Answer    : All available prebuilt kernel packages are mostly Generic build. But if you
+            want to build any specific hardware based like mine ( AMD Ryzen [zenver2] )
+            or ( Intel Xeon [Cooper Lake] ) then you must build
             your own.
 
 -----------------------------------------------------------------------------------------
