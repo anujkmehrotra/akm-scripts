@@ -44,7 +44,7 @@ handler="paru"
 #   " Kernel Build Category " as per detected Processor architecture and file "choose-gcc-optimization.sh"
 prockbc=14
 
-#####################  DO NOT EDIT THE FOLLOWING UNITL YOU KNOW WHAT YOU DOING  ###########################
+#####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
 
 
 #   Auto Processor type detection
@@ -63,7 +63,7 @@ if pacman -Qi ${handler} &> /dev/null; then
 else
         echo "No specific AUR Handler found in the system."
         echo "Installing AUR Handler '${handler}' ...."
-        sudo pacman -S ${handler} --noconfirm --needed
+        sudo pacman -S ${handler} --noconfirm
         echo "AUR Handler '${handler}' installed."
         echo
         echo "Please wait while we check the status of '${package}' for you."
@@ -78,13 +78,13 @@ nver="$(${handler} -Si ${package} | grep 'Version' | cut -c 19-27)"
 #   On installed and available.
 
 if [ -n "${check}" ] && [ "${nver}" == "${cver}" ]; then
-    sleep 3
+    sleep 1
         echo "Kernel '${package}' Version '${nver}' is INSTALLED and UP-TO-DATE."
         echo
 
 #   On not installed but available.
 elif [ -z "${check}" ] ; then
-    sleep 3
+    sleep 1
         tput setaf 1
         echo
         echo "======================================================================================="
@@ -98,9 +98,11 @@ elif [ -z "${check}" ] ; then
         echo "WARNING :"
         echo "Wrong selection of 'Kernel Build Category' may HANG your system during Kernel building."
         echo
-        echo "Do you want to install? (y/n)"; read CHOICE
+        echo "Do you want to install? (y/n)";
         echo "======================================================================================="
+        tput sgr0
 
+    read CHOICE
     case $CHOICE in
 
     y )
@@ -110,32 +112,33 @@ elif [ -z "${check}" ] ; then
         echo "======================================================================================="
         echo "Preparing Kernel '${package}' Version '${nver}' to install ...."
         echo "======================================================================================="
-    sleep 2
+    sleep 1
+
     if test -f "${FILE}"; then
 
         mv -f ${pulldir}/${package} ${tmpdir}
         cd ${tmpdir}/${package}
         rm -Rf src
-	rm -f ${package}*
-	echo
+        rm -f ${package}*
+        echo
         echo "======================================================================================="
         echo "Found PKGBUILD. Pulling Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
         echo
     sleep 2
-	git pull ${source}
+        git pull ${source}
     else
     	cd ${tmpdir}
     	echo
-	echo "======================================================================================="
+        echo "======================================================================================="
         echo "Cloning Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
         echo
     sleep 2
         rm -Rf ${package}
-	git clone ${source}
-	cp -f ${bakdir}/myconfig ${package}/myconfig
-	cd ${package}
+        git clone ${source}
+        cp -f ${bakdir}/myconfig ${package}/myconfig
+        cd ${package}
     fi
 
     if pacman -Qi ${package1} &> /dev/null; then
@@ -161,7 +164,7 @@ elif [ -z "${check}" ] ; then
     	#env _microarchitecture=${prockbc} use_numa=n use_tracers=n use_ns=y _localmodcfg=y makepkg -sc
 
     else
-    sleep 2
+    sleep 1
         echo
         echo "======================================================================================="
         echo "Installing and listing modprobe moudules ....."
@@ -190,7 +193,7 @@ elif [ -z "${check}" ] ; then
         echo "======================================================================================="
         echo "Building process for Kernel '${package}' Version '${nver}' completed."
         echo "======================================================================================="
-    sleep 3
+    sleep 1
 	rm -f ${insdir}/* && cp -f ${tmpdir}/${package}/${package}* ${insdir}
         mv -f config.last myconfig
 	cp -f myconfig ${bakdir}/myconfig
@@ -198,28 +201,32 @@ elif [ -z "${check}" ] ; then
         echo "======================================================================================="
         echo "Installing Kernel '${package}' Version '${nver}' ...."
         echo "======================================================================================="
-    sleep 3
+    sleep 1
+
 #   Kernel installation
         echo
-	cd ${insdir} && sudo pacman -U --noconfirm ${package}*
-	echo
+        cd ${insdir} && sudo pacman -U --noconfirm ${package}*
+        echo
         echo "======================================================================================="
         echo "Kernel "${package}" Version "${nver}" installed. Updating grub ...."
         echo "======================================================================================="
     sleep 1
+
 #   Updating Grub
         echo
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
+
 #   Setting the FQ-PIE Queuing Discipline
-	echo
-	echo "======================================================================================="
+
+        echo
+        echo "======================================================================================="
         echo "Applying tweaks (FQ-PIE Queuing Discipline)."
         echo "======================================================================================="
     sleep 3
         echo
         echo 'net.core.default_qdisc = fq_pie' | sudo tee /etc/sysctl.d/90-override.conf
         echo
-	echo "======================================================================================="
+        echo "======================================================================================="
         echo "Tweaks (FQ-PIE Queuing Discipline) applied."
         echo "======================================================================================="
         echo
@@ -235,7 +242,6 @@ elif [ -z "${check}" ] ; then
         echo "======================================================================================="
         echo "Kernel '${package}' Version '${nver}' Installed. Please reboot."
         echo "======================================================================================="
-        tput sgr0
 
     ;;
 
@@ -258,16 +264,18 @@ elif [ -z "${check}" ] ; then
     esac
 
 else
-    sleep 3
+    sleep 1
 #   On update available.
 
         tput setaf 2
         echo
         echo "======================================================================================="
         echo "A new Version '${nver}' is available over the Current Version '${cver}'"
-        echo "Do you want to update '${package}' Version '${nver}' ? (y/n)"; read CHOICE
+        echo "Do you want to update '${package}' Version '${nver}' ? (y/n)";
         echo "======================================================================================="
+        tput sgr0
 
+    read CHOICE
     case $CHOICE in
 
     y )
@@ -275,7 +283,7 @@ else
         echo "======================================================================================="
         echo "Preparing Kernel '${package}' Version '${nver}' to update ...."
         echo "======================================================================================="
-    sleep 2
+    sleep 1
 
 #   Preparing and pulling git repo
 
@@ -373,13 +381,13 @@ else
     sleep 3
 #   Kernel installation
         echo
-	cd ${insdir} && sudo pacman -U --noconfirm --needed ${package}*
+        cd ${insdir} && sudo pacman -U --noconfirm --needed ${package}*
 #   Updating Grub
     sleep 3
         echo
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
         echo
-	echo "======================================================================================="
+        echo "======================================================================================="
         echo "Please, DO NOT DELETE the build directory."
         echo "It will be used to update the Kernel '${package} in future."
         echo "======================================================================================="
@@ -387,11 +395,10 @@ else
 	rm -Rf ${pulldir}/${package}
 	mv -f ${tmpdir}/${package} ${pulldir}
     sleep 2
-	echo
+        echo
         echo "======================================================================================="
         echo "Kernel '${package}' Version '${nver}' updated. Please reboot."
         echo "======================================================================================="
-        tput sgr0
 
     ;;
 
