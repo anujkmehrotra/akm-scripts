@@ -25,7 +25,7 @@ echo "==========================================================================
 echo "WARNING : DO NOT Open and Run any app during this process."
 echo "============================================================================"
 echo
-sleep 3
+sleep 1
 #   Coping your bashrc-personal file from the backup directory
     cp -f /$bakdir/.bashrc-personal ~/.bashrc-personal && source ~/.bashrc-personal
 
@@ -44,7 +44,7 @@ echo
     [arcolinux_repo_submicron]
     SigLevel = Required DatabaseOptional
     Include = /etc/pacman.d/arcolinux-mirrorlist' | sudo tee -a /etc/pacman.conf
-sleep 3
+sleep 1
 echo
 echo "============================================================================"
 echo 'To revert back, please restore from (.bak) file and reboot.'
@@ -53,7 +53,7 @@ echo
 echo "============================================================================"
 echo 'Updating system repositories ....'
 echo "============================================================================"
-sleep 3
+sleep 1
     sudo pacman -Syy
 
 # If required for Chaotic repo
@@ -62,7 +62,7 @@ sleep 3
 echo "============================================================================"
 echo 'Changing system scheduler (/etc/udev/rules.d/60-ioschedulers.rules) ....'
 echo "============================================================================"
-sleep 3
+sleep 1
 echo
     echo'# set scheduler for NVMe
     ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]", ATTR{queue/scheduler}="none"
@@ -80,7 +80,7 @@ echo 'Updating mkinitcpio and grub .... (Backup file : /etc/default/grub.bak)'
 echo "============================================================================"
     sudo cp -f /etc/default/grub /etc/default/grub.bak
     sudo cp -f /etc/mkinitcpio.conf /etc/mkinitcpio.conf.bak
-sleep 3
+sleep 1
     echo
 
     sudo sed -e 's|MOUDULES=""|MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)|g' -i /etc/mkinitcpio.conf
@@ -102,16 +102,22 @@ echo
 echo "============================================================================"
 echo 'Changing makepkg.conf .... (Changes for Xanmod Kernel)'
 echo "============================================================================"
-sleep 3
+sleep 1
     sudo sed -e 's|CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions \|CFLAGS="-march=x86-64 -mtune=generic -O3 -pipe -fno-plt -fexceptions \|g' -i /etc/makepkg.conf
 
 echo
 echo "============================================================================"
 echo 'Disabling journaling .... (Backup file : /etc/systemd/journald.conf.bak)'
 echo "============================================================================"
-sleep 3
+sleep 1
     sudo cp -f /etc/systemd/journald.conf /etc/systemd/journald.conf.bak
+    sudo cp -f /etc/systemd/journald.conf.d/volatile-storage.conf /etc/systemd/journald.conf.d/volatile-storage.conf.bak
+
     sudo sed -e 's|Storage=volatile|Storage=none|g' -i /etc/systemd/journald.conf
+    sudo sed -e 's|[Journal]
+    Storage=volatile|[Journal]
+    #Storage=volatile
+    Storage=none|g' -i /etc/systemd/journald.conf.d/volatile-storage.conf
 echo
 echo "============================================================================"
 echo 'To revert back, please restore from (.bak) file and reboot.'
@@ -154,7 +160,7 @@ echo
 echo "============================================================================"
 echo 'Updating system swap handling .... (/etc/sysctl.d/100-archlinux.conf)'
 echo "============================================================================"
-sleep 3
+sleep 1
 echo
     echo'vm.vfs_cache_pressure=50
     vm.swappiness=10
@@ -187,10 +193,10 @@ echo "==========================================================================
 echo "Removing unrequired packages ...."
 echo "============================================================================"
 
-sleep 3
+sleep 1
 # Packages to remove
 echo
-    sudo pacman -R --noconfirm xf86-video-amdgpu xf86-video-ati xf86-video-fbdev xf86-video-vesa xf86-video-openchrome firefox tlp broadcom-wl variety arcolinux-variety-autostart-git arcolinux-variety-git blueberry thunar
+    sudo pacman -R --noconfirm xf86-video-amdgpu xf86-video-ati xf86-video-fbdev xf86-video-vesa xf86-video-openchrome firefox tlp broadcom-wl variety arcolinux-variety-autostart-git arcolinux-variety-git thunar
 
 echo "----------------------------------------------------------------------------"
 
@@ -199,7 +205,7 @@ echo "==========================================================================
 echo 'Installing required packages ....'
 echo "============================================================================"
 
-sleep 3
+sleep 1
 echo
     sudo pacman -S --noconfirm --needed reflector rate-mirrors-bin powerpill gnome-disk-utility amd-ucode-git
 
@@ -210,9 +216,8 @@ echo "==========================================================================
 echo 'Updating required services .... (If you do not have printer & bluetooth)'
 echo "============================================================================"
 
-sleep 3
+sleep 1
     sudo systemctl disable cups.service
-    sudo systemctl disable bluetooth.service
     sudo systemctl disable cronie.service
     sudo systemctl enable fstrim.timer
     sudo systemctl enable ufw.service
@@ -222,7 +227,7 @@ sleep 3
 #echo 'Creating swap file (6 GB) .... ('zramd' is the better alternative)'
 #echo "============================================================================"
 
-#sleep 3
+#sleep 1
 #    sudo dd if=/dev/zero of=/swapfile bs=1M count=6143
 #    sudo mkswap /swapfile
 #    sudo chmod 600 /swapfile
@@ -234,14 +239,14 @@ sleep 3
 #echo "Please see above if any error found, else Swapfile is created successfully."
 #echo "============================================================================"
 
-sleep 3
+sleep 1
 #   Change your drive(s) details. Otherwise your system will not boot after reboot.
 echo
 echo "============================================================================"
 echo 'Updating fstab file with auto-mounting .... (Backup file : /etc/fstab.bak)'
 echo "============================================================================"
 echo
-sleep 3
+sleep 1
     echo
     sudo cp -f /etc/fstab /etc/fstab.bak
 
