@@ -98,21 +98,7 @@ Command   : rstpkg
 
 -----------------------------------------------------------------------------------------
 
-Script-9  : xanmod-kernel.sh
-
-Usage     : Build Xanmod Kernel (edge / stable / tt / other available in aur) according
-            your hardware.
-
-How to use: Make alias (toxan) in '.bashrc-personal' file. and call the script.
-
-            alias toxan="sh (location of script file)/xanmod-kernel.sh"
-
-Command   : toxan
-
-
------------------------------------------------------------------------------------------
-
-Script-10  : xanmod-kernel-remove.sh
+Script-9   : xanmod-kernel-remove.sh
 
 Usage      : Remove installed Xanmod Kernel (edge / stable / tt / other).
 
@@ -121,6 +107,19 @@ How to use : Make alias (toxan) in '.bashrc-personal' file. and call the script.
             alias rmxan="sh (location of script file)/xanmod-kernel-remove.sh"
 
 Command    : rmxan
+
+-----------------------------------------------------------------------------------------
+
+Script-10  : xanmod-kernel.sh
+
+Usage      : Build Xanmod Kernel (edge / stable / tt / other available in aur) according
+             your hardware.
+
+How to use: Make alias (toxan) in '.bashrc-personal' file. and call the script.
+
+            alias toxan="sh (location of script file)/xanmod-kernel.sh"
+
+Command   : toxan
 
 -----------------------------------------------------------------------------------------
 
