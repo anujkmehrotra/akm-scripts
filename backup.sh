@@ -87,11 +87,16 @@ sleep 1
     sudo timeshift --create --comments "${tsc}"
     echo
     echo "=============================================================================="
-    echo "Uploading a zip file of backup and others on cloud storage ...."
+    echo "Backing up on cloud storage ...."
     echo "=============================================================================="
 sleep 1
     echo
-    cd ${bakloc} && tar -zcf Backup.tar.gz Backup && mv -f Backup.tar.gz ${bakremote}
+    cd ${bakloc}
+    echo "Compressing backup ...."
+    tar -zcf Backup.tar.gz Backup
+    echo
+    echo "Uploading backup ...."
+    mv -f Backup.tar.gz ${bakremote}
     cd ${bakremote}
     grive
 sleep 1
