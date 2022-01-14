@@ -50,9 +50,9 @@ elif [ -z "${check}" ] ; then
         echo "Removing '${package}' ...."
         echo "======================================================================================="
 
-        #sudo pacman -R --noconfirm ${package} ${package}-headers
+        sudo pacman -R --noconfirm ${package} ${package}-headers
     sleep 1
-        #sudo grub-mkconfig -o /boot/grub/grub.cfg
+        sudo grub-mkconfig -o /boot/grub/grub.cfg
 
         echo
         echo "======================================================================================="
