@@ -37,9 +37,8 @@ echo "==========================================================================
     sudo cp -f /etc/pacman.conf /etc/pacman.conf.bak
 echo
     echo'
-    [chaotic-aur]
-    SigLevel = Required DatabaseOptional
-    Include = /etc/pacman.d/chaotic-mirrorlist
+    [archlinuxcn]
+    Server = http://repo.archlinuxcn.org/$arch
 
     [arcolinux_repo_submicron]
     SigLevel = Required DatabaseOptional
@@ -57,7 +56,10 @@ sleep 1
     sudo pacman -Syy
 
 # If required for Chaotic repo
-    pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && sudo sudo pacman-key --lsign-key 3056513887B78AEB && sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+    #pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && sudo sudo pacman-key --lsign-key 3056513887B78AEB && sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+
+    sudo pacman -S archlinuxcn-mirrorlist-git archlinuxcn-keyring --noconfirm
+    sudo pacman -Syy
 
 echo "============================================================================"
 echo 'Changing system scheduler (/etc/udev/rules.d/60-ioschedulers.rules) ....'
