@@ -21,20 +21,22 @@ package="linux-xanmod-edge"
 
 #   Checking running kernel status.
 
-kernel="$(uname -r | grep "xanmod" | cut -c 9-14)";
+kernel="$(uname -r | cut -b 8,9,10,11,12,13)";
 pakage="xanmod"
 
 #   On running kernel
 
     if [ "${kernel}" == "${pakage}" ]; then
     sleep 1
-        echo "Kernel '${package}' is currently running. Removal request denied."
-
+        tput setaf 1
+        echo "Xanmod Kernel is currently running. Removal request denied."
+        echo "You must boot from a different kernel to remove it."
+        tput sgr0
 #   On not running kernel
 
 elif [ -z "${check}" ] ; then
     sleep 1
-        tput setaf 1
+        tput setaf 2
         echo
         echo "======================================================================================="
         echo "Do you want to remove '${package}'? (y/n)";
