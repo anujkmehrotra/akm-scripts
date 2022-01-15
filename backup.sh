@@ -52,7 +52,6 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
         sudo timeshift --delete-all
         rm -f ${bakremote}/Backup.tar.gz
         rm -f ${bakloc}/Backup.tar.gz
-        rm -Rf ${bakremote}/POS
         rm -Rf ${bakhome}
 sleep 1
     echo
@@ -79,22 +78,29 @@ sleep 1
         cp -f /etc/hblock/deny.list ${bakloc}/Backup/deny.list
         cp -f /mnt/Data/linux-xanmod-edge/myconfig ${bakloc}/Backup/myconfig
         cp -Rf /home/* ${bakhome}
-        cp -Rf ${bakother} ${bakremote}/POS
+
     echo "=============================================================================="
     echo "Local backup completed in '${bakloc}/Backup'."
     echo "=============================================================================="
 sleep 1
     sudo timeshift --create --comments "${tsc}"
+    echo
     echo "=============================================================================="
     echo "Backing up on cloud storage ...."
     echo "=============================================================================="
 sleep 1
     cd ${bakloc}
+    echo
+    echo "=============================================================================="
     echo "Compressing backup ...."
+    echo "=============================================================================="
     tar -zcf Backup.tar.gz Backup
     mv -f Backup.tar.gz ${bakremote}
-    cd ${bakremote}
+    echo
+    echo "=============================================================================="
     echo "Uploading backup ...."
+    echo "=============================================================================="
+    cd ${bakremote}
     grive
 sleep 1
     echo
