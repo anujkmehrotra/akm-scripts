@@ -59,24 +59,31 @@ sleep 1
     echo "Removed previous backup. Starting a new ...."
     echo "=============================================================================="
     echo
-    echo "INFO : Ignoring '${ignpkg}' temporarily packages from backup process ...."
+    echo "=============================================================================="
+    echo "Ignoring '${ignpkg}' temporarily packages from backup process ...."
+    echo "=============================================================================="
     echo
+#   Local and AUR packages backup
         pacman -Qqen > ${bakloc}/Backup/pkglist.txt
         pacman -Qqem > ${bakloc}/Backup/localpkglist.txt
-#   Removing my custom build xanmod kernel name from the localpkglist
+#   Removing my manual build pkg (xanmod kernel) name from the localpkglist
         sed -i '/linux-xanmod/d' ${bakloc}/Backup/localpkglist.txt
+#   Important system files backup
         cp -f /etc/mkinitcpio.d/* ${bakloc}/Backup
         cp -f /etc/sddm.conf.d/kde_settings.conf ${bakloc}/Backup/kde_settings.conf
         cp -f /etc/sddm.conf.d/hidpi.conf ${bakloc}/Backup/hidpi.conf
         cp -f /etc/sddm.conf ${bakloc}/Backup/sddm.conf
         cp -f /etc/fstab ${bakloc}/Backup/fstab
         cp -f /etc/pacman.conf ${bakloc}/Backup/pacman.conf
+#   Added backup of my custom mirrorlist for archlinuxcn's repo
         cp -f /etc/pacman.d/archlinuxcn-mirrorlist ${bakloc}/Backup
         cp -f /etc/default/grub ${bakloc}/Backup/grub
         cp -f /etc/hosts ${bakloc}/Backup/hosts
         cp -f /etc/hblock/allow.list ${bakloc}/Backup/allow.list
         cp -f /etc/hblock/deny.list ${bakloc}/Backup/deny.list
+#   Custom config file backup for (xanmod kernel manual build pkg)
         cp -f /mnt/Data/linux-xanmod-edge/myconfig ${bakloc}/Backup/myconfig
+#   HOME folder backup
         cp -Rf /home/* ${bakhome}
 
     echo "=============================================================================="
@@ -121,11 +128,12 @@ sleep 2
 
 sleep 1
     echo
+    setaf 1
     echo "=============================================================================="
     echo "Packages installed. Please configure { $package } & { $package1 } first."
     echo "Also set once ' Backup Locations ' in the script accordingly."
     echo "For the fast and better response, use ' alias ' mentioned in the script."
     echo "After all configurations and changes, re-run this backup script."
     echo "=============================================================================="
-
+    sgr0
 fi
