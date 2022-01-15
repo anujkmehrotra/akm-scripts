@@ -72,6 +72,7 @@ sleep 1
         cp -f /etc/sddm.conf ${bakloc}/Backup/sddm.conf
         cp -f /etc/fstab ${bakloc}/Backup/fstab
         cp -f /etc/pacman.conf ${bakloc}/Backup/pacman.conf
+        cp -f /etc/pacman.d/archlinuxcn-mirrorlist ${bakloc}/Backup
         cp -f /etc/default/grub ${bakloc}/Backup/grub
         cp -f /etc/hosts ${bakloc}/Backup/hosts
         cp -f /etc/hblock/allow.list ${bakloc}/Backup/allow.list
@@ -79,32 +80,27 @@ sleep 1
         cp -f /mnt/Data/linux-xanmod-edge/myconfig ${bakloc}/Backup/myconfig
         cp -Rf /home/* ${bakhome}
         cp -Rf ${bakother} ${bakremote}/POS
-    echo
     echo "=============================================================================="
     echo "Local backup completed in '${bakloc}/Backup'."
     echo "=============================================================================="
 sleep 1
     sudo timeshift --create --comments "${tsc}"
-    echo
     echo "=============================================================================="
     echo "Backing up on cloud storage ...."
     echo "=============================================================================="
 sleep 1
-    echo
     cd ${bakloc}
     echo "Compressing backup ...."
     tar -zcf Backup.tar.gz Backup
-    echo
-    echo "Uploading backup ...."
     mv -f Backup.tar.gz ${bakremote}
     cd ${bakremote}
+    echo "Uploading backup ...."
     grive
 sleep 1
     echo
     echo "=============================================================================="
     echo "Backup process completed."
     echo "=============================================================================="
-    echo
     cd "$HOME"
 else
 sleep 1
