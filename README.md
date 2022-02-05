@@ -13,8 +13,8 @@ Script-1   : backup-pkgs.sh
 Usage      : Take backup all repo installed packages to a list.
 
 Command    : Make alias (bakpkg) in '.bashrc-personal' file. and call the script.
-             
-             alias bakpkg="sh (location of script file)/backup-pkgs.sh"
+
+                alias bakpkg="sh (location of script file)/backup-pkgs.sh"
 
 Command    : bakpkg
 
