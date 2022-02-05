@@ -5,6 +5,7 @@ Useful shell scripts for daily use based on Arch Linux tested on ArcoLinux only.
 PLEASE READ THE SCRIPT BEFORE RUNNING & USE AT YOUR OWN RISK
 
 ALSO CHANGE ACCORDINGLY WHERE IT REQUIRES LIKE (location path / package name)
+
 -----------------------------------------------------------------------------------------
 
 Script-1   : backup-pkgs.sh
@@ -15,6 +16,7 @@ Command    : Make alias (bakpkg) in '.bashrc-personal' file. and call the script
              alias bakpkg="sh (location of script file)/backup-pkgs.sh"
 
 Command    : bakpkg
+
 -----------------------------------------------------------------------------------------
 
 Script-2   : backup.sh
@@ -28,6 +30,7 @@ How to use : Make alias (bakup) in '.bashrc-personal' file. and call the script.
              alias bakup="sh (location of script file)/backup.sh"
 
 Command    : bakup
+
 -----------------------------------------------------------------------------------------
 
 Script-3   : freshstart.sh
@@ -35,11 +38,13 @@ Script-3   : freshstart.sh
 Condition  : After fresh installation.
 
 Usage      : System tuning according your need after fresh installation.
+
 -----------------------------------------------------------------------------------------
 
 Script-4   : install.sh
 
 Usage      : Some packages for your newly installed System. (Other than ArcoLinux installation ISO)
+
 -----------------------------------------------------------------------------------------
 
 Script-5   : is_installed.sh
@@ -47,28 +52,38 @@ Usage      : To check for any installed package in your System. Also it will off
              to install the package if it is not.
 How to use : Make alias (ckpkg) in '.bashrc-personal' file. and call the script.
              alias ckpkg="sh (location of script file)/is_installed.sh"
+
 Command    : ckpkg packagename
+
 -----------------------------------------------------------------------------------------
 
 Script-6   : is_removed.sh
 Usage      : To remove any installed package with or without its dependencies.
 How to use : Make alias (rmpkg) in '.bashrc-personal' file. and call the script.
              alias rmpkg="sh (location of script file)/is_removed.sh"
+
 Command    : rmpkg packagename
+
 -----------------------------------------------------------------------------------------
 
 Script-7   : nvidia.sh
 Usage      : Nvidia driver installation script with some extra options.
 How to use : Make alias (tonvd) in '.bashrc-personal' file. and call the script.
              alias tonvd="sh (location of script file)/nvidia.sh"
+
 Command    : tonvd
+
 -----------------------------------------------------------------------------------------
 
 Script-8   : restore-pkgs.sh
+
 Usage      : Restore all repo installed packages from already backup-ed list.
+
 How to use : Make alias (rstpkg) in '.bashrc-personal' file. and call the script.
              alias rstpkg="sh (location of script file)/restore-pkgs.sh"
+
 Command    : rstpkg
+
 -----------------------------------------------------------------------------------------
 
 Script-9   : xanmod-kernel-remove.sh
