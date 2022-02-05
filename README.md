@@ -48,8 +48,10 @@ Usage      : Some packages for your newly installed System. (Other than ArcoLinu
 -----------------------------------------------------------------------------------------
 
 Script-5   : is_installed.sh
+
 Usage      : To check for any installed package in your System. Also it will offer you
              to install the package if it is not.
+
 How to use : Make alias (ckpkg) in '.bashrc-personal' file. and call the script.
              alias ckpkg="sh (location of script file)/is_installed.sh"
 
@@ -58,7 +60,9 @@ Command    : ckpkg packagename
 -----------------------------------------------------------------------------------------
 
 Script-6   : is_removed.sh
+
 Usage      : To remove any installed package with or without its dependencies.
+
 How to use : Make alias (rmpkg) in '.bashrc-personal' file. and call the script.
              alias rmpkg="sh (location of script file)/is_removed.sh"
 
@@ -67,7 +71,9 @@ Command    : rmpkg packagename
 -----------------------------------------------------------------------------------------
 
 Script-7   : nvidia.sh
+
 Usage      : Nvidia driver installation script with some extra options.
+
 How to use : Make alias (tonvd) in '.bashrc-personal' file. and call the script.
              alias tonvd="sh (location of script file)/nvidia.sh"
 
@@ -87,24 +93,35 @@ Command    : rstpkg
 -----------------------------------------------------------------------------------------
 
 Script-9   : xanmod-kernel-remove.sh
+
 Usage      : Remove installed Xanmod Kernel (edge / stable / tt / other).
+
 How to use : Make alias (toxan) in '.bashrc-personal' file. and call the script.
              alias rmxan="sh (location of script file)/xanmod-kernel-remove.sh"
+
 Command    : rmxan
+
 -----------------------------------------------------------------------------------------
 
 Script-10  : xanmod-kernel.sh
+
 Usage      : Build Xanmod Kernel (edge / stable / tt / other available in aur) according
              your hardware.
+
 How to use:  Make alias (toxan) in '.bashrc-personal' file. and call the script.
              alias toxan="sh (location of script file)/xanmod-kernel.sh"
+
 Command    : toxan
+
 -----------------------------------------------------------------------------------------
 
 Question  : Why should I build the Kernel by my own ?
+
 Answer    : All available prebuilt kernel packages are mostly Generic build. But if you
             want to build any specific hardware based like mine ( AMD Ryzen [zenver2] )
             or ( Intel Xeon [Cooper Lake] ) then you must build
             your own.
+
 -----------------------------------------------------------------------------------------
+
 ALL ALIASES MENTIONED ABOVE ARE JUST THE EXAMPLE. YOU CAN CHOOSE YOUR OWN NAME FOR AN ALIAS.
