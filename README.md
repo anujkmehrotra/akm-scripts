@@ -1,32 +1,44 @@
 # akm-scripts
 
 Useful shell scripts for daily use based on Arch Linux tested on ArcoLinux only.
+
 PLEASE READ THE SCRIPT BEFORE RUNNING & USE AT YOUR OWN RISK
+
 ALSO CHANGE ACCORDINGLY WHERE IT REQUIRES LIKE (location path / package name)
 -----------------------------------------------------------------------------------------
 
 Script-1   : backup-pkgs.sh
+
 Usage      : Take backup all repo installed packages to a list.
+
 Command    : Make alias (bakpkg) in '.bashrc-personal' file. and call the script.
-            alias bakpkg="sh (location of script file)/backup-pkgs.sh"
+             alias bakpkg="sh (location of script file)/backup-pkgs.sh"
+
 Command    : bakpkg
 -----------------------------------------------------------------------------------------
 
 Script-2   : backup.sh
+
 Condition  : Always creates fresh backup not incremental.
+
 Usage      : Takes backup of '/' with 'timeshift' and
-            '/home' directories with some important System files.
+             '/home' directories with some important System files.
+
 How to use : Make alias (bakup) in '.bashrc-personal' file. and call the script.
              alias bakup="sh (location of script file)/backup.sh"
+
 Command    : bakup
 -----------------------------------------------------------------------------------------
 
 Script-3   : freshstart.sh
+
 Condition  : After fresh installation.
+
 Usage      : System tuning according your need after fresh installation.
 -----------------------------------------------------------------------------------------
 
 Script-4   : install.sh
+
 Usage      : Some packages for your newly installed System. (Other than ArcoLinux installation ISO)
 -----------------------------------------------------------------------------------------
 
