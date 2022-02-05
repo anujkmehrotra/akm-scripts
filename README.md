@@ -13,6 +13,7 @@ Script-1   : backup-pkgs.sh
 Usage      : Take backup all repo installed packages to a list.
 
 Command    : Make alias (bakpkg) in '.bashrc-personal' file. and call the script.
+             
              alias bakpkg="sh (location of script file)/backup-pkgs.sh"
 
 Command    : bakpkg
@@ -27,6 +28,7 @@ Usage      : Takes backup of '/' with 'timeshift' and
              '/home' directories with some important System files.
 
 How to use : Make alias (bakup) in '.bashrc-personal' file. and call the script.
+             
              alias bakup="sh (location of script file)/backup.sh"
 
 Command    : bakup
@@ -53,6 +55,7 @@ Usage      : To check for any installed package in your System. Also it will off
              to install the package if it is not.
 
 How to use : Make alias (ckpkg) in '.bashrc-personal' file. and call the script.
+             
              alias ckpkg="sh (location of script file)/is_installed.sh"
 
 Command    : ckpkg packagename
@@ -64,6 +67,7 @@ Script-6   : is_removed.sh
 Usage      : To remove any installed package with or without its dependencies.
 
 How to use : Make alias (rmpkg) in '.bashrc-personal' file. and call the script.
+             
              alias rmpkg="sh (location of script file)/is_removed.sh"
 
 Command    : rmpkg packagename
@@ -75,6 +79,7 @@ Script-7   : nvidia.sh
 Usage      : Nvidia driver installation script with some extra options.
 
 How to use : Make alias (tonvd) in '.bashrc-personal' file. and call the script.
+             
              alias tonvd="sh (location of script file)/nvidia.sh"
 
 Command    : tonvd
@@ -86,6 +91,7 @@ Script-8   : restore-pkgs.sh
 Usage      : Restore all repo installed packages from already backup-ed list.
 
 How to use : Make alias (rstpkg) in '.bashrc-personal' file. and call the script.
+             
              alias rstpkg="sh (location of script file)/restore-pkgs.sh"
 
 Command    : rstpkg
@@ -97,6 +103,7 @@ Script-9   : xanmod-kernel-remove.sh
 Usage      : Remove installed Xanmod Kernel (edge / stable / tt / other).
 
 How to use : Make alias (toxan) in '.bashrc-personal' file. and call the script.
+             
              alias rmxan="sh (location of script file)/xanmod-kernel-remove.sh"
 
 Command    : rmxan
@@ -109,6 +116,7 @@ Usage      : Build Xanmod Kernel (edge / stable / tt / other available in aur) a
              your hardware.
 
 How to use:  Make alias (toxan) in '.bashrc-personal' file. and call the script.
+             
              alias toxan="sh (location of script file)/xanmod-kernel.sh"
 
 Command    : toxan
