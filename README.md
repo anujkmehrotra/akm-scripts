@@ -8,7 +8,7 @@ ALSO CHANGE ACCORDINGLY WHERE IT REQUIRES LIKE (location path / package name)
 
 -----------------------------------------------------------------------------------------
 
-Script-1  : 0-drivers.sh
+Script-1  : freshstart.sh
 
 Condition : After fresh installation.
 
