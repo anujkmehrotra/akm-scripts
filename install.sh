@@ -3,93 +3,58 @@ set -e
 ##################################################################################################################
 # Author        :   AKM
 # Disribution   :   ArcoLinux only
-# Requirement   :   'freshstart.sh' run first
+# Requirement   :   freshstart.sh run first
 ##################################################################################################################
 
-    echo "============================================================================"
-    echo "                 First time System Update & Install Apps"
-    echo "============================================================================"
+PKGS=("git" "tk" "gitfiend" "python3" "python-pip" "lshw" "lolcat" "ufetch-git" "pacui" "rebuild-detector"
+"qtwebflix-git" "freetube-bin" "yt-dlp" "youtube-dl" "mediainfo" "mediainfo-gui" "meld" "inkscape" "simplescreenrecorder"
+"mpv" "vlc" "cpio" "gputest" "mesa" "lib32-mesa" "libva" "lib32-libva" "libva-utils" "libva-mesa-driver" "lib32-libva-mesa-driver"
+"libvdpau" "libva-vdpau-driver" "lib32-libva-vdpau-driver" "lib32-libvdpau" "libvdpau-va-gl" "mesa-demos"
+"mesa-vdpau" "lib32-mesa-vdpau" "opengl-man-pages" "opencl-headers" "opencl-clhpp" "vulkan-headers" "vulkan-icd-loader"
+"lib32-vulkan-icd-loader" "vulkan-extra-layers" "vulkan-extra-tools" "vulkan-tools"
+"vulkan-mesa-layers" "lib32-vulkan-mesa-layers" "openh264" "gstreamer" "gst-plugin-opencv" "gst-plugin-qmlgl" "meson"
+"gsmartcontrol" "xterm" "xdman"  "webapp-manager" "atom" "chromium-widevine" "ungoogled-chromium" "firefox" "min"
+"hunspell" "hunspell-en_gb" "hunspell-en_us" "bpytop" "timeshift" "ventoy-bin" "etcher-bin"
+"bitwarden" "bitwarden-cli" "libreoffice-fresh" "libreoffice-fresh-en-gb" "pstoedit" "libmythes" "hunspell" "sonnet" "aspell"
+"gtk-engine-murrine" "sassc" "numix-circle-icon-theme-git" "adwaita-icon-theme"
+"gnome-icon-theme" "gnome-icon-theme-extras" "gnome-icon-theme-symbolic" "ttf-indic-otf" "ttf-ms-fonts"
+"nvidia-settings" "nvidia-utils" "lib32-nvidia-utils" "opencl-nvidia" "lib32-opencl-nvidia" "egl-wayland" "eglexternalplatform")
 
-# System Update
-    echo "============================================================================"
-    echo "Rating fastest mirrorlist ...."
-    echo "============================================================================"
-rate-mirrors --allow-root arch | sudo tee /etc/pacman.d/mirrorlist
 
-# Install Terminal based Apps
-    echo "============================================================================"
-    echo "Installing Terminal apps ...."
-    echo "============================================================================"
-sleep 3
-    sudo pacman -S --noconfirm --needed git tk gitfriend python3 python-pip lshw lolcat ufetch-git sfetch-git pacui rebuild-detector
+# Install  Apps
+echo "============================================================================"
+echo "Installing apps from existing repositories ...."
+echo "============================================================================"
 
-# Multimedia apps
-    echo "============================================================================"
-    echo "Installing Multimedia apps ...."
-    echo "============================================================================"
-sleep 3
-     sudo pacman -S --noconfirm --needed mpv smplayer-svn smplayer-skins smplayer-themes qtwebflix-git freetube yt-dlp youtube-dl mediainfo mediainfo-gui krita libmypaint meld inkscape simplescreenrecorder
-
-# GPU (Intel & AMD) Support apps & tools
-    echo "============================================================================"
-    echo "Installing libraries and tools ...."
-    echo "============================================================================"
-sleep 3
-    sudo pacman -S --noconfirm --needed cpio gputest appmenu-gtk-module mesa lib32-mesa libva lib32-libva libva-utils libva-mesa-driver lib32-libva-mesa-driver libvdpauinfo libvdpau libva-vdpau-driver lib32-libva-vdpau-driver lib32-libvdpau libvdpau-va-gl mesa-demos mesa-vdpau lib32-mesa-vdpau opengl-man-pages opencl-headers opencl-clhpp firefox-appmenu-bin vulkan-headers vulkan-icd-loader lib32-vulkan-icd-loader vulkan-extra-layers vulkan-extra-tools vulkan-swrast vulkan-tools vulkan-validation-layers lib32-vulkan-validation-layers vulkan-mesa-layers lib32-vulkan-mesa-layers spirv-tools openh264 gstreamer gstreamer-meta
-
-# Gnome apps
-    echo "============================================================================"
-    echo "Installing additional apps ...."
-    echo "============================================================================"
-sleep 3
-    sudo pacman -S --noconfirm --needed gnome-disk-utility gsmartcontrol xterm latte-dock kdenlive xdman flameshot ungoogled-chromium chromium-widevine webapp-manager ktorrent bitwarden libreoffice-fresh libreoffice-fresh-en-gb pstoedit libmythes protonvpn-gui hunspell sonnet aspell hspell libvoikko hunspell-en_gb hunspell-en_us bpytop opencv gst-plugin-opencv gst-plugin-gtk gst-plugin-qmlgl gst-plugin-wpe wpewebkit timeshift ferdi kaccounts-providers kcolorchooser kolourpaint konqueror kalendar kdialog bcprov java-commons-lang pdftk leptonica tesseract tesseract-data-eng tesseract-data-ind
-
-    pip install httpx[http2]
-
-    echo "============================================================================"
-    echo "Installing Icons and Themes ...."
-    echo "============================================================================"
-sleep 3
-    sudo pacman -S --noconfirm --needed gtk-engine-murrine sassc numix-circle-icon-theme-git numix-circle-icon-theme-git gnome-theme-extra gnome-icon-theme arcolinux-wallpapers-submicron1-1920x1080-1080hd-git arcolinux-wallpapers-submicron2-1920x1080-1080hd-git adwaita-icon-theme adwaita-qt adwaita-qt6 libadwaita gtk3-nocsd-git gtk-chtheme
-
-# Hindi font
-    echo "============================================================================"
-    echo "Installing Fonts ...."
-    echo "============================================================================"
-sleep 3
-    sudo pacman -S --noconfirm --needed ttf-indic-otf ttf-ms-fonts
+sudo pacman -S --noconfirm --needed "${PKGS[@]}"
+echo "All repositories packages installed."
 
 # AUR packages to build
-    echo "============================================================================"
-    echo "Installing AUR apps ...."
-    echo "============================================================================"
-sleep 3
-    paru -a -S --noconfirm grive zramd
+echo "============================================================================"
+echo "Installing AUR apps ...."
+echo "============================================================================"
 
-# Ramdisk installation
-    echo "============================================================================"
-    echo "Installing RamDisk and others .... (Optional)"
-    echo "============================================================================"
-sleep 3
-    rm -Rf /mnt/Recovery/ramdisk
-    cd /mnt/Recovery
-    git clone https://github.com/estarq/ramdisk
-    rm -Rf /mnt/Data/Gdrive/RamDisk
-    cp -Rf ramdisk /mnt/Data/Gdrive/RamDisk
-    cd ramdisk
-    sudo python3 install.py
-    cd $HOME
-    cp -f /mnt/Recovery/Backup/.chromecache ~/
-    cp -f /mnt/Recovery/Backup/.config/autostart/chromecache.desktop $XDG_CONFIG_HOME/autostart
-    echo " RamDisk successfully installed."
+# Gnome does not support
+  #paru -a -S --noconfirm nvidia-tweaks
+paru -a -S grive zramd ferdi cora-icon-theme
+paru -a -S --noconfirm chromium-extension-web-store protonvpn-gui gnome-session-properties system-monitoring-center
+
+# Configuring zramd
+sudo sed -e 's|# ALGORITHM=zstd|ALGORITHM=zstd|g' -i /etc/default/zramd
+sudo sed -e 's|# NUM_DEVICES=1|NUM_DEVICES=8|g' -i /etc/default/zramd
+sudo sed -e 's|# SKIP_VM=false|SKIP_VM=false|g' -i /etc/default/zramd
+
+sudo systemctl enable --now zramd
 
 # Some Extra Work
-    cd /mnt/Data && tar -zxf /mnt/Data/Pictures.tar.gz
-    mv -f /mnt/Data/*.jpg ~/Pictures
-    mv -f /mnt/Data/*.png ~/Pictures
-    cd $HOME
-    sudo systemctl enable --now zramd
+sudo cp -Rf /mnt/Data/Theme/UOS-Dark /usr/share/icons
+
+cd /mnt/Data && tar -zxf /mnt/Data/Pictures.tar.gz
+mv -f /mnt/Data/*.jpg ~/Pictures
+mv -f /mnt/Data/*.png ~/Pictures
+cd "$HOME"
 echo
 echo "============================================================================"
-echo "                          Done. Please reboot."
+echo "Please configure sensors and reboot."
 echo "============================================================================"
+sudo sensors-detect
