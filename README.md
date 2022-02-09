@@ -49,7 +49,19 @@ Command    : updhosts
 
 -----------------------------------------------------------------------------------------
 
-Script-4   : freshstart.sh
+Script-4   : ck-kernel.sh
+
+Usage      : Build ck Kernel (stable) according your hardware.
+
+How to use:  Make alias (tock) in '.bashrc-personal' file. and call the script.
+             
+             alias tock="sh (location of script file)/ck-kernel.sh"
+
+Command    : tock
+
+-----------------------------------------------------------------------------------------
+
+Script-5   : freshstart.sh
 
 Condition  : After fresh installation.
 
@@ -57,13 +69,13 @@ Usage      : System tuning according your need after fresh installation.
 
 -----------------------------------------------------------------------------------------
 
-Script-5   : install.sh
+Script-6   : install.sh
 
 Usage      : Some packages for your newly installed System. (Other than ArcoLinux installation ISO)
 
 -----------------------------------------------------------------------------------------
 
-Script-6   : is_installed.sh
+Script-7   : is_installed.sh
 
 Usage      : To check for any installed package in your System. Also it will offer you
              to install the package if it is not.
@@ -76,7 +88,7 @@ Command    : ckpkg packagename
 
 -----------------------------------------------------------------------------------------
 
-Script-7   : is_removed.sh
+Script-8   : is_removed.sh
 
 Usage      : To remove any installed package with or without its dependencies.
 
@@ -88,7 +100,7 @@ Command    : rmpkg packagename
 
 -----------------------------------------------------------------------------------------
 
-Script-8   : nvidia.sh
+Script-9   : nvidia.sh
 
 Usage      : Nvidia driver installation script with some extra options.
 
@@ -100,7 +112,7 @@ Command    : tonvd
 
 -----------------------------------------------------------------------------------------
 
-Script-9   : restore-pkgs.sh
+Script-10   : restore-pkgs.sh
 
 Usage      : Restore all repo installed packages from already backup-ed list.
 
@@ -112,7 +124,7 @@ Command    : rstpkg
 
 -----------------------------------------------------------------------------------------
 
-Script-10   : xanmod-kernel-remove.sh
+Script-11   : xanmod-kernel-remove.sh
 
 Usage      : Remove installed Xanmod Kernel (edge / stable / tt / other).
 
@@ -124,7 +136,7 @@ Command    : rmxan
 
 -----------------------------------------------------------------------------------------
 
-Script-11  : xanmod-kernel.sh
+Script-12  : xanmod-kernel.sh
 
 Usage      : Build Xanmod Kernel (edge / stable / tt / other available in aur) according
              your hardware.
