@@ -8,27 +8,24 @@ set -e
 # Author            : AKM                                                                                 #
 # Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
 # Requirement   1   : AUR handler (yay/paru). Can be choose manually in the script.                       #
-#               2   : package modprobed-db as kernel building helper                                      #
+#               2   : package 'modprobed-db' as kernel building helper                                      #
 ###########################################################################################################
-############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ####################################
+########### EDIT THE FOLLOWING ACCORDING YOUR NEED. USE PROPER VARIABLES ##################################
 ###########################################################################################################
-#   Kernel name as in AUR
-package="linux-ck"
-#   Kernel building helper
-helper="modprobed-db"
-#   AUR handler
+
+#   AUR handler                                                                               (Changable) #
 handler="paru"
-#   package building location
-tmpdir=/mnt/RamDisk
-#   location to keep build (.zst) files of kernel to resuse later if needed
-insdir=/mnt/Data/Kernel
+#   package building location                                                                 (Changable) #
+tmpdir="/mnt/RamDisk"
+#   location to keep build (.zst) files of kernel to resuse later if needed                   (Changable) #
+insdir="/mnt/Data/Kernel"
+
 ###########################################################################################################
 #####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
 ###########################################################################################################
 
-# Comparing kernel versions
-cver="$(paru -Qi ${package} | grep "Version" | cut -c 19-27)"
-nver="$(paru -Si ${package} | grep "Version" | cut -c 19-27)"
+#   Kernel building helper
+helper="modprobed-db"
 
 #   Checking required package
 if pacman -Qi ${handler} ${helper} &> /dev/null; then
@@ -37,14 +34,27 @@ if pacman -Qi ${handler} ${helper} &> /dev/null; then
         echo "======================================================================================="
       sleep 1
 else
-        sudo pacman -S ${handler} ${helper}--noconfirm
+        echo "======================================================================================="
+        echo "Installing required package(s) and enabling service ...."
+        echo "======================================================================================="
+
+        sudo pacman -S --needed --noconfirm ${handler} ${helper}
+        systemctl --user enable --now ${helper}.service
+        ${helper} list
 fi
+
+#   Kernel name as in AUR
+package="linux-ck"
+
+#   Comparing kernel versions
+cver="$(${handler} -Qi ${package} | grep "Version" | cut -c 19-27)"
+nver="$(${handler} -Si ${package} | grep "Version" | cut -c 19-27)"
 
 #   Checking kernel status
 if pacman -Qi ${package} &> /dev/null && [ "${nver}" == "${cver}" ]; then
         tput setaf 2
           echo "======================================================================================="
-          echo "Kernel '${package}' Version '${nver}' is already installed."
+          echo "Kernel '${package}' version '${nver}' is already installed."
           echo "======================================================================================="
         tput sgr0
 					exit 1
@@ -52,7 +62,7 @@ if pacman -Qi ${package} &> /dev/null && [ "${nver}" == "${cver}" ]; then
 else
       tput setaf 1
         	echo "======================================================================================="
-        	echo "Kernel '${package}' Version '${nver}' is not installed."
+        	echo "Kernel '${package}' version '${nver}' is not installed."
 					echo
         	echo "Do you want to install ? (y/n)";
         	echo "======================================================================================="
@@ -88,14 +98,14 @@ else
           mv -f ${tmpdir}/${handler}/${package}/${package}* ${insdir}
 
           echo "======================================================================================="
- 		      echo "Building kernel '${package}' Version '${nver}' completed. Please reboot."
+ 		      echo "Building kernel '${package}' version '${nver}' completed. Please reboot."
  		      echo "======================================================================================="
 
       ;;
 
       n )
           echo "======================================================================================="
-          echo "You chose not to install the Kernel '${package}' Version '${nver}' ."
+          echo "You chose not to install the Kernel '${package}' version '${nver}' ."
           exit 1
           echo "======================================================================================="
 
