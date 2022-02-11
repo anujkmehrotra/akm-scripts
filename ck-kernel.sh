@@ -8,9 +8,9 @@ set -e
 # Author            : AKM                                                                                 #
 # Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
 # Requirement   1   : AUR handler (yay/paru). Can be choose manually in the script.                       #
-#               2   : package 'modprobed-db' as kernel building helper                                      #
+#               2   : package 'modprobed-db' as kernel building helper                                    #
 ###########################################################################################################
-########### EDIT THE FOLLOWING ACCORDING YOUR NEED. USE PROPER VARIABLES ##################################
+#################### EDIT THE FOLLOWING ACCORDING YOUR NEED. USE PROPER VARIABLES #########################
 ###########################################################################################################
 
 #   AUR handler                                                                               (Changable) #
@@ -57,15 +57,15 @@ if pacman -Qi ${package} &> /dev/null && [ "${nver}" == "${cver}" ]; then
           echo "Kernel '${package}' version '${nver}' is already installed."
           echo "======================================================================================="
         tput sgr0
-					exit 1
+	  exit 1;
 
 else
       tput setaf 1
-        	echo "======================================================================================="
-        	echo "Kernel '${package}' version '${nver}' is not installed."
-					echo
-        	echo "Do you want to install ? (y/n)";
-        	echo "======================================================================================="
+          echo "======================================================================================="
+          echo "Kernel '${package}' version '${nver}' is not installed."
+	  echo
+          echo "Do you want to install ? (y/n)";
+          echo "======================================================================================="
         tput sgr0
 
       read CHOICE
@@ -98,15 +98,15 @@ else
           mv -f ${tmpdir}/${handler}/${package}/${package}* ${insdir}
 
           echo "======================================================================================="
- 		      echo "Building kernel '${package}' version '${nver}' completed. Please reboot."
- 		      echo "======================================================================================="
+   	  echo "Building kernel '${package}' version '${nver}' completed. Please reboot."
+ 	  echo "======================================================================================="
 
       ;;
 
       n )
           echo "======================================================================================="
           echo "You chose not to install the Kernel '${package}' version '${nver}' ."
-          exit 1
+          exit 1;
           echo "======================================================================================="
 
       ;;
