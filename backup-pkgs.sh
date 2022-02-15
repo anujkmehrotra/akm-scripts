@@ -6,10 +6,10 @@ set -e
 ##################################################################################################################
 
 #   Backup location of some System files
-bakdir=/mnt/Recovery/Backup
+bakdir=/mnt/Data/Backup
 
-sudo pacman -Qqen > ${bakdir}/pkglist.txt
+    sudo pacman -Qqen > ${bakdir}/pkglist.txt
     sudo pacman -Qqem > ${bakdir}/localpkglist.txt
-    sed -i '/linux-xanmod/d' ${bakdir}/localpkglist.txt
-echo
+    sed -i '/linux-ck/d' ${bakdir}/localpkglist.txt
+
 echo 'All packages list backuped.'
