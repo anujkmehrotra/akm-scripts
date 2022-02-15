@@ -5,17 +5,38 @@ set -e
 # Distribution  :   Arch Linux only
 ##################################################################################################################
 
-#   Backup location of some System files
-bakdir=/mnt/Recovery/Backup
+#   Backup location pgklist.txt files
+bakdir="/mnt/Data/Backup"
+#   AUR handler                                                                               (Changable) #
+handler="paru"
 
-echo "################################################################"
-echo "##########         Restoring packages ....           ###########"
-echo "################################################################"
+  echo "================================================================"
+  echo "Restoring packages from all repositories ...."
+  echo "================================================================"
 echo
     sudo pacman -S --needed $(comm -12 <(pacman -Slq|sort) <(sort ${bakdir}/pkglist.txt) )
 echo
-echo "All repositories packages restored."
+
+if pacman -Qi ${handler} &> /dev/null; then
+
+  echo "================================================================"
+  echo "Restoring packages AUR ...."
+  echo "================================================================"
+
+    sleep 1
+    ${handler} -a -S --needed - < ${bakdir}/localpkglist.txt
+
+else
+
+  echo "================================================================"
+  echo "Installing AUR handler and restoring AUR packages ...."
+  echo "================================================================"
+
+    sudo pacman -S --needed --noconfirm ${handler}
+    ${handler} -a -S --needed - < ${bakdir}/localpkglist.txt
+fi
+
 echo
-echo "################################################################"
-echo "###########        Done. Please reboot           ###############"
-echo "################################################################"
+  echo "================================================================"
+  echo "All repositories and AUR packages restored. Please reboot."
+  echo "================================================================"
