@@ -27,6 +27,8 @@ service="NetworkManager.service"
 filew="https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
 #   Requirement
 package="curl"
+#   Checking hosts file existence
+filecheck="${target}"
 
 #   Checking required package and testing versions
 if pacman -Qi ${package} &> /dev/null ; then
@@ -44,20 +46,15 @@ else
 fi
 
 #    Downloading hosts file
-##    First method
-########################################
 cd ${tmpl}
 rm -f ${file}
 ${package} ${filew} -O
-#######################################
-##    Second method. Do not change until it required.
-##wget2-q ${filew}-O ${tmpl}/${file}
 
 #   Comparing file versions
 cver="$(grep -r 'Date:' ${target} | cut -c 9-25)"
 nver="$(grep -r 'Date:' ${file} | cut -c 9-25)"
 
-if [ "${nver}" == "${cver}" ] ; then
+if test -f "${filecheck}" && [ "${nver}" == "${cver}" ] ; then
       echo
       echo "======================================================================================="
       echo "File [${target}] has already updated to ${nver}. No need to update."
