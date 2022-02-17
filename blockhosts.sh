@@ -1,13 +1,13 @@
 #!/bin/bash
 
 ###########################################################################################################
-###############################   PLEASE READ THE SCRIPT BEFORE USING  ############################################
-###############################    USE THIS SCRIPT AT YOUR OWN RISK  ##############################################
+###############################   PLEASE READ THE SCRIPT BEFORE USING  ####################################
+###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
 ###########################################################################################################
-# Author               : AKM                                                                                 #
+# Author            : AKM                                                                                 #
 # Disribution       : Arch Linux (Tested on ArcoLinux only)                                               #
 # Instruction       : Choose any 1 METHOD (CUSTOMISED or DIRECT) at a time and keep disable the other.    #
-# Requirement    : package 'curl' for METHOD 1 and package 'wget' for METHOD 2                         #
+# Requirement       : package 'curl' for METHOD 1 and package 'wget' for METHOD 2                         #
 ###########################################################################################################
 ############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ##########################################
 ###########################################################################################################
