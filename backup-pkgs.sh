@@ -10,9 +10,9 @@ set -e
     rm -f ${bakdir}/pkglist.txt && rm -f ${bakdir}/localpkglist.txt
 
 # Repos list
-    sudo pacman -Qnq >> ${bakdir}/pkglist.txt
+    pacman -Qnq >> ${bakdir}/pkglist.txt
 # AUR list
-    sudo pacman -Qmq >> ${bakdir}/localpkglist.txt
+    pacman -Qmq >> ${bakdir}/localpkglist.txt
 # Remove self build packages
     sed -i '/linux-xanmod/d' ${bakdir}/localpkglist.txt
     
