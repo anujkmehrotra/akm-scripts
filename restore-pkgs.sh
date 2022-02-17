@@ -13,8 +13,10 @@ handler="paru"
   echo "================================================================"
   echo "Restoring packages from all repositories ...."
   echo "================================================================"
-echo
-    sudo pacman -S --needed $(comm -12 <(pacman -Slq|sort) <(sort ${bakdir}/pkglist.txt) )
+  sudo pacman -Syy
+  sudo pacman -S --needed $(comm -12 <(pacman -Slq|sort) <(sort ${bakdir}/pkglist.txt) )  
+  # or  
+  #sudo pacman -S --needed $(< ${bakdir}/pkglist.txt)
 echo
 
 if pacman -Qi ${handler} &> /dev/null; then
