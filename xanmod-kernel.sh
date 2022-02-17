@@ -4,12 +4,12 @@ set -e
 ###############################   PLEASE READ THE SCRIPT BEFORE USING  ####################################
 ###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
 ###########################################################################################################
-# Author                      : AKM                                                                                 #
-# Disribution 	           : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
+# Author            : AKM                                                                                 #
+# Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
 # Requirement #1    : AMD/Intel Processor (You can change your Processor type (proc) in the script too.   #
-#                          #2    : File 'myconfig' (Whole configuration of Kernel according the Processor)             #
-#                                   : If 'myconfig' is not available then it will be created after package build.         #
-#                          #3    : AUR Helper (yay / paru / Other ). Can be choose manually in the script.             #
+#             #2    : File 'myconfig' (Whole configuration of Kernel according the Processor)             #
+#            	    : If 'myconfig' is not available then it will be created after package build.         #
+#             #3    : AUR Helper (paru). Can be choose manually in the script.             		  #
 ###########################################################################################################
 ## There are several pauses added due to long building process and you might not see them after
 ## building the Kernel. These pauses will help to understand better what is happening.
@@ -25,7 +25,7 @@ set -e
 package="linux-xanmod-edge"
 #   GIT address for cloning or pulluing
 source=https://aur.archlinux.org/${package}.git
-#   Use "tmps" file system based location like : (/var/tmp) or (ramdisk) or any other to build package faster
+#   Use "tmpfs" file system based location like : (/var/tmp) or (ramdisk) or any other to build package faster
 tmpdir=/mnt/RamDisk
 #   Location where you want to keep your build directory after installation
 pulldir=/mnt/Data
@@ -35,10 +35,12 @@ bakdir=/mnt/Data/Backup
 insdir=/mnt/Data/Kernel
 #   AUR helper (only paru)
 helper="paru"
+
 ######################## Very Important to set according to your Processor ###############################
 
-#  KBC= " Kernel Build Category " as per detected Processor architecture and file "choose-gcc-optimization.sh"
+#  KBC= " Kernel Build Category " according the file "choose-gcc-optimization.sh" from build dir.
 prockbc=14
+
 #####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
 #   Custom kernel building helper
 package1="modprobed-db"
@@ -52,7 +54,7 @@ nver="$(${helper} -a -Si ${package} | grep 'Version' | cut -c 19-27)"
     #=====================================================================
     #   Checking required package
 if pacman -Qi ${helper} &> /dev/null; then
-		echo "Please wait while we check the status of '${package}' for you."
+	echo "Please wait while we check the status of '${package}' for you."
 else
         echo "Installing AUR Helper '${helper}' ...."
         sudo pacman -S ${helper} --noconfirm
@@ -164,7 +166,7 @@ else
         sleep 1
         rm -f ${insdir}/* && cp -f ${tmpdir}/${package}/${package}* ${insdir}
         mv -f config.last myconfig
-        cp -f myconfig ${bakdir}/myconfig
+        cp -f myconfig ${bakdir}
         echo
         echo "======================================================================================="
         echo "Installing Kernel '${package}' version'${nver}' ...."
