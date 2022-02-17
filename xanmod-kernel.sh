@@ -45,7 +45,9 @@ prockbc=14
 #   Custom kernel building helper
 package1="modprobed-db"
 #   To check existing build directory with the file 'PKGBUILD'
-FILE=$pulldir/${package}/PKGBUILD
+file="$pulldir/${package}/PKGBUILD"
+#   To check tweak file
+filet="/etc/sysctl.d/90-override.conf"
 #   Checking current kernel version
 cver="$(${helper} -Qi ${package} | grep 'Version' | cut -c 19-27)"
 #   Checking available kernel version
@@ -101,7 +103,7 @@ else
 
         #=====================================================================
         #   Checking previous build dir status
-    if test -f "${FILE}"; then
+    if test -f "${file}"; then
         mv -f ${pulldir}/${package} ${tmpdir}
         cd ${tmpdir}/${package}
         rm -Rf src
@@ -186,12 +188,17 @@ else
         sudo grub-mkconfig -o /boot/grub/grub.cfg
 
         #   Setting the FQ-PIE Queuing Discipline
-
+    
+    if test -f "${filet}"; then
+        echo "======================================================================================="
+        echo "FQ-PIE Queuing Discipline tweak has already applied, skipping ...."
+        echo "======================================================================================="
+    else
         echo "======================================================================================="
         echo "Applying tweaks (FQ-PIE Queuing Discipline)."
         echo "======================================================================================="
         echo 'net.core.default_qdisc = fq_pie' | sudo tee /etc/sysctl.d/90-override.conf
- 
+    fi
         cd "$HOME"
         rm -Rf "${pulldir}"/"${package}"
         mv -f "${tmpdir}"/"${package}" "${pulldir}"
@@ -201,10 +208,10 @@ else
         echo "Kernel '${package}' version'${nver}' Installed. Please reboot."
         echo "======================================================================================="
         tput sgr0
+        echo
         echo "INFO"
         echo "======================================================================================="
-        echo "Please, DO NOT DELETE the build directory."
-        echo "It can be used to update the Kernel in future."
+        echo "DO NOT DELETE the build directory. It can be used to update the kernel in future."
         echo "======================================================================================="
     ;;
 
