@@ -15,5 +15,5 @@ set -e
     pacman -Qmq >> ${bakdir}/localpkglist.txt
 # Remove self build packages
     sed -i '/linux-xanmod/d' ${bakdir}/localpkglist.txt
-    
+    sed -i '/linux-xanmod/d' ${bakdir}/pkglist.txt
     echo "All packages from repositories and aur backuped."
