@@ -25,14 +25,14 @@ set -e
 package="linux-xanmod-edge"
 #   GIT address for cloning or pulluing
 source=https://aur.archlinux.org/${package}.git
-#   Use "tmpfs" file system based location like : (/var/tmp) or (ramdisk) or any other to build package faster
-tmpdir=/mnt/RamDisk
+#   Use "tmpfs" location like : (/var/tmp) or (ramdisk) or any other to build package faster
+tmpdir="/mnt/RamDisk"
 #   Location where you want to keep your build directory after installation
-pulldir=/mnt/Data
+pulldir="/mnt/Data"
 #   Backup location For "myconfig" file incase of build directory deletion and first time installation
-bakdir=/mnt/Data/Backup
+bakdir="/mnt/Data/Backup"
 #   Location of the finish package (.zst) file for installation
-insdir=/mnt/Data/Kernel
+insdir="/mnt/Data/Kernel"
 #   AUR helper (only paru)
 helper="paru"
 
