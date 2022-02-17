@@ -2,15 +2,15 @@
 set -e
 
 ###########################################################################################################
-###############################   PLEASE READ THE SCRIPT BEFORE USING  ############################################
-###############################    USE THIS SCRIPT AT YOUR OWN RISK  ##############################################
+###############################   PLEASE READ THE SCRIPT BEFORE USING  ####################################
+###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
 ###########################################################################################################
 # Author            : AKM                                                                                 #
 # Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
 # Requirement   1   : AUR handler (yay/paru). Can be choose manually in the script.                       #
 #               2   : package 'modprobed-db' as kernel building helper                                    #
 ###########################################################################################################
-#################### EDIT THE FOLLOWING ACCORDING YOUR NEED. USE PROPER VARIABLES #################################
+#################### EDIT THE FOLLOWING ACCORDING YOUR NEED. USE PROPER VARIABLES #########################
 ###########################################################################################################
 
 #   AUR handler (Change if you want to change the whole command in the main process below)
@@ -21,7 +21,7 @@ tmpdir="/mnt/RamDisk"
 insdir="/mnt/Data/Kernel"
 
 ###########################################################################################################
-#####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ##################################
+#####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
 ###########################################################################################################
 
 #   Kernel building helper
