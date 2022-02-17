@@ -13,15 +13,7 @@ set -e
     sudo pacman -Qnq >> ${bakdir}/pkglist.txt
 # AUR list
     sudo pacman -Qmq >> ${bakdir}/localpkglist.txt
-# Remove AUR Packages
-    #sed -i '/adwaita-dark/d' ${bakdir}/pkglist.txt
-    #sed -i '/chromium-extension-web-store/d' ${bakdir}/pkglist.txt
-    #sed -i '/chromium-extension-web-store/d' ${bakdir}/pkglist.txt
-    #sed -i '/fragments-git/d' ${bakdir}/pkglist.txt
-    #sed -i '/gnome-session-properties/d' ${bakdir}/pkglist.txt
-    #sed -i '/grive/d' ${bakdir}/pkglist.txt
-    #sed -i '/kora-icon-theme/d' ${bakdir}/pkglist.txt
-    #sed -i '/system-monitoring-center/d' ${bakdir}/pkglist.txt
-    #sed -i '/zramd/d' ${bakdir}/pkglist.txt
-
+# Remove self build packages
+    sed -i '/linux-xanmod/d' ${bakdir}/localpkglist.txt
+    
     echo "All packages from repositories and aur backuped."

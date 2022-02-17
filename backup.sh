@@ -92,7 +92,9 @@ echo "==========================================================================
 		    sudo cp -f /etc/sysctl.d/100-archlinux.conf ${bakloc}/Backup
 		    sudo cp -f /etc/sysctl.d/9999-disable-core-dump.conf ${bakloc}/Backup
 		    sudo cp -f /etc/security/limits.conf ${bakloc}/Backup
-		    
+#       xanmod kernel config		    
+                    sudo cp -f ${bakloc}/linux-xanmod-edge/myconfig ${bakloc}/Backup
+
 echo "=============================================================================="
 echo "Taking important folders and files backup from [/home] ...."
 echo "=============================================================================="

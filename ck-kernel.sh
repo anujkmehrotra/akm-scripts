@@ -2,18 +2,18 @@
 set -e
 
 ###########################################################################################################
-###############################   PLEASE READ THE SCRIPT BEFORE USING  ####################################
-###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
+###############################   PLEASE READ THE SCRIPT BEFORE USING  ############################################
+###############################    USE THIS SCRIPT AT YOUR OWN RISK  ##############################################
 ###########################################################################################################
 # Author            : AKM                                                                                 #
 # Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
 # Requirement   1   : AUR handler (yay/paru). Can be choose manually in the script.                       #
 #               2   : package 'modprobed-db' as kernel building helper                                    #
 ###########################################################################################################
-#################### EDIT THE FOLLOWING ACCORDING YOUR NEED. USE PROPER VARIABLES #########################
+#################### EDIT THE FOLLOWING ACCORDING YOUR NEED. USE PROPER VARIABLES #################################
 ###########################################################################################################
 
-#   AUR handler                                                                               (Changable) #
+#   AUR handler (Change if you want to change the whole command in the main process below)
 handler="paru"
 #   package building location                                                                 (Changable) #
 tmpdir="/mnt/RamDisk"
@@ -21,7 +21,7 @@ tmpdir="/mnt/RamDisk"
 insdir="/mnt/Data/Kernel"
 
 ###########################################################################################################
-#####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
+#####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ##################################
 ###########################################################################################################
 
 #   Kernel building helper
@@ -48,7 +48,7 @@ package="linux-ck"
 
 #   Comparing kernel versions
 cver="$(${handler} -Qi ${package} | grep "Version" | cut -c 19-27)"
-nver="$(${handler} -Si ${package} | grep "Version" | cut -c 19-27)"
+nver="$(${handler} -a -Si ${package} | grep "Version" | cut -c 19-27)"
 
 #   Checking kernel status
 if pacman -Qi ${package} &> /dev/null && [ "${nver}" == "${cver}" ]; then
@@ -57,13 +57,13 @@ if pacman -Qi ${package} &> /dev/null && [ "${nver}" == "${cver}" ]; then
           echo "Kernel '${package}' version '${nver}' is already installed."
           echo "======================================================================================="
         tput sgr0
-	  exit 1;
+	        exit 1;
 
 else
       tput setaf 1
           echo "======================================================================================="
           echo "Kernel '${package}' version '${nver}' is not installed."
-	  echo
+	        echo
           echo "Do you want to install ? (y/n)";
           echo "======================================================================================="
         tput sgr0
@@ -82,7 +82,7 @@ else
           echo "Building kernel '${package}' version '${nver}' . Please wait ....."
           echo "======================================================================================="
 
-          ${handler} -a -S --noconfirm ${package} ${package}-headers
+          ${handler} -a -S ${package} ${package}-headers
 
           echo "======================================================================================="
           echo "Updating grub ...."
