@@ -18,25 +18,28 @@
 #   Check pkg is installed or not, then remove.
 
 package="$1"
-check="$(pacman -Qs --color always "${package}" | grep "local" | grep "${package}")"
+check="$(pacman -Qs --color always "${package}" | grep "local" | grep "${package}")";
 
 if [ -n "${check}" ] ; then
     sleep 1
-    tput setaf 1
+        pactree -d 1 "${package}"
         echo "============================================================================"
+        echo "See pactree for the ${package} above :"
         echo "Do you want to remove ${package} with its all dependencies?"
-        echo "Proceed with cautions!! (y/n)";
+        tput setaf 1
+        echo "Proceed with cautions!! (y/n)" ;
+        tput sgr0
         echo "============================================================================"
-echo
-read CHOICE
-case $CHOICE in
+    
+    read -r CHOICE
+    case $CHOICE in
 
     y )
-        sudo pacman -Rcns ${package}
+        sudo pacman -Rs "${package}"
     ;;
 
     n )
-        sudo pacman -Rdd ${package}
+        sudo pacman -Rdd "${package}"
     ;;
 
     * )
@@ -45,7 +48,7 @@ case $CHOICE in
         echo "============================================================================"
     ;;
 
-esac
+    esac
         echo "Done."
 
 elif [ -z "${check}" ] ; then
@@ -54,5 +57,4 @@ elif [ -z "${check}" ] ; then
         echo "${package} is NOT installed."
         echo "Please type pkg name correctly or choose installed pkg only."
         echo "============================================================================"
-    tput sgr0
 fi

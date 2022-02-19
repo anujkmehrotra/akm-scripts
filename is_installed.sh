@@ -22,26 +22,29 @@ package="$1";
 check="$(pacman -Qs --color always "${package}" | grep "local" | grep "${package}")";
 
 if [ -n "${check}" ] ; then
-    sleep 3
+    sleep 1
         echo "============================================================================"
-        echo "${package} is ALREADY installed."
+        echo "${package} is ALREADY installed. See pactree below :"
         echo "============================================================================"
+
+        pactree -d 1 "$package"
+        exit 1;
 
 elif [ -z "${check}" ] ; then
-    sleep 3
+    sleep 1
         echo "============================================================================"
-        echo "${package} is NOT installed. Do you want to install? (y/n)";
+        echo "${package} is NOT installed. Do you want to install? (y/n)"
         echo "============================================================================"
-fi
 
-read CHOICE
-case $CHOICE in
+
+    read -r CHOICE
+    case $CHOICE in
 
     y )
         echo "============================================================================"
         echo "Installing ${package}..."
         echo "============================================================================"
-        paru -S ${package}
+        paru -S "${package}"
 
     ;;
 
@@ -57,5 +60,5 @@ case $CHOICE in
         echo "============================================================================"
 
     ;;
-
-esac
+    esac
+fi
