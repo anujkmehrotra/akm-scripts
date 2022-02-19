@@ -31,7 +31,7 @@ package="curl"
 filecheck="${target}"
 
 #   Checking required package and testing versions
-if pacman -Qi ${package} &> /dev/null ; then
+if pacman -Qi "${package}" &> /dev/null ; then
 
         echo "======================================================================================="
         echo "Please wait while we update [${target}] file for you ...."
@@ -42,31 +42,28 @@ else
         echo "Installing missing packages ...."
         echo "======================================================================================="
 
-        sudo pacman -S  --noconfirm ${package}
+        sudo pacman -S  --noconfirm "${package}"
 fi
 
 #    Downloading hosts file
-cd ${tmpl}
-rm -f ${file}
-${package} ${filew} -O
+rm -f "${tmpl}"/"${file}"
+"${package}" "${filew}" -o "${tmpl}"/"${file}"
 
 #   Comparing file versions
-cver="$(grep -r 'Date:' ${target} | cut -c 9-25)"
-nver="$(grep -r 'Date:' ${file} | cut -c 9-25)"
+cver="$(grep -r 'Date:' "${target}" | cut -c 9-25);"
+nver="$(grep -r 'Date:' "${tmpl}"/"${file}" | cut -c 9-25);"
 
 if test -f "${filecheck}" && [ "${nver}" == "${cver}" ] ; then
       echo
       echo "======================================================================================="
       echo "File [${target}] has already updated to ${nver}. No need to update."
       echo "======================================================================================="
-      cd ~
 else
       sleep 1
-      sudo cp -f ${file} ${target}
-      sudo systemctl restart ${service}
+      sudo cp -f "${tmpl}"/"${file}" "${target}"
+      sudo systemctl restart "${service}"
       echo
       echo "======================================================================================="
       echo "File [${target}] successfully updated to ${nver}."
       echo "======================================================================================="
-      cd ~
 fi
