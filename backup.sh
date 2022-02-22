@@ -67,7 +67,8 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
         pacman -Qmq > ${bakloc}/Backup/localpkglist.txt
 
         #   Removing my manual build pkg (CK kernel) name from the localpkglist
-        sed -i '/linux-xanmod/d' ${bakloc}/Backup/localpkglist.txt
+        sed -i '/linux-xanmod/d' ${bakloc}/localpkglist.txt
+        sed -i '/linux-xanmod/d' ${bakloc}/pkglist.txt
 
         echo "=============================================================================="
         echo "Taking important system files backup ...."
@@ -76,36 +77,34 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
         #   Important system files backup
         #		    cp -f /etc/sddm.conf.d/kde_settings.conf ${bakloc}/Backup
         #		    cp -f /etc/sddm.conf ${bakloc}/Backup
-		    sudo cp -f /etc/mkinitcpio.d/* ${bakloc}/Backup
-		    sudo cp -f /etc/fstab ${bakloc}/Backup
-		    sudo cp -f /etc/pacman.conf ${bakloc}/Backup
-		    sudo cp -f /etc/default/grub ${bakloc}/Backup
-		    sudo cp -f /etc/makepkg.conf ${bakloc}/Backup
-		    sudo cp -f /etc/systemd/journald.conf.d/volatile-storage.conf ${bakloc}/Backup
-		    sudo cp -f /etc/systemd/journald.conf ${bakloc}/Backup
-		    sudo cp -f /etc/udev/rules.d/60-scheduler.rules ${bakloc}/Backup
-		    sudo cp -f /etc/sysctl.d/100-archlinux.conf ${bakloc}/Backup
-		    sudo cp -f /etc/sysctl.d/9999-disable-core-dump.conf ${bakloc}/Backup
-		    sudo cp -f /etc/security/limits.conf ${bakloc}/Backup
+	cp -f /etc/mkinitcpio.d/* ${bakloc}/Backup
+	cp -f /etc/fstab ${bakloc}/Backup
+	cp -f /etc/pacman.conf ${bakloc}/Backup
+	cp -f /etc/default/grub ${bakloc}/Backup
+	cp -f /etc/makepkg.conf ${bakloc}/Backup
+	cp -f /etc/systemd/journald.conf.d/volatile-storage.conf ${bakloc}/Backup
+	cp -f /etc/systemd/journald.conf ${bakloc}/Backup
+	cp -f /etc/udev/rules.d/60-scheduler.rules ${bakloc}/Backup
+	cp -f /etc/sysctl.d/100-archlinux.conf ${bakloc}/Backup
+	cp -f /etc/sysctl.d/9999-disable-core-dump.conf ${bakloc}/Backup
+	cp -f /etc/security/limits.conf ${bakloc}/Backup
         #       xanmod kernel config		    
-                    sudo cp -f ${bakloc}/linux-xanmod-edge/myconfig ${bakloc}/Backup
+                    cp -f ${bakloc}/linux-xanmod-edge/myconfig ${bakloc}/Backup
 
         echo "=============================================================================="
         echo "Taking important folders and files backup from [/home] ...."
         echo "=============================================================================="
 
         #   Important folders and files backup from [/home]
-
-        mkdir ${bakhome} && cp -Rf ~/.config .local .bashrc-personal .bashrc .chromecache .mozilla .var .xdman .gnupg .cert .vscode-oss  ${bakhome}
+        mkdir ${bakhome}
+        cp -Rf ~/.config .local .bashrc-personal .bashrc .chromecache .mozilla .var .xdman .gnupg .cert .vscode-oss  ${bakhome}
 
         echo "=============================================================================="
-        echo "Local backup completed in '${bakloc}/Backup'."
+        echo "Local backup completed in [${bakloc}/Backup]."
         echo "=============================================================================="
 
         sudo timeshift --create --comments "${tsc}"
-
         cd ${bakloc}
-
         echo "=============================================================================="
         echo "Compressing backup ...."
         echo "=============================================================================="
@@ -140,8 +139,6 @@ else
 
         echo "=============================================================================="
         echo "Packages installed. Please configure { $package } & { $package1 } first."
-        echo "Also set once ' Backup Locations ' in the script accordingly."
-        echo "For the fast and better response, use ' alias ' mentioned in the script."
         echo "After all configurations and changes, re-run this backup script."
         echo "=============================================================================="
 fi

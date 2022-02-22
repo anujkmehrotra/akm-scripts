@@ -50,8 +50,8 @@ rm -f "${tmpl}"/"${file}"
 "${package}" "${filew}" -o "${tmpl}"/"${file}"
 
 #   Comparing file versions
-cver="$(grep -r 'Date:' "${target}" | cut -c 9-25);"
-nver="$(grep -r 'Date:' "${tmpl}"/"${file}" | cut -c 9-25);"
+cver="$(grep -r 'Date:' "${target}" | cut -c 9-25)";
+nver="$(grep -r 'Date:' "${tmpl}"/"${file}" | cut -c 9-25)";
 
 if test -f "${filecheck}" && [ "${nver}" == "${cver}" ] ; then
       echo
