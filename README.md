@@ -1,6 +1,7 @@
 # akm-scripts
 
 Useful shell scripts for daily use based on Arch Linux tested on ArcoLinux only.
+Do not blinding run any script. It could harm your system. Kindly read throughly.
 
 PLEASE READ THE SCRIPT BEFORE RUNNING & USE AT YOUR OWN RISK
 
