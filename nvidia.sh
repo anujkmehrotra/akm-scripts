@@ -3,9 +3,9 @@
 ###########################################################################################################
 # Author            : AKM
 # Disribution 	    : Arch Linux only
-# required Pkg      : paru (sudo pacman -S paru / paru-bin)
+# required Pkg      : paru (sudo pacman -S paru)
 ###########################################################################################################
-###############################   PLEASE READ THE SCRIPT BEFORE USING  ####################################
+###############################  PLEASE READ THE SCRIPT BEFORE USING  #####################################
 ###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
 ###########################################################################################################
 
@@ -24,20 +24,25 @@ else
 fi
 
 echo
-tput setaf 1
+
 echo "============================================================================"
 echo "               Choose only ONE Nvidia driver at a time."
 echo "                     AUR support is required."
 echo "============================================================================"
-tput sgr0
 echo
 echo "1.  Nvidia   DKMS   (only nvidia-dkms with required pkgs)"
 echo
+tput setaf 1
 echo "---------------------------Advanced--------------------------"
-echo "2.  Nvidia   Tweaks (nvidia-dkms with nvidia-tweaks and cuda)"
+echo
+echo "2.  Nvidia   Tweaks (nvidia-dkms with nvidia-tweaks)"
+echo "Info : nvidia tweaks may not work with Gnome desktop"
 echo "-------------------------------------------------------------"
+tput sgr0
+echo
 echo "3.  Remove Nvidia   (DKMS with or without Tweaks)"
-echo "4.  Exit/Leave      (Do not install Nvidia)"
+echo
+echo "4.  Exit / Leave      (Do not install Nvidia)"
 echo
 echo "Type the number..."
 
@@ -65,7 +70,7 @@ case $CHOICE in
 		echo "============================================================================"
 		tput sgr0
         echo
-        sudo pacman -S ${package2}
+        sudo pacman -S --needed ${package2}
         sudo pacman -S --needed ${package1}
         echo "Nvidia has successfully installed in the system."
 
@@ -92,11 +97,10 @@ case $CHOICE in
 		echo "============================================================================"
 		tput sgr0
         echo
-        sudo pacman -S --needed ${package2}
+        sudo pacman -S ${package2}
         sudo pacman -S --needed ${package1}
-        sudo pacman -S --needed cuda
         ${handler} -a -S ${package3}
-        echo "Nvidia Tweaks and others packages have successfully installed in the system."
+        echo "Nvidia Tweaks and others packages have successfully installed in the system. Reboot now. "
 
     fi
     ;;
@@ -128,6 +132,7 @@ case $CHOICE in
         sudo pacman -Rcns ${package2} --noconfirm
         sudo pacman -R ${package1} --noconfirm
         echo "Nvidia package has successfully removed from the system."
+        echo "Info : Rebooting without any graphical driver can cause a blank screen."
         tput sgr0
     ;;
 
@@ -145,7 +150,6 @@ case $CHOICE in
     esac
 
     elif [ -z "${check}" ] ; then
-        sleep 1
         echo "${package2} is NOT installed";
     fi
     ;;
@@ -155,7 +159,7 @@ case $CHOICE in
         echo "============================================================================"
         echo "Exiting now"
         echo "============================================================================"
-    sleep 1
+        exit 1
         exit
     ;;
 
