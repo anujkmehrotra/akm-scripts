@@ -27,13 +27,16 @@ package1="timeshift"
 #   AUR Handler (yay / paru)
 package2="paru"
 #   Ignore temporarily packages
-ignpkg="$(du -h /var/cache/pacman/pkg | cut -c '1-4')"
+ignpkg="$(du -h /var/cache/pacman/pkg | cut -c '1-4')";
 
 echo "=============================================================================="
 echo "This script assumes that you have already configured"
 echo "the packages '${package}' and '${package1}' before running this."
 echo "if not, this script will install them. Kindly configure them by yourself."
+echo "=============================================================================="
+echo
         tput setaf 1
+echo "=============================================================================="        
 echo "WARNING : This is NOT an incremental backup process."
 echo "It will delete all the previous backups including timeshift."
 echo "=============================================================================="
@@ -48,17 +51,23 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
 
         # Deleted all timeshift previous backups
         sudo timeshift --delete-all
-        rm -f ${bakremote}/Backup.tar.gz
-        rm -f ${bakloc}/Backup.tar.gz
-        rm -Rf ${bakhome}
-
+        
         echo "=============================================================================="
         echo "Removed previous backup. Starting a new ...."
         echo "=============================================================================="
+        rm -f ${bakremote}/Backup.tar.gz
+        rm -f ${bakloc}/Backup.tar.gz
+        rm -Rf ${bakhome}/*
+        rm -Rf ${bakremote}/POS/*
+        echo "Done"
+        echo
         echo "=============================================================================="
         echo "Ignoring '${ignpkg}' temporarily packages from backup process ...."
         echo "=============================================================================="
         echo
+        echo "=============================================================================="
+        echo "Taking important system files backup ...."
+        echo "=============================================================================="
 
         #   Local and AUR packages backup
         rm -f ${bakloc}/Backup/pkglist.txt
@@ -67,13 +76,9 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
         pacman -Qmq > ${bakloc}/Backup/localpkglist.txt
 
         #   Removing my manual build pkg (CK kernel) name from the localpkglist
-        sed -i '/linux-xanmod/d' ${bakloc}/localpkglist.txt
-        sed -i '/linux-xanmod/d' ${bakloc}/pkglist.txt
-
-        echo "=============================================================================="
-        echo "Taking important system files backup ...."
-        echo "=============================================================================="
-
+        sed -i '/linux-xanmod/d' ${bakloc}/Backup/localpkglist.txt
+        sed -i '/linux-xanmod/d' ${bakloc}/Backup/pkglist.txt
+     
         #   Important system files backup
         #		    cp -f /etc/sddm.conf.d/kde_settings.conf ${bakloc}/Backup
         #		    cp -f /etc/sddm.conf ${bakloc}/Backup
@@ -90,13 +95,14 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
 	cp -f /etc/security/limits.conf ${bakloc}/Backup
         #       xanmod kernel config		    
                     cp -f ${bakloc}/linux-xanmod-edge/myconfig ${bakloc}/Backup
-
+        echo "Done"
+        echo
         echo "=============================================================================="
         echo "Taking important folders and files backup from [/home] ...."
         echo "=============================================================================="
 
         #   Important folders and files backup from [/home]
-        mkdir ${bakhome}
+        #mkdir ${bakhome}
         cp -Rf ~/.config .local .bashrc-personal .bashrc .chromecache .mozilla .var .xdman .gnupg .cert .vscode-oss  ${bakhome}
 
         echo "=============================================================================="
@@ -118,6 +124,7 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
         echo "Uploading backup ...."
         echo "=============================================================================="
 
+        cp -Rf ${bakloc}/POS/* ${bakremote}/POS
         cd ${bakremote}
         grive
 
