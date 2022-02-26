@@ -23,8 +23,6 @@ else
         sudo pacman -S ${handler} --noconfirm
 fi
 
-echo
-
 echo "============================================================================"
 echo "               Choose only ONE Nvidia driver at a time."
 echo "                     AUR support is required."
@@ -65,10 +63,10 @@ case $CHOICE in
 
         tput setaf 2
         echo
-		echo "============================================================================"
-		echo "${package2} is installing ...."
-		echo "============================================================================"
-		tput sgr0
+	echo "============================================================================"
+	echo "${package2} is installing ...."
+	echo "============================================================================"
+	tput sgr0
         echo
         sudo pacman -S --needed ${package2}
         sudo pacman -S --needed ${package1}
@@ -92,10 +90,10 @@ case $CHOICE in
 
         tput setaf 2
         echo
-		echo "============================================================================"
-		echo "'${package3}' is installing ...."
-		echo "============================================================================"
-		tput sgr0
+	echo "============================================================================"
+	echo "'${package3}' is installing ...."
+	echo "============================================================================"
+	tput sgr0
         echo
         sudo pacman -S ${package2}
         sudo pacman -S --needed ${package1}
@@ -127,8 +125,8 @@ case $CHOICE in
 
     y )
         echo "============================================================================"
-		echo "${package2} is uninstalling ...."
-		echo "============================================================================"
+	echo "${package2} is uninstalling ...."
+	echo "============================================================================"
         sudo pacman -Rcns ${package2} --noconfirm
         sudo pacman -R ${package1} --noconfirm
         echo "Nvidia package has successfully removed from the system."
