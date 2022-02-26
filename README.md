@@ -3,7 +3,7 @@
 Useful shell scripts for daily use based on Arch Linux tested on ArcoLinux only.
 
 Do not blinding run any script. It could harm your system. Kindly read throughly.
-These scripts can give you some ideas to create or to modify according your system.
+These scripts can give you some ideas to create or modify scripts according your system.
 
 PLEASE READ THE SCRIPT BEFORE RUNNING & USE AT YOUR OWN RISK
 
