@@ -24,7 +24,7 @@ set -e
 # Use only one linux-(xanmod/edge/lts/anbox/tt) name as in AUR
 package="linux-xanmod-edge"
 #   GIT address for cloning or pulluing
-source=https://aur.archlinux.org/${package}.git
+source="https://aur.archlinux.org/${package}.git"
 #   Use "tmpfs" location like : (/var/tmp) or (ramdisk) or any other to build package faster
 tmpdir="/mnt/RamDisk"
 #   Location where you want to keep your build directory after installation
@@ -33,15 +33,12 @@ pulldir="/mnt/Data"
 bakdir="/mnt/Data/Backup"
 #   Location of the finish package (.zst) file for installation
 insdir="/mnt/Data/Kernel"
-#   AUR helper (only paru)
-helper="paru"
-
-######################## Very Important to set according to your Processor ###############################
-
 #  KBC= " Kernel Build Category " according the file "choose-gcc-optimization.sh" from build dir.
-prockbc=14
+prockbc="14"
 
 #####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
+#   AUR helper (only paru)
+helper="paru"
 #   Custom kernel building helper
 package1="modprobed-db"
 #   To check existing build directory with the file 'PKGBUILD'
@@ -89,7 +86,7 @@ else
         echo "Do you want to install ? (y/n)";
         echo "======================================================================================="
         
-        read CHOICE
+        read -r CHOICE
         case $CHOICE in
 
     y )
