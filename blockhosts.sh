@@ -5,9 +5,8 @@
 ###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
 ###########################################################################################################
 # Author            : AKM                                                                                 #
-# Disribution       : Arch Linux (Tested on ArcoLinux only)                                               #
-# Instruction       : Choose any 1 METHOD (CUSTOMISED or DIRECT) at a time and keep disable the other.    #
-# Requirement       : package 'curl' for METHOD 1 and package 'wget' for METHOD 2                         #
+# Disribution       : Arch Linux                                                                          #
+# Requirement       : package 'curl'                                                                      #
 ###########################################################################################################
 ############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ##########################################
 ###########################################################################################################
@@ -46,8 +45,8 @@ else
 fi
 
 #    Downloading hosts file
-rm -f "${tmpl}"/"${file}"
-"${package}" "${filew}" -o "${tmpl}"/"${file}"
+rm -f ${tmpl}/${file}
+${package} ${filew} -o ${tmpl}/${file}
 
 #   Comparing file versions
 cver="$(grep -r 'Date:' "${target}" | cut -c 9-25)";
