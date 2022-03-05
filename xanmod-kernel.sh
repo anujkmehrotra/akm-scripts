@@ -197,8 +197,8 @@ else
         echo 'net.core.default_qdisc = fq_pie' | sudo tee /etc/sysctl.d/90-override.conf
     fi
         cd "$HOME"
-        rm -Rf "${pulldir}"/"${package}"
-        mv -f "${tmpdir}"/"${package}" "${pulldir}"
+        rm -Rf ${pulldir}/${package:?}
+        mv -f ${tmpdir}/${package} ${pulldir}
         echo
         tput setaf 2
         echo "======================================================================================="

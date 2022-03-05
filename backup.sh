@@ -50,14 +50,14 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
         echo "=============================================================================="
 
         # Deleted all timeshift previous backups
-        sudo timeshift --delete-all
+        #sudo timeshift --delete-all
         
         echo "=============================================================================="
         echo "Removed previous backup. Starting a new ...."
         echo "=============================================================================="
         rm -f ${bakremote}/Backup.tar.gz
         rm -f ${bakloc}/Backup.tar.gz
-        rm -Rf ${bakhome}/*
+        rm -Rf ${bakhome:?}/*
         rm -Rf ${bakremote}/POS/*
         echo "Done"
         echo
@@ -103,7 +103,7 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
 
         #   Important folders and files backup from [/home]
         #mkdir ${bakhome}
-        cp -Rf ~/.config .local .bashrc-personal .bashrc .chromecache .mozilla .var .xdman .gnupg .cert .vscode-oss  ${bakhome}
+        cp -Rf ~/.config .local .bashrc-personal .bashrc .chromecache .mozilla .var .xdman .Xresources .gnupg .cert .vscode-oss  ${bakhome}
 
         echo "=============================================================================="
         echo "Local backup completed in [${bakloc}/Backup]."
