@@ -11,7 +11,7 @@
 
 # Nvidia Installer
 handler="paru"
-package1="nvidia-settings nvidia-utils lib32-nvidia-utils opencl-nvidia lib32-opencl-nvidia egl-wayland eglexternalplatform"
+PKGS=("nvidia-settings" "nvidia-utils" "lib32-nvidia-utils" "opencl-nvidia" "lib32-opencl-nvidia" "egl-wayland" "eglexternalplatform")
 package2="nvidia-dkms"
 package3="nvidia-tweaks"
 
@@ -44,7 +44,7 @@ echo "4.  Exit / Leave      (Do not install Nvidia)"
 echo
 echo "Type the number..."
 
-read CHOICE
+read -r CHOICE
 
 case $CHOICE in
 
@@ -69,7 +69,7 @@ case $CHOICE in
 	tput sgr0
         echo
         sudo pacman -S --needed ${package2}
-        sudo pacman -S --needed ${package1}
+        sudo pacman -S --needed "${PKGS[@]}"
         echo "Nvidia has successfully installed in the system."
 
     fi
@@ -96,7 +96,7 @@ case $CHOICE in
 	tput sgr0
         echo
         sudo pacman -S ${package2}
-        sudo pacman -S --needed ${package1}
+        sudo pacman -S --needed "${PKGS[@]}"
         ${handler} -a -S ${package3}
         echo "Nvidia Tweaks and others packages have successfully installed in the system. Reboot now. "
 
@@ -120,7 +120,8 @@ case $CHOICE in
         echo "Proceed with cautions!! (y/n)";
         echo "============================================================================"
         echo
-    read CHOICE
+    
+    read -r CHOICE
     case $CHOICE in
 
     y )
@@ -128,7 +129,6 @@ case $CHOICE in
 	echo "${package2} is uninstalling ...."
 	echo "============================================================================"
         sudo pacman -Rcns ${package2} --noconfirm
-        sudo pacman -R ${package1} --noconfirm
         echo "Nvidia package has successfully removed from the system."
         echo "Info : Rebooting without any graphical driver can cause a blank screen."
         tput sgr0
