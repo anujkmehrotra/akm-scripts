@@ -105,6 +105,5 @@ sudo cp -f /mnt/Data/Backup/blacklist.conf /etc/modprobe.d/blacklist.conf
 #sudo cp -f ${bakloc}/kde_settings.conf /etc/sddm.conf.d
 #sudo cp -f ${bakloc}/sddm.conf /etc
 #========================================================================================================================
-#sudo systemctl stop power-profiles-daemon.service
-#sudo systemctl disable power-profiles-daemon.service
-#sudo systemctl mask power-profiles-daemon.service
+
+sudo chmod u+s /usr/bin/hddtemp

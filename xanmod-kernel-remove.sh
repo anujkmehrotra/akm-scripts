@@ -16,7 +16,7 @@ package="linux-xanmod-edge"
     sleep 1
     else
         echo "'${package}' is NOT installed.";
-        exit
+        exit 1
     fi
 
 #   Checking running kernel status.
@@ -29,9 +29,12 @@ pakage="xanmod"
     if [ "${kernel}" == "${pakage}" ]; then
     sleep 1
         tput setaf 1
+		echo "======================================================================================="
         echo "Xanmod Kernel is currently running. Removal request denied."
         echo "You must boot from a different kernel to remove it."
+		echo "======================================================================================="
         tput sgr0
+		exit 1
 #   On not running kernel
 
 elif [ -z "${check}" ] ; then
@@ -58,7 +61,7 @@ elif [ -z "${check}" ] ; then
 
         echo
         echo "======================================================================================="
-        echo "'&{package}' removed. Please reboot."
+        echo "'${package}' removed. Please reboot."
         echo "======================================================================================="
 
     ;;
