@@ -29,7 +29,7 @@ package2="paru"
 #   Ignore temporarily packages
 ignpkg="$(du -h /var/cache/pacman/pkg | cut -c '1-4')";
 # Home Folders and Files
-FOLFL=(".config" ".local" ".bin" ".bashrc-personal" ".bashrc" ".chromecache" ".mozilla" ".var" ".xdman" ".Xresources" ".gnupg" ".cert" ".vscode-oss")
+FOLFL=("Calibre Library" ".config" ".local" ".bin" ".bashrc-personal" ".bashrc" ".chromecache" ".mozilla" ".var" ".xdman" ".Xresources" ".gnupg" ".cert" ".vscode-oss")
 
 echo "=============================================================================="
 echo "This script assumes that you have already configured"
@@ -95,8 +95,6 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
 	cp -f /etc/sysctl.d/100-archlinux.conf ${bakloc}/Backup
 	cp -f /etc/sysctl.d/9999-disable-core-dump.conf ${bakloc}/Backup
 	cp -f /etc/security/limits.conf ${bakloc}/Backup
-        #       xanmod kernel config		    
-        cp -f ${bakloc}/linux-xanmod-edge/myconfig ${bakloc}/Backup
         echo "Done"
         echo
         echo "=============================================================================="
