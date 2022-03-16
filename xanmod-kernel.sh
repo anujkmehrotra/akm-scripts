@@ -88,7 +88,9 @@ else
         echo "Cloning Kernel '${package}' from GIT repository ...."
         echo "======================================================================================="
         echo
+        if [[ -d "${package}" ]]; then 
         rm -Rf ${package}
+        fi
         git clone ${source}
         cd ${package}
         
