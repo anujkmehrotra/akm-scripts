@@ -20,7 +20,7 @@ set -e
 # Use only one linux-(xanmod/edge/lts/anbox/tt) name as in AUR
 package="linux-xanmod-edge"
 #   GIT address for cloning or pulluing
-source="https://aur.archlinux.org/${package}.git"
+source="https://aur.archlinux.org/$package.git"
 #   Use "tmpfs" location like : (/var/tmp) or (ramdisk) or any other to build package faster
 tmpdir="/mnt/RamDisk"
 #   Location of the finish package (.zst) file for installation
@@ -31,32 +31,32 @@ prockbc="14"
 #####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
 filet="/etc/sysctl.d/90-override.conf"
 #   Checking current kernel version
-cver="$(paru -Qi ${package} | grep 'Version' | cut -c 19-27)";
+cver="$(paru -Qi $package | grep 'Version' | cut -c 19-27)";
 #   Checking available kernel version
-nver="$(paru -a -Si ${package} | grep 'Version' | cut -c 19-27)";
+nver="$(paru -a -Si $package | grep 'Version' | cut -c 19-27)";
 #==========================================================================================================
 
     #   Checking required package
 if pacman -Qi paru &> /dev/null; then
-	echo "Please wait while we check the status of '${package}' for you."
+	echo "Please wait while we check the status of '$package' for you."
 else
     sudo pacman -S paru --noconfirm
-    echo "Please wait while we check the status of '${package}' for you."
+    echo "Please wait while we check the status of '$package' for you."
 fi
     #=====================================================================
         #   On installed and available.
     #=====================================================================
-if pacman -Qi ${package} &> /dev/null && [ "${nver}" == "${cver}" ] ; then
+if pacman -Qi $package &> /dev/null && [ "$nver" == "$cver" ] ; then
         sleep 1
         tput setaf 2
         echo "======================================================================================="
-        echo "Kernel '${package}' version'${nver}' is INSTALLED and UP-TO-DATE."
+        echo "Kernel '$package' version'$nver' is INSTALLED and UP-TO-DATE."
         echo "======================================================================================="
         tput sgr0
 else
         sleep 1
         echo "======================================================================================="
-        echo "Kernel '${package}' version'${nver}' is NOT installed."
+        echo "Kernel '$package' version'$nver' is NOT installed."
         echo "======================================================================================="
         tput setaf 1
         echo
@@ -78,37 +78,36 @@ else
         #   Preparing and cloning git repo
         echo
         echo "======================================================================================="
-        echo "Preparing Kernel '${package}' version'${nver}' to install ...."
+        echo "Preparing Kernel '$package' version'$nver' to install ...."
         echo "======================================================================================="
         sleep 1
    
        	cd ${tmpdir}
     	echo
         echo "======================================================================================="
-        echo "Cloning Kernel '${package}' from GIT repository ...."
+        echo "Cloning Kernel '$package' from GIT repository ...."
         echo "======================================================================================="
         echo
-        if [[ -d "${package}" ]]; then 
-        rm -Rf ${package}
-        fi
-        git clone ${source}
-        cd ${package}
+        echo "Deleting the old folder if one exists ...."
+	    [ -d $package ] && rm -rf $package
+        git clone $source
+        cd $package
         
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n _compress_modules=y use_ns=y makepkg -sc
     
         sleep 1
-        rm -f ${insdir}/* && cp -f ${tmpdir}/${package}/${package}* ${insdir}
+        rm -f ${insdir}/* && cp -f $tmpdir/$package/$package* $insdir
         echo
         echo "======================================================================================="
-        echo "Installing Kernel '${package}' version'${nver}' ...."
+        echo "Installing Kernel '$package' version'$nver' ...."
         echo "======================================================================================="
     
         #   Kernel installation
         echo
-        cd ${insdir} && sudo pacman -U --needed --noconfirm ${package}*
+        cd ${insdir} && sudo pacman -U --needed --noconfirm $package*
         echo
         echo "======================================================================================="
-        echo "Kernel '${package}' version'${nver}' installed. Updating grub ...."
+        echo "Kernel '$package' version'$nver' installed. Updating grub ...."
         echo "======================================================================================="
         
         #   Updating Grub
@@ -118,7 +117,7 @@ else
 
         #   Setting the FQ-PIE Queuing Discipline
     
-    if test -f "${filet}"; then
+    if test -f "$filet"; then
         echo "======================================================================================="
         echo "FQ-PIE Queuing Discipline tweak has already applied, skipping ...."
         echo "======================================================================================="
@@ -132,7 +131,7 @@ else
         echo
         tput setaf 2
         echo "======================================================================================="
-        echo "Kernel '${package}' version'${nver}' Installed. Please reboot."
+        echo "Kernel '$package' version'$nver' Installed. Please reboot."
         echo "======================================================================================="
         tput sgr0
     ;;
@@ -140,7 +139,7 @@ else
     n )
         echo
         echo "======================================================================================="
-        echo "You chose not to install the Kernel '${package}' version'${nver}' ."
+        echo "You chose not to install the Kernel '$package' version'$nver' ."
         echo "======================================================================================="
 
     ;;

@@ -41,9 +41,6 @@ cp -f /etc/pacman.conf ${bakloc}/Originals
 cp -f /etc/default/grub ${bakloc}/Originals
 # aur and other package make file
 cp -f /etc/makepkg.conf ${bakloc}/Originals
-# system log generation file
-cp -f /etc/systemd/journald.conf.d/volatile-storage.conf ${bakloc}/Originals
-cp -f /etc/systemd/journald.conf ${bakloc}/Originals
 # network hosts file
 cp -f /etc/hosts ${bakloc}/Originals
 #========================================================================================================================
@@ -62,7 +59,7 @@ sudo pacman -Rs --noconfirm xf86-video-amdgpu xf86-video-ati xf86-video-fbdev xf
 
 ##  Also make it as startup from chromecache
 #nautilus -q || tracker daemon -k || tracker3 daemon -k
-sudo pacman -S --needed mutter-performance gnome-shell-performance nautilus-admin-git
+sudo pacman -S --needed mutter-performance nautilus-admin-git
 sudo pacman -Rs --noconfirm epiphany gnome-mplayer gnome-pie gnome-boxes cheese gnome-maps gnome-photos
 sudo pacman -Rcns --noconfirm thunar
 sudo pacman -Sy
@@ -74,13 +71,11 @@ sudo systemctl enable fstrim.timer
 sudo systemctl enable --now ufw.service
 #========================================================================================================================
 ##  Overwrite files
-sudo cp -f ${bakloc}/Originals/chaotic-mirrorlist /etc/pacman.d
-sudo cp -f ${bakloc}/grub /etc/default
+sudo cp -f $bakloc/Originals/chaotic-mirrorlist /etc/pacman.d
+sudo cp -f $bakloc/grub /etc/default
 sudo grub-mkconfig -o /boot/grub/grub.cfg
-sudo cp -f ${bakloc}/makepkg.conf /etc
-sudo cp -f ${bakloc}/volatile-storage.conf /etc/systemd/journald.conf.d
-sudo cp -f ${bakloc}/journald.conf /etc/systemd
-sudo cp -f ${bakloc}/pacman.conf /etc
+sudo cp -f $bakloc/makepkg.conf /etc
+sudo cp -f $bakloc/pacman.conf /etc
 
 #Creating some files
 sudo cp -f /mnt/Data/Backup/60-scheduler.rules /etc/udev/rules.d

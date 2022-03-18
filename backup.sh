@@ -24,8 +24,6 @@ tsc="Backup Script"
 package="grive"
 #   Do not change package1
 package1="timeshift"
-#   AUR Handler (yay / paru)
-package2="paru"
 #   Ignore temporarily packages
 ignpkg="$(du -h /var/cache/pacman/pkg | cut -c '1-4')";
 # Home Folders and Files
@@ -33,18 +31,18 @@ FOLFL=("Calibre Library" ".config" ".local" ".bin" ".bashrc-personal" ".bashrc" 
 
 echo "=============================================================================="
 echo "This script assumes that you have already configured"
-echo "the packages '${package}' and '${package1}' before running this."
+echo "the packages '$package' and '$package1' before running this."
 echo "if not, this script will install them. Kindly configure them by yourself."
 echo "=============================================================================="
 echo
-        tput setaf 1
-echo "=============================================================================="        
-echo "WARNING : This is NOT an incremental backup process."
-echo "It will delete all the previous backups including timeshift."
-echo "=============================================================================="
-        tput sgr0
+#        tput setaf 1
+#echo "=============================================================================="        
+#echo "WARNING : This is NOT an incremental backup process."
+#echo "It will delete all the previous backups including timeshift."
+#echo "=============================================================================="
+#        tput sgr0
 
-if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
+if pacman -Qi $package $package1 paru &> /dev/null; then
 
         echo
         echo "=============================================================================="
@@ -57,14 +55,14 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
         echo "=============================================================================="
         echo "Removed previous backup. Starting a new ...."
         echo "=============================================================================="
-        rm -f ${bakremote}/Backup.tar.gz
-        rm -f ${bakloc}/Backup.tar.gz
+        rm -f $bakremote/Backup.tar.gz
+        rm -f $bakloc/Backup.tar.gz
         rm -Rf ${bakhome:?}/*
-        rm -Rf ${bakremote}/POS/*
+        rm -Rf $bakremote/POS/*
         echo "Done"
         echo
         echo "=============================================================================="
-        echo "Ignoring '${ignpkg}' temporarily packages from backup process ...."
+        echo "Ignoring '$ignpkg' temporarily packages from backup process ...."
         echo "=============================================================================="
         echo
         echo "=============================================================================="
@@ -72,29 +70,29 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
         echo "=============================================================================="
 
         #   Local and AUR packages backup
-        rm -f ${bakloc}/Backup/pkglist.txt
-        rm -f ${bakloc}/Backup/localpkglist.txt
-        pacman -Qnq > ${bakloc}/Backup/pkglist.txt
-        pacman -Qmq > ${bakloc}/Backup/localpkglist.txt
+        rm -f $bakloc/Backup/pkglist.txt
+        rm -f $bakloc/Backup/localpkglist.txt
+        pacman -Qnq > $bakloc/Backup/pkglist.txt
+        pacman -Qmq > $bakloc/Backup/localpkglist.txt
 
         #   Removing my manual build pkg (CK kernel) name from the localpkglist
-        sed -i '/linux-xanmod/d' ${bakloc}/Backup/localpkglist.txt
-        sed -i '/linux-xanmod/d' ${bakloc}/Backup/pkglist.txt
+        sed -i '/linux-xanmod/d' $bakloc/Backup/localpkglist.txt
+        sed -i '/linux-xanmod/d' $bakloc/Backup/pkglist.txt
      
         #   Important system files backup
-        #		    cp -f /etc/sddm.conf.d/kde_settings.conf ${bakloc}/Backup
-        #		    cp -f /etc/sddm.conf ${bakloc}/Backup
-	cp -f /etc/mkinitcpio.d/* ${bakloc}/Backup
-	cp -f /etc/fstab ${bakloc}/Backup
-	cp -f /etc/pacman.conf ${bakloc}/Backup
-	cp -f /etc/default/grub ${bakloc}/Backup
-	cp -f /etc/makepkg.conf ${bakloc}/Backup
-	cp -f /etc/systemd/journald.conf.d/volatile-storage.conf ${bakloc}/Backup
-	cp -f /etc/systemd/journald.conf ${bakloc}/Backup
-	cp -f /etc/udev/rules.d/60-scheduler.rules ${bakloc}/Backup
-	cp -f /etc/sysctl.d/100-archlinux.conf ${bakloc}/Backup
-	cp -f /etc/sysctl.d/9999-disable-core-dump.conf ${bakloc}/Backup
-	cp -f /etc/security/limits.conf ${bakloc}/Backup
+        #		    cp -f /etc/sddm.conf.d/kde_settings.conf $bakloc/Backup
+        #		    cp -f /etc/sddm.conf $bakloc/Backup
+	cp -f /etc/mkinitcpio.d/* $bakloc/Backup
+	cp -f /etc/fstab $bakloc/Backup
+	cp -f /etc/pacman.conf $bakloc/Backup
+	cp -f /etc/default/grub $bakloc/Backup
+	cp -f /etc/makepkg.conf $bakloc/Backup
+	cp -f /etc/systemd/journald.conf.d/volatile-storage.conf $bakloc/Backup
+	cp -f /etc/systemd/journald.conf $bakloc/Backup
+	cp -f /etc/udev/rules.d/60-scheduler.rules $bakloc/Backup
+	cp -f /etc/sysctl.d/100-archlinux.conf $bakloc/Backup
+	cp -f /etc/sysctl.d/9999-disable-core-dump.conf $bakloc/Backup
+	cp -f /etc/security/limits.conf $bakloc/Backup
         echo "Done"
         echo
         echo "=============================================================================="
@@ -102,31 +100,27 @@ if pacman -Qi ${package} ${package1} ${package2} &> /dev/null; then
         echo "=============================================================================="
 
         #   Important folders and files backup from [/home]
-        #mkdir ${bakhome}
-        
-        cp -Rf ~/"${FOLFL[@]}" ${bakhome}
+        cp -Rf ~/"${FOLFL[@]}" $bakhome
 
         echo "=============================================================================="
-        echo "Local backup completed in [${bakloc}/Backup]."
+        echo "Local backup completed in [$bakloc/Backup]."
         echo "=============================================================================="
 
-        sudo timeshift --create --comments "${tsc}"
-        cd ${bakloc}
-        echo "=============================================================================="
-        echo "Compressing backup ...."
-        echo "=============================================================================="
-
-        tar -zcf Backup.tar.gz Backup
-        mv -f Backup.tar.gz ${bakremote}
-
-        echo "Done"
-        echo
+        sudo timeshift --create --comments "$tsc"
+        #cd $bakloc
+        #echo "=============================================================================="
+        #echo "Compressing backup ...."
+        #echo "=============================================================================="
+        #tar -zcf Backup.tar.gz Backup
+        #mv -f Backup.tar.gz $bakremote
+        #echo "Done"
+        #echo
         echo "=============================================================================="
         echo "Uploading backup ...."
         echo "=============================================================================="
 
-        cp -Rf ${bakloc}/POS/* ${bakremote}/POS
-        cd ${bakremote}
+        cp -Rf $bakloc/POS/* $bakremote/POS
+        cd $bakremote
         grive
 
         echo "=============================================================================="
@@ -139,14 +133,14 @@ else
         sleep 1
 
         echo "=============================================================================="
-        echo "Installing required packages '${package}' & '${package1}' ...."
+        echo "Installing required packages '$package' & '$package1' ...."
         echo "=============================================================================="
         
-        sudo pacman -S --noconfirm --needed ${package1} ${package2}
-        ${package2} -a -S --noconfirm ${package}
+        sudo pacman -S --noconfirm --needed $package1 paru
+        paru -a -S --noconfirm $package
 
         echo "=============================================================================="
-        echo "Packages installed. Please configure { $package } & { $package1 } first."
+        echo "Packages installed. Please configure '$package' & '$package1' first."
         echo "After all configurations and changes, re-run this backup script."
         echo "=============================================================================="
 fi
