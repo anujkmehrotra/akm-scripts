@@ -27,7 +27,7 @@ package1="timeshift"
 #   Ignore temporarily packages
 ignpkg="$(du -h /var/cache/pacman/pkg | cut -c '1-4')";
 # Home Folders and Files
-FOLFL=("Calibre Library" ".config" ".local" ".bin" ".bashrc-personal" ".bashrc" ".chromecache" ".mozilla" ".var" ".xdman" ".Xresources" ".gnupg" ".cert" ".vscode-oss")
+FOLFL=(".config" ".local" ".bin" ".bashrc-personal" ".bashrc" ".chromecache" ".mozilla" ".var" ".xdman" ".Xresources" ".gnupg" ".cert" ".vscode-oss")
 
 echo "=============================================================================="
 echo "This script assumes that you have already configured"
@@ -55,8 +55,8 @@ if pacman -Qi $package $package1 paru &> /dev/null; then
         echo "=============================================================================="
         echo "Removed previous backup. Starting a new ...."
         echo "=============================================================================="
-        rm -f $bakremote/Backup.tar.gz
-        rm -f $bakloc/Backup.tar.gz
+        #rm -f $bakremote/Backup.tar.gz
+        #rm -f $bakloc/Backup.tar.gz
         rm -Rf ${bakhome:?}/*
         rm -Rf $bakremote/POS/*
         echo "Done"
@@ -86,9 +86,7 @@ if pacman -Qi $package $package1 paru &> /dev/null; then
 	cp -f /etc/fstab $bakloc/Backup
 	cp -f /etc/pacman.conf $bakloc/Backup
 	cp -f /etc/default/grub $bakloc/Backup
-	cp -f /etc/makepkg.conf $bakloc/Backup
-	cp -f /etc/systemd/journald.conf.d/volatile-storage.conf $bakloc/Backup
-	cp -f /etc/systemd/journald.conf $bakloc/Backup
+	cp -f /etc/systemd/system.conf $bakloc/Backup
 	cp -f /etc/udev/rules.d/60-scheduler.rules $bakloc/Backup
 	cp -f /etc/sysctl.d/100-archlinux.conf $bakloc/Backup
 	cp -f /etc/sysctl.d/9999-disable-core-dump.conf $bakloc/Backup
@@ -106,7 +104,7 @@ if pacman -Qi $package $package1 paru &> /dev/null; then
         echo "Local backup completed in [$bakloc/Backup]."
         echo "=============================================================================="
 
-        sudo timeshift --create --comments "$tsc"
+        #sudo timeshift --create --comments "$tsc"
         #cd $bakloc
         #echo "=============================================================================="
         #echo "Compressing backup ...."

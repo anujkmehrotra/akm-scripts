@@ -11,7 +11,7 @@ set -e
 
 # Where I take regular backup of my /home directory (other than '/' and '/home')
 bakloc="/mnt/Data/Backup"
-PKGS=("reflector" "rate-mirrors-bin" "powerpill" "zenpower-dkms" "zenmonitor-git" "msr-tools" "amd-ucode" "gufw" "linux-firmware-qlogic" "timeshift")
+PKGS=("reflector" "rate-mirrors-bin" "powerpill" "zenpower-dkms-git" "zenmonitor-git" "msr-tools" "amd-ucode" "gufw" "timeshift")
 #========================================================================================================================
 #echo 'tmpfs	/tmp		tmpfs   defaults,noatime,mode=1777 0 0
 #tmpfs	/var/log	tmpfs   defaults,noatime,mode=0755 0 0
@@ -28,21 +28,21 @@ PKGS=("reflector" "rate-mirrors-bin" "powerpill" "zenpower-dkms" "zenmonitor-git
 ##  Enable these below commands after above executions
 #=====================================================================================
 ##  Backup
-rm -Rf ${bakloc}/Originals/*
+#rm -Rf ${bakloc}/Originals/*
 #   Mirrorlist
-cp -f /etc/pacman.d/chaotic-mirrorlist ${bakloc}/Originals
+#cp -f /etc/pacman.d/chaotic-mirrorlist ${bakloc}/Originals
 # preset files
-cp -f /etc/mkinitcpio.d/* ${bakloc}/Originals
+#cp -f /etc/mkinitcpio.d/* ${bakloc}/Originals
 # fstab file
-cp -f /etc/fstab ${bakloc}/Originals
+#cp -f /etc/fstab ${bakloc}/Originals
 # pacman file
-cp -f /etc/pacman.conf ${bakloc}/Originals
+#cp -f /etc/pacman.conf ${bakloc}/Originals
 # grub file
-cp -f /etc/default/grub ${bakloc}/Originals
+#cp -f /etc/default/grub ${bakloc}/Originals
 # aur and other package make file
-cp -f /etc/makepkg.conf ${bakloc}/Originals
+#cp -f /etc/makepkg.conf ${bakloc}/Originals
 # network hosts file
-cp -f /etc/hosts ${bakloc}/Originals
+#cp -f /etc/hosts ${bakloc}/Originals
 #========================================================================================================================
 
 ##  If required for Chaotic repo
@@ -51,19 +51,19 @@ cp -f /etc/hosts ${bakloc}/Originals
 #sudo pacman -Sy --noconfirm chaotic-keyring && sudo pacman -S --noconfirm chaotic-mirrorlist
 #sudo pacman -S archlinuxcn-mirrorlist-git archlinuxcn-keyring --noconfirm
 
-sudo pacman -Syy
-sudo pacman -Rs --noconfirm xf86-video-amdgpu xf86-video-ati xf86-video-fbdev xf86-video-vesa xf86-video-openchrome broadcom-wl-dkms arcolinux-hblock-git
-
+#sudo pacman -Syy
+#sudo pacman -Rs --noconfirm xf86-video-amdgpu xf86-video-ati xf86-video-fbdev xf86-video-vesa xf86-video-openchrome broadcom-wl-dkms r8168-dkms tlp
+#sudo mkinitcpio -p linux
 ##  For Gnome
 ##  Disable Color and remove 'Default Samsung Color' from Settings-Color and import 'Standard sRGB' color. Use [!] from the list after removing default.
 
 ##  Also make it as startup from chromecache
 #nautilus -q || tracker daemon -k || tracker3 daemon -k
-sudo pacman -S --needed mutter-performance nautilus-admin-git
-sudo pacman -Rs --noconfirm epiphany gnome-mplayer gnome-pie gnome-boxes cheese gnome-maps gnome-photos
-sudo pacman -Rcns --noconfirm thunar
+#sudo pacman -S --needed mutter-performance nautilus-admin-git
+#sudo pacman -Rs --noconfirm epiphany gnome-mplayer gnome-pie gnome-boxes cheese gnome-maps gnome-photos
+#sudo pacman -Rcns --noconfirm thunar
 sudo pacman -Sy
-sudo pacman -Sy chaotic-keyring
+#sudo pacman -Sy chaotic-keyring
 sudo pacman -S --needed "${PKGS[@]}" && echo 'All packages installed.'
 
 sudo systemctl disable cronie.service
@@ -79,7 +79,7 @@ sudo cp -f $bakloc/pacman.conf /etc
 
 #Creating some files
 sudo cp -f /mnt/Data/Backup/60-scheduler.rules /etc/udev/rules.d
-sudo cp -f /mnt/Data/Backup/100-archlinux.conf /etc/sysctl.d
+#sudo cp -f /mnt/Data/Backup/100-archlinux.conf /etc/sysctl.d
 sudo cp -f /mnt/Data/Backup/9999-disable-core-dump.conf /etc/sysctl.d
 sudo sysctl -p /etc/sysctl.d/9999-disable-core-dump.conf
 sudo cp -f /mnt/Data/Backup/limits.conf /etc/security
