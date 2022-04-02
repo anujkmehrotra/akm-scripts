@@ -88,7 +88,7 @@ if pacman -Qi $package $package1 paru &> /dev/null; then
 	cp -f /etc/default/grub $bakloc/Backup
 	cp -f /etc/systemd/system.conf $bakloc/Backup
 	cp -f /etc/udev/rules.d/60-scheduler.rules $bakloc/Backup
-	cp -f /etc/sysctl.d/100-archlinux.conf $bakloc/Backup
+	#cp -f /etc/sysctl.d/100-archlinux.conf $bakloc/Backup
 	cp -f /etc/sysctl.d/9999-disable-core-dump.conf $bakloc/Backup
 	cp -f /etc/security/limits.conf $bakloc/Backup
         echo "Done"

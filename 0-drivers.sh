@@ -52,7 +52,7 @@ PKGS=("reflector" "rate-mirrors-bin" "powerpill" "zenpower-dkms-git" "zenmonitor
 #sudo pacman -S archlinuxcn-mirrorlist-git archlinuxcn-keyring --noconfirm
 
 #sudo pacman -Syy
-#sudo pacman -Rs --noconfirm xf86-video-amdgpu xf86-video-ati xf86-video-fbdev xf86-video-vesa xf86-video-openchrome broadcom-wl-dkms r8168-dkms tlp
+#sudo pacman -Rnsudd xf86-video-amdgpu xf86-video-ati xf86-video-fbdev xf86-video-vesa xf86-video-openchrome broadcom-wl-dkms r8168-dkms tlp
 #sudo mkinitcpio -p linux
 ##  For Gnome
 ##  Disable Color and remove 'Default Samsung Color' from Settings-Color and import 'Standard sRGB' color. Use [!] from the list after removing default.
@@ -64,7 +64,7 @@ PKGS=("reflector" "rate-mirrors-bin" "powerpill" "zenpower-dkms-git" "zenmonitor
 #sudo pacman -Rcns --noconfirm thunar
 sudo pacman -Sy
 #sudo pacman -Sy chaotic-keyring
-sudo pacman -S --needed "${PKGS[@]}" && echo 'All packages installed.'
+sudo pacman -S --asdeps --needed "${PKGS[@]}" && echo 'All packages installed.'
 
 sudo systemctl disable cronie.service
 sudo systemctl enable fstrim.timer
