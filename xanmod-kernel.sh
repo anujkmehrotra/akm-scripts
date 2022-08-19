@@ -18,18 +18,17 @@ set -e
 
 ############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ####################################
 # Use only one linux-(xanmod/edge/lts/anbox/tt) name as in AUR
-package="linux-xanmod-edge"
+package="linux-xanmod"
 #   GIT address for cloning or pulluing
 source="https://aur.archlinux.org/$package.git"
 #   Use "tmpfs" location like : (/var/tmp) or (ramdisk) or any other to build package faster
-tmpdir="/var/tmp"
+tmpdir="/tmp"
 #   Location of the finish package (.zst) file for installation
 insdir="/mnt/Data/Kernel"
 #  According the file "choose-gcc-optimization.sh" from build dir.
 prockbc="14"
 
 #####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
-filet="/etc/sysctl.d/90-override.conf"
 #   Checking current kernel version
 cver="$(paru -Qi $package | grep 'Version' | awk '{print $3}')";
 #   Checking available kernel version
@@ -55,21 +54,12 @@ if pacman -Qi $package &> /dev/null && [ "$nver" == "$cver" ] ; then
         tput sgr0
 else
         sleep 1
-        echo "======================================================================================="
-        echo "Kernel '$package' version '$nver' is NOT installed."
-        echo "======================================================================================="
         tput setaf 1
-        echo
-        echo "WARNING :"
         echo "======================================================================================="
-        echo "Wrong selection of 'prockbc' may HANG your system during Kernel building."
+        echo "Kernel '$package' version '$nver' is NOT installed. Do you want to install ? (y/n)";
         echo "======================================================================================="
         tput sgr0
-        echo
-        echo "======================================================================================="
-        echo "Do you want to install ? (y/n)";
-        echo "======================================================================================="
-        
+
         read -r CHOICE
         case $CHOICE in
 
@@ -89,13 +79,26 @@ else
         echo "======================================================================================="
         echo
         echo "Deleting the old folder if one exists ...."
+
 	    [ -d $package ] && rm -rf $package
         git clone $source
         cd $package
-        
+        echo
+        echo "======================================================================================="
+        echo "Building Kernel '$package' version '$nver' ...."
+        echo "======================================================================================="
+
+        #sudo gpg --recv-keys ABAF11C65A2970B130ABE3C479BE3E4300411886
+        #sudo gpg --recv-keys 647F28654894E3BD457199BE38DBBDC86092693E
+        #paru -a -S $package $package-headers
         env _microarchitecture=${prockbc} use_numa=n use_tracers=n _compress_modules=y use_ns=y makepkg -sc
     
         sleep 1
+        echo
+        echo "======================================================================================="
+        echo "Checking requirement for installation ...."
+        echo "======================================================================================="
+        echo
         rm -f ${insdir}/* && cp -f $tmpdir/$package/$package* $insdir
         echo
         echo "======================================================================================="
@@ -107,7 +110,7 @@ else
         cd ${insdir} && sudo pacman -U --needed --noconfirm $package*
         echo
         echo "======================================================================================="
-        echo "Kernel '$package' version '$nver' installed. Updating grub ...."
+        echo "Updating grub ...."
         echo "======================================================================================="
         
         #   Updating Grub
@@ -115,18 +118,6 @@ else
         sleep 1
         sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-        #   Setting the FQ-PIE Queuing Discipline
-    
-    if test -f "$filet"; then
-        echo "======================================================================================="
-        echo "FQ-PIE Queuing Discipline tweak has already applied, skipping ...."
-        echo "======================================================================================="
-    else
-        echo "======================================================================================="
-        echo "Applying tweaks (FQ-PIE Queuing Discipline)."
-        echo "======================================================================================="
-        echo 'net.core.default_qdisc = fq_pie' | sudo tee /etc/sysctl.d/90-override.conf
-    fi
         cd "$HOME"
         echo
         tput setaf 2
@@ -138,17 +129,21 @@ else
 
     n )
         echo
+        tput setaf 1
         echo "======================================================================================="
         echo "You chose not to install the Kernel '$package' version '$nver' ."
         echo "======================================================================================="
+        tput sgr0
 
-    ;;
+   ;;
 
     * )
         echo
+        tput setaf 1
         echo "======================================================================================="
         echo "Only allowed 'y/n' to answer."
         echo "======================================================================================="
+        tput sgr0
 
     ;;
     esac

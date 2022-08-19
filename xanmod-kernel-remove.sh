@@ -8,7 +8,7 @@ set -e
 # Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
 ###########################################################################################################
 
-package="linux-xanmod-edge"
+package="linux-xanmod"
 
 #   Checking required package
     if pacman -Qi ${package} &> /dev/null; then
@@ -21,7 +21,7 @@ package="linux-xanmod-edge"
 
 #   Checking running kernel status.
 
-kernel="$(uname -r | cut -b 8,9,10,11,12,13)";
+kernel="$(uname -r | cut -b 9,10,11,12,13,14)";
 pakage="xanmod"
 
 #   On running kernel
