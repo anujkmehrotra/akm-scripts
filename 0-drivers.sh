@@ -57,16 +57,19 @@ PKGS=("reflector" "rate-mirrors-bin" "powerpill" "zenpower-dkms-git" "zenmonitor
 ##  For Gnome
 ##  Disable Color and remove 'Default Samsung Color' from Settings-Color and import 'Standard sRGB' color. Use [!] from the list after removing default.
 
-##  Also make it as startup from chromecache
-#nautilus -q || tracker daemon -k || tracker3 daemon -k
+##  Disable Gnome Tracker (Disable Search option for 'Files' from 'Settings' completely)
+nautilus -q && tracker3 daemon -k
+systemctl --user mask tracker-extract-3.service tracker-miner-fs-3.service tracker-miner-rss-3.service tracker-writeback-3.service tracker-xdg-portal-3.service tracker-miner-fs-control-3.service
+tracker3 reset -s -r
 #sudo pacman -S --needed mutter-performance nautilus-admin-git
 #sudo pacman -Rs --noconfirm epiphany gnome-mplayer gnome-pie gnome-boxes cheese gnome-maps gnome-photos
 #sudo pacman -Rcns --noconfirm thunar
 sudo pacman -Sy
 #sudo pacman -Sy chaotic-keyring
-sudo pacman -S --asdeps --needed "${PKGS[@]}" && echo 'All packages installed.'
+#sudo pacman -S --needed "${PKGS[@]}" && echo 'All packages installed.'
 
 sudo systemctl disable cronie.service
+sudo systemctl disable cups.service
 sudo systemctl enable fstrim.timer
 sudo systemctl enable --now ufw.service
 #========================================================================================================================
@@ -78,12 +81,12 @@ sudo cp -f $bakloc/makepkg.conf /etc
 sudo cp -f $bakloc/pacman.conf /etc
 
 #Creating some files
-sudo cp -f /mnt/Data/Backup/60-scheduler.rules /etc/udev/rules.d
-#sudo cp -f /mnt/Data/Backup/100-archlinux.conf /etc/sysctl.d
-sudo cp -f /mnt/Data/Backup/9999-disable-core-dump.conf /etc/sysctl.d
-sudo sysctl -p /etc/sysctl.d/9999-disable-core-dump.conf
-sudo cp -f /mnt/Data/Backup/limits.conf /etc/security
-sudo cp -f /mnt/Data/Backup/blacklist.conf /etc/modprobe.d/blacklist.conf
+#cp -f /mnt/Data/Backup/60-scheduler.rules /etc/udev/rules.d
+#cp -f /mnt/Data/Backup/100-archlinux.conf /etc/sysctl.d
+#cp -f /mnt/Data/Backup/9999-disable-core-dump.conf /etc/sysctl.d
+#sudo sysctl -p /etc/sysctl.d/9999-disable-core-dump.conf
+#cp -f /mnt/Data/Backup/limits.conf /etc/security
+#cp -f /mnt/Data/Backup/blacklist.conf /etc/modprobe.d/blacklist.conf
 #========================================================================================================================
 
 # Creating Swap file (Optional)
@@ -100,5 +103,5 @@ sudo cp -f /mnt/Data/Backup/blacklist.conf /etc/modprobe.d/blacklist.conf
 #sudo cp -f ${bakloc}/kde_settings.conf /etc/sddm.conf.d
 #sudo cp -f ${bakloc}/sddm.conf /etc
 #========================================================================================================================
-
+sudo sensors-detect
 sudo chmod u+s /usr/bin/hddtemp
