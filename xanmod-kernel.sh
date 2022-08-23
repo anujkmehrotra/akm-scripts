@@ -22,7 +22,7 @@ package="linux-xanmod"
 #   GIT address for cloning or pulluing
 source="https://aur.archlinux.org/$package.git"
 #   Use "tmpfs" location like : (/var/tmp) or (ramdisk) or any other to build package faster
-tmpdir="/tmp"
+tmpdir="/var/tmp"
 #   Location of the finish package (.zst) file for installation
 insdir="/mnt/Data/Kernel"
 #  According the file "choose-gcc-optimization.sh" from build dir.
@@ -114,12 +114,11 @@ else
         echo "======================================================================================="
         
         #   Updating Grub
-        echo
-        sleep 1
-        sudo grub-mkconfig -o /boot/grub/grub.cfg
-
+        #echo
+        #sleep 1
+        #sudo grub-mkconfig -o /boot/grub/grub.cfg
         cd "$HOME"
-        echo
+        #echo
         tput setaf 2
         echo "======================================================================================="
         echo "Kernel '$package' version '$nver' Installed. Please reboot."
