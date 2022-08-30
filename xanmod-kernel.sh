@@ -18,7 +18,7 @@ set -e
 
 ############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ####################################
 # Use only one linux-(xanmod/edge/lts/anbox/tt) name as in AUR
-package="linux-xanmod"
+package="linux-xanmod-edge"
 #   GIT address for cloning or pulluing
 source="https://aur.archlinux.org/$package.git"
 #   Use "tmpfs" location like : (/var/tmp) or (ramdisk) or any other to build package faster

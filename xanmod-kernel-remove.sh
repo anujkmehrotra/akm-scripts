@@ -8,7 +8,7 @@ set -e
 # Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
 ###########################################################################################################
 
-package="linux-xanmod"
+package="linux-xanmod-edge"
 
 #   Checking required package
     if pacman -Qi ${package} &> /dev/null; then
@@ -56,8 +56,8 @@ elif [ -z "${check}" ] ; then
         echo "======================================================================================="
 
         sudo pacman -R --noconfirm ${package} ${package}-headers
-    sleep 1
-        sudo grub-mkconfig -o /boot/grub/grub.cfg
+        #sleep 1
+        #sudo grub-mkconfig -o /boot/grub/grub.cfg
 
         echo
         echo "======================================================================================="
