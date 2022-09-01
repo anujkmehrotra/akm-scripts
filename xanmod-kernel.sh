@@ -78,7 +78,10 @@ else
         echo "Cloning Kernel '$package' from GIT repository ...."
         echo "======================================================================================="
         echo
-        echo "Deleting the old folder if one exists ...."
+        echo "======================================================================================="
+        echo "Removing the old build directory if it exists ...."
+        echo "======================================================================================="
+        echo
 
 	    [ -d $package ] && rm -rf $package
         git clone $source

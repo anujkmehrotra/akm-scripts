@@ -1,26 +1,41 @@
 #!/bin/bash
 
 #   WARNING: DO NOT USE RUN SCRIPT FROM ROOT [/] OR HOME [/home] DIRECTORY
-#   USE A SEPRATE LOCATION LIKE [BAKPATH]
-BAKPATH="/mnt/Data/Backup"
+#   USE A SEPRATE LOCATION LIKE [BAKPATH] & [BakHome]
+
+BAKPATH="/mnt/Data"
+BAKFOL="BakHome"
 
 #   Home Folders and Files
 
 echo "Checking for old backup ...."
 sleep 1
-if [ -d "$BAKPATH" ]; then
-rm -Rf $BAKPATH
+
+cd $BAKPATH
+
+if [ -d "$BAKFOL" ]; then
+rm -Rf $BAKFOL
 echo 'Old backup removed. Creating new ....'
 sleep 1
-mkdir $BAKPATH
+mkdir $BAKFOL
+
 #   List of files/folders of /home folders which needs to backup
-cp -Rf $HOME $BAKPATH
-echo 'New backup completed.'
+cd $HOME
+cp -Rf $HOME $BAKPATH/$BAKFOL
+echo 'Backup of /home has completed.'
+#   Running pkgs backup script
+sh .bakpkgs.sh
+
 else
+
 echo 'No old backup found. Creating first time ....'
-mkdir $BAKPATH
+mkdir $BAKFOL
 sleep 1
+
 #   List of files/folders of /home folders which needs to backup
-cp -Rf $HOME $BAKPATH
-echo 'Backup completed.'
+cd $HOME
+cp -Rf $HOME $BAKPATH/$BAKFOL
+echo 'Backup of /home has completed.'
+#   Running pkgs backup script
+sh .bakpkgs.sh
 fi
