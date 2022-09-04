@@ -11,13 +11,13 @@ ALSO CHANGE ACCORDINGLY WHERE IT REQUIRES LIKE (location path / package name)
 
 -----------------------------------------------------------------------------------------
 
-EXAMPLE :
+USAGE EXAMPLE THROUGH TERMINAL:
 
 Script-1   : backup-pkgs.sh
 
 Usage      : Take backup all repo installed packages to a list.
 
-Command    : Make alias (bakpkg) in '.bashrc-personal' file. and call the script.
+Command    : Make alias (bakpkg) in '.bashrc' or '.bashrc-personal' file.
 
              alias bakpkg="sh (location of script file)/backup-pkgs.sh"
 
