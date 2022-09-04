@@ -6,7 +6,7 @@ set -e
 ###########################################################################################################
 # Author            : AKM                                                                                 #
 # Disribution 	    : ArchLinux with AUR (Tested on ArcoLinux only)                                       #
-# Requirement       : AMD/Intel Processor (You can change your Processor type (prockbc) in the script too. #
+# Requirement       : AMD/Intel Processor (You can change your Processor type (cpuver) in the script too. #
 ###########################################################################################################
 
 ############################   EDITING INSTRUCTIONS  ######################################################
@@ -26,7 +26,7 @@ tmpdir="/var/tmp"
 #   Location of the finish package (.zst) file for installation
 insdir="/mnt/Data/Kernel"
 #  According the file "choose-gcc-optimization.sh" from build dir.
-prockbc="14"
+cpuver="14"
 
 #####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
 #   Checking current kernel version
@@ -37,27 +37,38 @@ nver="$(paru -a -Si $package | grep 'Version' | awk '{print $3}')";
 
     #   Checking required package
 if pacman -Qi paru &> /dev/null; then
-	echo "Please wait while we check the status of '$package' for you."
+    sleep 1
 else
+    echo "Missing required package, installing ...."
     sudo pacman -S paru --noconfirm
-    echo "Please wait while we check the status of '$package' for you."
+    sleep 1
 fi
-    #=====================================================================
-        #   On installed and available.
-    #=====================================================================
-if pacman -Qi $package &> /dev/null && [ "$nver" == "$cver" ] ; then
-        sleep 1
+
+#   On installed.
+
+if [ "$nver" == "$cver" ] ; then
         tput setaf 2
         echo "======================================================================================="
-        echo "Kernel '$package' version '$nver' is INSTALLED and UP-TO-DATE."
+        echo "Kernel '$package' version '$cver' is UP-TO-DATE."
+        echo "======================================================================================="
+        tput sgr0
+
+#   On update available.
+
+else if pacman -Qi $package &> /dev/null ; then
+        tput setaf 2
+        echo "======================================================================================="
+        echo "Kernel '$package' version '$cver' is already INSTALLED."
         echo "======================================================================================="
         tput sgr0
 else
-        sleep 1
+
+#   On fresh installation.
+
         tput setaf 1
-        echo "======================================================================================="
+        echo "==============================================================================================="
         echo "Kernel '$package' version '$nver' is NOT installed. Do you want to install ? (y/n)";
-        echo "======================================================================================="
+        echo "==============================================================================================="
         tput sgr0
 
         read -r CHOICE
@@ -65,14 +76,15 @@ else
 
     y )
 
-        #   Preparing and cloning git repo
+#   Preparing and cloning git repo
+
         echo
         echo "======================================================================================="
         echo "Preparing Kernel '$package' version '$nver' to install ...."
         echo "======================================================================================="
         sleep 1
    
-       	cd ${tmpdir}
+        cd ${tmpdir}
     	echo
         echo "======================================================================================="
         echo "Cloning Kernel '$package' from GIT repository ...."
@@ -83,7 +95,7 @@ else
         echo "======================================================================================="
         echo
 
-	    [ -d $package ] && rm -rf $package
+        [ -d $package ] && rm -rf $package
         git clone $source
         cd $package
         echo
@@ -91,10 +103,13 @@ else
         echo "Building Kernel '$package' version '$nver' ...."
         echo "======================================================================================="
 
+#   Keys in case required.
+
         #sudo gpg --recv-keys ABAF11C65A2970B130ABE3C479BE3E4300411886
         #sudo gpg --recv-keys 647F28654894E3BD457199BE38DBBDC86092693E
-        #paru -a -S $package $package-headers
-        env _microarchitecture=${prockbc} use_numa=n use_tracers=n _compress_modules=y use_ns=y makepkg -sc
+
+#   Building
+        env _microarchitecture=${cpuver} use_numa=n use_tracers=n _compress_modules=y use_ns=y makepkg -sc
     
         sleep 1
         echo
@@ -108,7 +123,7 @@ else
         echo "Installing Kernel '$package' version '$nver' ...."
         echo "======================================================================================="
     
-        #   Kernel installation
+#   Kernel installation
         echo
         cd ${insdir} && sudo pacman -U --needed --noconfirm $package*
         echo
@@ -116,7 +131,7 @@ else
         echo "Updating grub ...."
         echo "======================================================================================="
         
-        #   Updating Grub
+#   Updating Grub (Disabled by default)
         #echo
         #sleep 1
         #sudo grub-mkconfig -o /boot/grub/grub.cfg
@@ -133,7 +148,7 @@ else
         echo
         tput setaf 1
         echo "======================================================================================="
-        echo "You chose not to install the Kernel '$package' version '$nver' ."
+        echo "You chose not to install the Kernel '$package' version '$nver' . Exiting ...."
         echo "======================================================================================="
         tput sgr0
 
@@ -143,10 +158,11 @@ else
         echo
         tput setaf 1
         echo "======================================================================================="
-        echo "Only allowed 'y/n' to answer."
+        echo "Only allowed 'y/n' to answer. Exiting ...."
         echo "======================================================================================="
         tput sgr0
 
     ;;
     esac
+fi
 fi
