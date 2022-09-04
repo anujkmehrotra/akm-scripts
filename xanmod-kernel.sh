@@ -55,7 +55,7 @@ if [ "$nver" == "$cver" ] ; then
 
 #   On update available.
 
-else if pacman -Qi $package &> /dev/null ; then
+elif pacman -Qi $package &> /dev/null ; then
         tput setaf 2
         echo "======================================================================================="
         echo "Kernel '$package' version '$cver' is already INSTALLED."
@@ -164,5 +164,4 @@ else
 
     ;;
     esac
-fi
 fi
