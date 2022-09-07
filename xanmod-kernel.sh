@@ -46,21 +46,13 @@ fi
 
 #   On installed.
 
-if [ "$nver" == "$cver" ] ; then
+if pacman -Qi $package &> /dev/null && [ "$nver" == "$cver" ] ; then
         tput setaf 2
         echo "======================================================================================="
-        echo "Kernel '$package' version '$cver' is UP-TO-DATE."
+        echo "Kernel '$package' version '$nver' is Installed and UP-TO-DATE."
         echo "======================================================================================="
         tput sgr0
-
-#   On update available.
-
-elif pacman -Qi $package &> /dev/null ; then
-        tput setaf 2
-        echo "======================================================================================="
-        echo "Kernel '$package' version '$cver' is already INSTALLED."
-        echo "======================================================================================="
-        tput sgr0
+        exit 0
 else
 
 #   On fresh installation.
