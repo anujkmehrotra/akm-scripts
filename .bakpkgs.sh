@@ -1,5 +1,12 @@
 #!/bin/bash
 
+###########################################################################################################
+###############################   PLEASE READ THE SCRIPT BEFORE USING  ####################################
+###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
+###########################################################################################################
+# Author            : AKM
+###########################################################################################################
+
 bakdir="/mnt/Data/Linux/FS"
 
 # Pkgs List
@@ -10,7 +17,7 @@ echo "All optional packages listed in the file 'optdeplist'."
 rm -f $bakdir/aurpkglist.txt && pacman -Qmq > $bakdir/aurpkglist.txt
 echo "All aur built packages listed in the file 'aurpkglist'."
 #   Removing my manual build pkg (xanmod) name from the localpkglist
-sed -i '/linux-xanmod/d' $bakdir/aurpkglist.txt
+#sed -i '/linux-xanmod/d' $bakdir/aurpkglist.txt
 #sed -i '/linux-xanmod/d' $bakdir/pkglist.txt
 
 # Important files
