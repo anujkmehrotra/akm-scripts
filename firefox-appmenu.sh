@@ -50,9 +50,7 @@ rm -f $package*
 
 wget -q $source/$package-$nver-x86_64.pkg.tar.zst
         echo
-echo "Info : Installation will auto-skip if '$package' is already installed."
-        echo
-sudo pacman -U $package* --needed --noconfirm
+sudo pacman -U $package* --noconfirm
         cd "$HOME"
 
 else
