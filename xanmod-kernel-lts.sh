@@ -30,34 +30,41 @@ cpuver="14"
 
 #####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
 
-    #   Checking required package
+
+#   Checking required package
 if pacman -Qi paru &> /dev/null; then
-    sleep 1
+       sleep 1
 else
-        echo "======================================================================================="
-        echo "Missing required package, installing ...."
-        echo "======================================================================================="
+echo "======================================================================================="
+echo "Missing required package; installing ...."
+echo "======================================================================================="
+echo
 sudo pacman -S paru --noconfirm
-    sleep 1
 fi
 
-#==============================================================================================================
+#####################################################################################################################
 
-#   Checking currently installed kernel version with available in AUR
+# Checking if package is already installed or not
+
+echo "======================================================================================="
+echo "Checking Kernel status '${package}' in the system ...."
+echo "======================================================================================="
+echo
+        sleep 1
+
+#   Checking current kernel version with AUR
 cver="$(paru -Qi $package | grep 'Version' | awk '{print $3}')";
 nver="$(paru -a -Si $package | grep 'Version' | awk '{print $3}')";
 
-#   On installed.
 if pacman -Qi $package &> /dev/null && [ "$nver" == "$cver" ] ; then
-        tput setaf 2
-        echo "======================================================================================="
-        echo "Kernel '$package' version '$nver' is Installed and UP-TO-DATE."
-        echo "======================================================================================="
-        tput sgr0
-        exit 0
-else
 
-#   On fresh installation.
+        tput setaf 2
+echo "======================================================================================="
+echo "Kernel '$package' version '$cver' is UP-To-Date."
+echo "======================================================================================="
+        tput sgr0
+        exit 1
+else
 
         tput setaf 1
         echo "==============================================================================================="
@@ -76,7 +83,7 @@ else
         echo "======================================================================================="
         echo "Preparing Kernel '$package' version '$nver' to install ...."
         echo "======================================================================================="
-        sleep 1
+        echo
 cd ${tmpdir}
         echo
         echo "======================================================================================="
@@ -84,13 +91,14 @@ cd ${tmpdir}
         echo "======================================================================================="
         echo
 git clone $source
-        echo "======================================================================================="
+cd $package
+        echo
+        "======================================================================================="
         echo "Removing the old build directory if it exists ...."
         echo "======================================================================================="
         echo
 
-[ -d $package ] && rm -rf $package
-cd $package
+#[ -d src ] && rm -rf src
         echo
         echo "======================================================================================="
         echo "Building Kernel '$package' version '$nver' ...."
@@ -102,9 +110,9 @@ cd $package
         #sudo gpg --recv-keys 647F28654894E3BD457199BE38DBBDC86092693E
 
 #   Building
+
 env _microarchitecture=${cpuver} use_numa=n use_tracers=n _compress_modules=y use_ns=y makepkg -sc
-    
-        sleep 1
+
         echo
         echo "======================================================================================="
         echo "Checking requirement for installation ...."
@@ -115,20 +123,21 @@ rm -f ${insdir}/* && cp -f $tmpdir/$package/$package* $insdir
         echo "======================================================================================="
         echo "Installing Kernel '$package' version '$nver' ...."
         echo "======================================================================================="
-    
+
 #   Kernel installation
         echo
-cd ${insdir} && sudo pacman -U --needed --noconfirm $package*
+cd $insdir && sudo pacman -U --needed --noconfirm $package*
         echo
         echo "======================================================================================="
         echo "Updating grub ...."
         echo "======================================================================================="
-        
+
 #   Updating Grub (Disabled by default)
         #echo
         #sleep 1
         #sudo grub-mkconfig -o /boot/grub/grub.cfg
 cd "$HOME"
+        #echo
         tput setaf 2
         echo "======================================================================================="
         echo "Kernel '$package' version '$nver' Installed. Please reboot."
@@ -139,9 +148,9 @@ cd "$HOME"
     n )
         echo
         tput setaf 1
-        echo "==========================================================================================="
+        echo "======================================================================================="
         echo "You chose not to install the Kernel '$package' version '$nver' . Exiting ...."
-        echo "==========================================================================================="
+        echo "======================================================================================="
         tput sgr0
 
    ;;
