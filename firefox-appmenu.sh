@@ -50,7 +50,7 @@ rm -f $package*
 
 wget -q $source/$package-$nver-x86_64.pkg.tar.zst
         echo
-sudo pacman -U $package* --noconfirm
+sudo pacman -U $package* --needed --noconfirm
         cd "$HOME"
 
 else
@@ -75,7 +75,7 @@ rm -f $package*
 
 wget -q $source/$package-$nver-x86_64.pkg.tar.zst
         echo
-sudo pacman -U $package* --needed --noconfirm
+sudo pacman -U $package* --noconfirm
 cd "$HOME"
         echo
 
