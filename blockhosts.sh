@@ -57,7 +57,7 @@ fi
 #   Removing old and Downloading new hosts file
 sudo rm -f $tmpl/$file
 sleep 1
-$tool $filew -o $tmpl/$file
+$tool $filew -s -o $tmpl/$file
 
 #   OR alternative command with
 #wget -q $filew -O /$tmpl
@@ -91,7 +91,7 @@ if [ -f "$target.bak" ]; then
 
 sudo cp -f $tmpl/$file $target
 sudo systemctl restart $service
-
+echo
 echo "======================================================================================="
 echo "File [$target] successfully updated to $nver."
 echo "======================================================================================="
@@ -100,6 +100,7 @@ else
 
 #    Creating backup file if no backup or on first run
 sudo cp -f $target $target.bak
+echo
 echo "======================================================================================="
 echo "Hosts file backup created as [/etc/$file.bak]"
 echo "======================================================================================="
