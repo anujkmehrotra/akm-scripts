@@ -1,0 +1,17 @@
+# Create AUR package from deb package
+
+sudo pacman -S debtap
+sudo debtap -u
+debtab -q package.deb
+
+goto downloaded deb file location like /tmp or /var/tmp or /home/download
+edit file when asked to open with nano
+edit packager name to akm
+edit dependencies
+ctrl+o
+enter
+ctrl+x
+ctrl+x
+done, package created
+
+sudo pacman -U package.pkg.tar.zst
