@@ -32,4 +32,5 @@ Answer    : All available prebuilt kernel packages are mostly 'Generic' build. B
             or (Intel Xeon [Cooper Lake]) then you must build by your own.
             
 Note      : Sample prebuilt working script for cpu type AMD Ryzen zen 2 is added.
+
 -----------------------------------------------------------------------------------------
