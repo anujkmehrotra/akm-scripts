@@ -84,30 +84,14 @@ else
         echo "Preparing Kernel '$package' version '$nver' to install ...."
         echo "======================================================================================="
         echo
+rm -Rf $package
 cd ${tmpdir}
-        echo
-        echo "======================================================================================="
-        echo "Cloning Kernel '$package' from GIT repository ...."
-        echo "======================================================================================="
-        echo
 git clone $source
 cd $package
-        echo
-        "======================================================================================="
-        echo "Removing the old build directory if it exists ...."
-        echo "======================================================================================="
-        echo
-
-#[ -d src ] && rm -rf src
         echo
         echo "======================================================================================="
         echo "Building Kernel '$package' version '$nver' ...."
         echo "======================================================================================="
-
-#   Keys in case required.
-
-        #sudo gpg --recv-keys ABAF11C65A2970B130ABE3C479BE3E4300411886
-        #sudo gpg --recv-keys 647F28654894E3BD457199BE38DBBDC86092693E
 
 #   Building
 
