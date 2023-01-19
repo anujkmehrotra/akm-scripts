@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 ###########################################################################################################
 # Author            : AKM
@@ -13,7 +14,7 @@
 handler="paru"
 PKGS=("nvidia-settings" "nvidia-utils" "lib32-nvidia-utils" "opencl-nvidia" "lib32-opencl-nvidia" "egl-wayland" "eglexternalplatform")
 package2="nvidia-dkms"
-package3="nvidia-tweaks"
+
 
 #   Checking required package
 if pacman -Qi ${handler} &> /dev/null; then
@@ -24,25 +25,23 @@ else
 fi
 
 echo "============================================================================"
-echo "               Choose only ONE Nvidia driver at a time."
-echo "                     AUR support is required."
+echo "               Choose only 1 Option at a time."
 echo "============================================================================"
 echo
-echo "1.  Nvidia   DKMS   (only nvidia-dkms with required pkgs)"
-echo
-tput setaf 1
-echo "---------------------------Advanced--------------------------"
-echo
-echo "2.  Nvidia   Tweaks (nvidia-dkms with nvidia-tweaks)"
-echo "Info : nvidia tweaks may not work with Gnome desktop"
+echo "1.  Nvidia DKMS   (only nvidia-dkms with required pkgs)"
 echo "-------------------------------------------------------------"
-tput sgr0
 echo
-echo "3.  Remove Nvidia   (DKMS with or without Tweaks)"
+echo "2.  Nvidia other packages (if Nvidiia is already installed)"
+echo "-------------------------------------------------------------"
+echo
+echo "3.  Remove Nvidia"
+echo "-------------------------------------------------------------"
 echo
 echo "4.  Exit / Leave      (Do not install Nvidia)"
+echo "-------------------------------------------------------------"
 echo
 echo "Type the number..."
+echo "-------------------------------------------------------------"
 
 read -r CHOICE
 
@@ -83,22 +82,22 @@ case $CHOICE in
 
     if [ -n "${check}" ] ; then
         sleep 1
-        echo "${package3} is already installed";
+                tput setaf 2
+    echo
+	echo "============================================================================"
+	echo "Nvidiia's other packages are installing ...."
+	echo "============================================================================"
+        tput sgr0
+    echo
+        sudo pacman -S --needed "${PKGS[@]}"
+    echo
+    echo "============================================================================"
+    echo "Nvidia's other packages have successfully installed. Reboot now. "
+    echo "============================================================================"
+
     elif [ -z "${check}" ] ; then
         sleep 1
         echo "${package3} is NOT installed"
-
-        tput setaf 2
-        echo
-	echo "============================================================================"
-	echo "'${package3}' is installing ...."
-	echo "============================================================================"
-	tput sgr0
-        echo
-        sudo pacman -S ${package2}
-        sudo pacman -S --needed "${PKGS[@]}"
-        ${handler} -a -S ${package3}
-        echo "Nvidia Tweaks and others packages have successfully installed in the system. Reboot now. "
 
     fi
     ;;
@@ -128,7 +127,7 @@ case $CHOICE in
         echo "============================================================================"
 	echo "${package2} is uninstalling ...."
 	echo "============================================================================"
-        sudo pacman -Rcns ${package2} --noconfirm
+        sudo pacman -R ${package2} --noconfirm
         echo "Nvidia package has successfully removed from the system."
         echo "Info : Rebooting without any graphical driver can cause a blank screen."
         tput sgr0
