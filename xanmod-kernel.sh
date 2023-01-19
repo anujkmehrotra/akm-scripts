@@ -18,7 +18,7 @@ set -e
 
 ############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ####################################
 # Use only one linux-(xanmod/edge/lts/anbox/tt) name as in AUR
-package="linux-xanmod-lts"
+package="linux-xanmod"
 #   GIT address for cloning or pulluing
 source="https://aur.archlinux.org/$package.git"
 #   Use "tmpfs" location like : (/var/tmp) or (ramdisk) or any other to build package faster
@@ -30,24 +30,25 @@ cpuver="14"
 
 #####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
 
+#==========================================================================================================
+
     #   Checking required package
 if pacman -Qi paru &> /dev/null; then
     sleep 1
 else
-        echo "======================================================================================="
-        echo "Missing required package, installing ...."
-        echo "======================================================================================="
-sudo pacman -S paru --noconfirm
+    echo "Missing required package, installing ...."
+    sudo pacman -S paru --noconfirm
     sleep 1
 fi
 
-#==============================================================================================================
 
-#   Checking currently installed kernel version with available in AUR
+#   Checking current kernel version
 cver="$(paru -Qi $package | grep 'Version' | awk '{print $3}')";
+#   Checking available kernel version
 nver="$(paru -a -Si $package | grep 'Version' | awk '{print $3}')";
 
-#   On installed.
+#   On installed
+
 if pacman -Qi $package &> /dev/null && [ "$nver" == "$cver" ] ; then
         tput setaf 2
         echo "======================================================================================="
@@ -76,33 +77,18 @@ else
         echo "======================================================================================="
         echo "Preparing Kernel '$package' version '$nver' to install ...."
         echo "======================================================================================="
-        sleep 1
-cd ${tmpdir}
         echo
-        echo "======================================================================================="
-        echo "Cloning Kernel '$package' from GIT repository ...."
-        echo "======================================================================================="
-        echo
-git clone $source
-        echo "======================================================================================="
-        echo "Removing the old build directory if it exists ...."
-        echo "======================================================================================="
-        echo
-
-[ -d $package ] && rm -rf $package
-cd $package
+        cd $tmpdir
+        rm -Rf $package
+        git clone $source
+        cd $package
         echo
         echo "======================================================================================="
         echo "Building Kernel '$package' version '$nver' ...."
         echo "======================================================================================="
 
-#   Keys in case required.
-
-        #sudo gpg --recv-keys ABAF11C65A2970B130ABE3C479BE3E4300411886
-        #sudo gpg --recv-keys 647F28654894E3BD457199BE38DBBDC86092693E
-
 #   Building
-env _microarchitecture=${cpuver} use_numa=n use_tracers=n _compress_modules=y use_ns=y makepkg -sc
+        env _microarchitecture=${cpuver} use_numa=n use_tracers=n _compress_modules=y use_ns=y makepkg -sc
     
         sleep 1
         echo
@@ -110,7 +96,7 @@ env _microarchitecture=${cpuver} use_numa=n use_tracers=n _compress_modules=y us
         echo "Checking requirement for installation ...."
         echo "======================================================================================="
         echo
-rm -f ${insdir}/* && cp -f $tmpdir/$package/$package* $insdir
+        rm -f ${insdir}/* && cp -f $tmpdir/$package/$package* $insdir
         echo
         echo "======================================================================================="
         echo "Installing Kernel '$package' version '$nver' ...."
@@ -118,7 +104,7 @@ rm -f ${insdir}/* && cp -f $tmpdir/$package/$package* $insdir
     
 #   Kernel installation
         echo
-cd ${insdir} && sudo pacman -U --needed --noconfirm $package*
+        cd ${insdir} && sudo pacman -U --needed --noconfirm $package*
         echo
         echo "======================================================================================="
         echo "Updating grub ...."
@@ -128,7 +114,8 @@ cd ${insdir} && sudo pacman -U --needed --noconfirm $package*
         #echo
         #sleep 1
         #sudo grub-mkconfig -o /boot/grub/grub.cfg
-cd "$HOME"
+        cd "$HOME"
+        #echo
         tput setaf 2
         echo "======================================================================================="
         echo "Kernel '$package' version '$nver' Installed. Please reboot."
@@ -139,9 +126,9 @@ cd "$HOME"
     n )
         echo
         tput setaf 1
-        echo "==========================================================================================="
+        echo "======================================================================================="
         echo "You chose not to install the Kernel '$package' version '$nver' . Exiting ...."
-        echo "==========================================================================================="
+        echo "======================================================================================="
         tput sgr0
 
    ;;
