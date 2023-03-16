@@ -1,0 +1,236 @@
+#!/bin/bash
+
+###########################################################################################################
+###############################   PLEASE READ THE SCRIPT BEFORE USING  ####################################
+###############################    USE THIS SCRIPT AT YOUR OWN RISK  ######################################
+###########################################################################################################
+# Author            : AKM
+###########################################################################################################
+
+#   Temporary resolver for kde error
+#systemctl --user restart plasma-xdg-desktop-portal-kde
+
+#   Folder location
+loc="/tmp"
+
+#   for the Freetube
+rm -Rf $loc/freetube
+rm -R ~/.config/FreeTube/Cache/Cache_Data
+rm -R ~/.config/FreeTube/storyboards
+mkdir $loc/freetube
+cd $loc/freetube
+mkdir Cache
+mkdir storyboards
+ln -s $loc/freetube/Cache ~/.config/FreeTube/Cache/Cache_Data
+ln -s $loc/freetube/storyboards ~/.config/FreeTube/storyboards
+cd $HOME
+
+#   for the QtWebFlix
+#rm -Rf $loc/qtwebflix
+#rm -R ~/.cache/qtwebflix/QtWebEngine/Default/Cache
+#mkdir $loc/qtwebflix
+#ln -s $loc/qtwebflix ~/.cache/qtwebflix/QtWebEngine/Default/Cache
+
+#   for the google-chrome
+rm -Rf $loc/google-chrome
+rm -R ~/.cache/google-chrome/Default/Cache/Cache_Data
+mkdir $loc/google-chrome
+ln -s $loc/google-chrome ~/.cache/google-chrome/Default/Cache/Cache_Data
+
+#   for the VSCode
+rm -Rf $loc/code
+rm -R ~/.config/Code/Cache/Cache_Data
+mkdir $loc/code
+ln -s $loc/code ~/.config/Code/Cache/Cache_Data
+
+#   for the mpv
+#rm -Rf $loc/mpv
+#mkdir $loc/mpv
+
+#   for the yt-dl-gui
+rm -Rf $loc/yt-dl
+mkdir $loc/yt-dl
+
+#   for the /tmp/torrents
+rm -Rf $loc/torrents
+mkdir $loc/torrents
+
+#   for the /mnt/Data/Backup
+
+#   for the Discord
+rm -Rf $loc/discord
+rm -R ~/.config/discord/Cache
+mkdir $loc/discord
+ln -s $loc/discord ~/.config/discord/Cache
+
+#   for the whatsapp-nativefier
+rm -Rf $loc/whatsapp
+rm -R ~/.config/whatsapp-nativefier-d40211/Cache/Cache_Data
+mkdir $loc/whatsapp
+ln -s $loc/whatsapp ~/.config/whatsapp-nativefier-d40211/Cache/Cache_Data
+
+if [ -d "/mnt/Data/Backup" ]; then
+echo "'Backup'folder already exists."
+else
+mkdir /mnt/Data/Backup
+fi
+
+#   for the pipe-viewer
+#if [ -d "$loc/pipe-viewer" ]; then
+#echo "'pipe-viewer' folder already exists."
+#else
+#mkdir $loc/pipe-viewer
+#fi
+
+
+#   for the Firefox
+#if [ -d "$loc/firefox" ]; then
+#echo "'Firefox' folder already exists."
+#else
+#mkdir $loc/firefox
+#fi
+
+#   for the Paru
+#if [ -d "/var$loc/paru" ]; then
+#echo "'Paru' folder already exists."
+#else
+#rm -Rf ~/.cache/paru/clone
+#mkdir /var$loc/paru
+#ln -s /var$loc/paru ~/.cache/paru/clone
+#fi
+
+#   for the twitter-nativefier
+#if [ -d "$loc/twitter" ]; then
+#echo "'Twitter' folder already exists."
+#else
+#rm -R ~/.config/twitter-nativefier-4fd9c9/Cache/Cache_Data
+#mkdir $loc/twitter
+#ln -s $loc/twitter ~/.config/twitter-nativefier-4fd9c9/Cache/Cache_Data
+#fi
+
+#   for the Mailspring
+#if [ -d "$loc/mailspring" ]; then
+#echo "'Mailspring' folder already exists."
+#else
+#rm -R ~/.config/Mailspring/Cache/Cache_Data
+#mkdir $loc/mailspring
+#ln -s $loc/mailspring ~/.config/Mailspring/Cache/Cache_Data
+#fi
+
+#   for the KDE Widget (Event Calender)
+#if [ -d "$loc/kio_http" ]; then
+#echo "'kio_http' folder already exists."
+#else
+#/bin/rm -Rf ~/.cache/kio_http
+#/bin/mkdir $loc/kio_http
+#/bin/ln -s $loc/kio_http ~/.cache/kio_http
+#fi
+
+#   for the Google-Chrome
+#if [ -d "$loc/google-chrome" ]; then
+#echo "Google Chrome folder already exists."
+#else
+#rm -R ~/.cache/google-chrome/Default/Cache/Cache_Data
+#mkdir $loc/google-chrome
+#ln -s $loc/google-chrome ~/.cache/google-chrome/Default/Cache/Cache_Data
+#fi
+
+#	for the Brave
+#if [ -d "$loc/BraveSoftware" ]; then
+#echo "BraveSoftware folder already exists."
+#else
+#/bin/rm ~/.cache/BraveSoftware/Brave-Browser/Default/Cache/Cache_Data
+#/bin/mkdir $loc/BraveSoftware
+#/bin/ln -s $loc/BraveSoftware ~/.cache/BraveSoftware/Brave-Browser/Default/Cache/Cache_Data
+#fi
+
+#   for the YaY
+#if [ -d "/var$loc/yay" ]; then
+#echo "yay folder already exists."
+#else
+#rm -Rf ~/.cache/yay
+#mkdir /var$loc/yay
+#ln -s /var$loc/yay ~/.cache/yay
+#fi
+
+#   for the Geary
+#if [ -d "$loc/geary" ]; then
+#echo "geary folder already exists."
+#else
+#rm -R ~/.cache/geary
+#/bin/mkdir $loc/geary
+#/bin/ln -s $loc/geary ~/.cache/geary
+#fi
+
+#   for the Tangram
+#if [ -d "$loc/tangram" ]; then
+#echo "tangram folder already exists."
+#else
+#/bin/rm -R ~/.cache/Tangram
+#/bin/rm -R ~/.cache/re.sonny.Tangram/CacheStorage
+#/bin/mkdir $loc/tangram
+#/bin/mkdir $loc/tangram/CacheStorage
+#/bin/ln -s $loc/tangram ~/.cache/Tangram
+#/bin/ln -s $loc/tangram/CacheStorage ~/.cache/re.sonny.Tangram/CacheStorage
+#fi
+
+#   Disabling Gnome tracker
+#nautilus -q && tracker daemon -k || tracker3 daemon -k
+
+#   for the Min
+#/bin/rm -R ~/.config/Min/Cache
+#/bin/mkdir $loc/Min
+#/bin/ln -s $loc/Min ~/.config/Min/Cache
+
+#   for the DiscordCanary
+#/bin/rm -R ~/.config/discordcanary/Cache
+#/bin/mkdir $loc/discord
+#/bin/ln -s $loc/discord ~/.config/discordcanary/Cache
+
+#   for the Thunderbird
+#if [ -d "$loc/thunderbird" ]; then
+#echo "'Thunderbird' folder already exists."
+#else
+#/bin/rm -R ~/.cache/thunderbird/xi0lim75.default-release/cache2/entries
+#/bin/mkdir $loc/thunderbird
+#/bin/ln -s $loc/thunderbird ~/.cache/thunderbird/xi0lim75.default-release/cache2/entries
+#fi
+
+##   for the Ferdi
+#/bin/rm -R ~/.config/Ferdi/Cache
+#/bin/mkdir $loc/Ferdi
+#/bin/ln -s $loc/Ferdi ~/.config/Ferdi/Cache
+
+#   for the thumbnails
+/bin/mkdir $loc/thumbnails
+/bin/rm -R ~/.cache/thumbnails/large
+/bin/rm -R ~/.cache/thumbnails/normal
+/bin/rm -R ~/.cache/thumbnails/fail
+/bin/rm -R ~/.cache/thumbnails/x-large
+/bin/rm -R ~/.cache/thumbnails/xx-large
+/bin/ln -s $loc/thumbnails ~/.cache/thumbnails/large
+/bin/ln -s $loc/thumbnails ~/.cache/thumbnails/normal
+/bin/ln -s $loc/thumbnails ~/.cache/thumbnails/fail
+/bin/ln -s $loc/thumbnails ~/.cache/thumbnails/x-large
+/bin/ln -s $loc/thumbnails ~/.cache/thumbnails/xx-large
+
+
+#   for the lattedock
+#/bin/rm -R ~/.cache/lattedock/qmlcache
+#/bin/mkdir $loc/lattedock
+#/bin/ln -s $loc/lattedock ~/.cache/lattedock/qmlcache
+
+#   for the konqueror
+#/bin/rm -R ~/.cache/konqueror/QtWebEngine/Default/Cache
+#/bin/mkdir $loc/konqueror
+#/bin/ln -s $loc/konqueror ~/.cache/konqueror/QtWebEngine/Default/Cache
+
+#	for the opera
+#/bin/rm ~/.cache/opera
+#/bin/mkdir $loc/opera
+#/bin/ln -s $loc/opera ~/.cache/opera
+
+#	for the Vivaldi
+#/bin/rm ~/.cache/vivaldi
+#/bin/mkdir $loc/vivaldi
+#/bin/ln -s $loc/vivaldi ~/.cache/vivaldi

@@ -10,99 +10,73 @@ set -e
 
 ############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ####################################
 
-package="linux-xanmod"
+pkg="linux-xanmod"
 subpkg="linux"
-verpkg="bin-x64v2"
+verpkg="bin-x64v3"
+package="$pkg-$subpkg-$verpkg"
+kernelloc="/mnt/Personal/Kernel"
+
 #####################  DO NOT EDIT THE FOLLOWING UNTIL YOU KNOW WHAT YOU DOING  ###########################
 
-#   Checking required package
-if pacman -Qi paru &> /dev/null; then
-        sleep 1
-else
-
-echo "======================================================================================="
-        echo "Missing required package; installing ...."
-echo "======================================================================================="
-        echo
-sudo pacman -S paru --noconfirm
-
-fi
-
-#==========================================================================================================
-
-#   Checking current kernel version
-cver="$(paru -Qi "$package-$subpkg-$verpkg" | grep 'Version' | awk '{print $3}')";
+#       Checking current kernel version
+cver="$(paru -Qi $package | grep 'Version' | awk '{print $3}')";
 #   Checking available kernel version
-nver="$(paru -a -Si "$package-$subpkg-$verpkg" | grep 'Version' | awk '{print $3}')";
+nver="$(paru -a -Si $package | grep 'Version' | awk '{print $3}')";
 
-## Checking if package is already installed or not
+#   On installed
 
-echo "======================================================================================="
-        echo "Checking Kernel status '${package}' in the system ...."
-echo "======================================================================================="
-        echo
-
-if pacman -Qi $package &> /dev/null ; then
-
-echo "======================================================================================="
-        echo "Kernel '$package' is installed. Checking updates ...." ;
-echo "======================================================================================="
-
-elif [ "$nver" == "$cver" ] ; then
-
-        tput setaf 2
-echo "======================================================================================="
-        echo "Kernel '$package' version '$cver' is UP-To-Date." ;
-echo "======================================================================================="
-        tput sgr0
-        exit 0
-
+if pacman -Qi $package &> /dev/null && [ "$nver" == "$cver" ] ; then
+    tput setaf 2
+    echo "======================================================================================="
+    echo "Kernel '$package' version '$nver' is Installed and UP-TO-DATE."
+    echo "======================================================================================="
+    tput sgr0
+exit 0
 else
 
-        tput setaf 1
-        echo
-echo "==============================================================================================================="
-        echo "Kernel '$package' version '$nver' is NOT installed. Do you want to install ? (y/n)";
-echo "==============================================================================================================="
-        tput sgr0
+#   On fresh installation.
 
-        read -r CHOICE
-        case $CHOICE in
+    tput setaf 1
+    echo "==============================================================================================="
+    echo "Kernel '$package' version '$nver' is NOT installed. Do you want to install ? (y/n)";
+    echo "==============================================================================================="
+    tput sgr0
+
+read -r CHOICE
+case $CHOICE in
 
     y )
-        echo
-echo "======================================================================================="
-        echo "Installing Kernel '$package' ...."
-echo "======================================================================================="
-        echo
-paru -a -S --noconfirm $package-$subpkg-$verpkg $package-$subpkg-headers-$verpkg
-        echo
-        tput setaf 1
-echo "======================================================================================="
-        echo "Kernel '$package' installed. Please reboot."
-echo "======================================================================================="
-        tput sgr0
+
+#   Kernel installation
+paru -a -S --noconfirm $package $pkg-$subpkg-headers-$verpkg
+
+    tput setaf 2
+    echo "======================================================================================="
+    echo "Kernel '$package' version '$nver' Installed. Please reboot."
+    echo "======================================================================================="
+    tput sgr0
+rm -f $kernelloc/*.zst
+cp -f $HOME/.cache/paru/clone/$package/*.zst $kernelloc
     ;;
 
     n )
-        echo
-        tput setaf 1
-echo "======================================================================================="
-        echo "You chose not to install the Kernel '$package'. Exiting ...."
-echo "======================================================================================="
-        tput sgr0
+    echo
+    tput setaf 1
+    echo "======================================================================================="
+    echo "You chose not to install the Kernel '$package' version '$nver' . Exiting ...."
+    echo "======================================================================================="
+    tput sgr0
 
    ;;
 
     * )
-        echo
-        tput setaf 1
-echo "======================================================================================="
-        echo "Only allowed 'y/n' to answer. Exiting ...."
-echo "======================================================================================="
-        tput sgr0
+    echo
+    tput setaf 1
+    echo "======================================================================================="
+    echo "Only allowed 'y/n' to answer. Exiting ...."
+    echo "======================================================================================="
+    tput sgr0
 
     ;;
     esac
-
 fi
