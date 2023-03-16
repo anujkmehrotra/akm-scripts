@@ -3,8 +3,9 @@
 #export LC_CTYPE=en_US.UTF-8
 #export LC_ALL=en_US.UTF-8
 
-set MyKernel "linux-xanmod-linux-bin-x64v2"
-set bakdir "/mnt/Data/Linux/FS"
+set MyKernel "linux-amd-znver2"
+set bakdir "/mnt/Data/FS"
+set pos "/mnt/Personal/POS"
 
 # Important aliases
 
@@ -16,6 +17,7 @@ alias nfp="nano $HOME/.config/fish/alias.fish"
 alias nlog="systemd-analyze cat-config systemd/journald.conf"
 alias nmake="sudo nano /etc/makepkg.conf"
 alias nkde="sudo nano /etc/sddm.conf.d/kde_settings.conf"
+alias nenv="sudo nano /etc/environment"
 #--------------------------------------------------------------------------------------------------
 
 # System aliases
@@ -72,8 +74,8 @@ alias coredump="sudo rm -f /var/lib/systemd/coredump/core.* && echo 'Core Dump f
 
 # Drive Explorer
 alias data="cd /mnt/Data"
-alias gdrive="cd /mnt/Data/Gdrive && grive && cd $HOME && echo 'Google drive sync completed.'"
-alias pos="cd /mnt/Personal/POS"
+alias gdrive="cd /mnt/Data/Gdrive"
+alias pos="cd $pos"
 alias dwn="cd /mnt/Data/Downloads"
 
 # Custom pkg 'Firefox-appmenu'
@@ -81,21 +83,19 @@ alias dwn="cd /mnt/Data/Downloads"
 
 # hosts file aliases
 #alias blockhosts="pkexec sh /mnt/Personal/POS/blockhosts.sh"
-alias bakhosts="sudo cp -f /etc/hosts /etc/hosts.bak && echo 'Hosts file backup done.'"
+#alias bakhosts="sudo cp -f /etc/hosts /etc/hosts.bak && echo 'Hosts file backup done.'"
 #alias updhosts="pkexec hblock && netrestart && echo 'Hosts file updated.'"
 alias rsthosts="sudo cp -f $bakdir/hosts.bak /etc/hosts && netrestart && echo 'Original hosts file restored.'"
 alias nhosts="sudo nano /etc/hosts"
 
 ## Create Kernel Image aliases
 
-# Xanmod Kernel
-alias mkimgxan="sudo mkinitcpio -p $MyKernel"
-
+# MyKernel
+alias mkimgkernel="sudo mkinitcpio -p linux-xanmod-linux-bin-x64v3"
 # Default Vanilla Kernel
 alias mkimglinux="sudo mkinitcpio -p linux"
-
 # Allinone Kernel Image Creation
-alias mkimg="mkimglinux && mkimgxan && update-grub && echo 'Image created successfully. Please reboot now.'"
+alias mkimg="mkimglinux && mkimgkernel && update-grub"
 
 # Remove Old Kernel Modules
 alias kml="cd /lib/modules/ && ls && echo 'Select only old Kernel Modules to remove. Do not remove the current using kernel.'"
@@ -115,6 +115,7 @@ alias sl="systemctl suspend -i"
 alias up="sudo pacman -Syy"
 alias upa="paru -a -Su"
 alias upd="update && upa"
+
 # Ventoy/USB alias
 alias usb="/opt/ventoy/VentoyGUI.x86_64"
 alias usbc="cp -f /mnt/Data/Downloads/*.iso /run/media/akm/Ventoy && echo 'All iso files copied to Ventoy usb.'"
@@ -122,13 +123,13 @@ alias usbm="mv -f /mnt/Data/Downloads/*.iso /mnt/Data/Linux && echo 'All iso fil
 alias usbu="umount -v /run/media/akm/Ventoy && echo 'Ventoy usb unmounted successfully. Please remove the usb.'"
 
 # Move Videos files to their destination as required
-alias ts="mv -f /mnt/Data/Downloads/*.ts /mnt/Data/X/Others && echo 'All ts files moved to /mnt/Data/X/Others.'"
-alias mkv="mv -f /mnt/Data/Downloads/*.mkv $pulldir/Videos/Others && echo 'All mkv files moved to [/mnt/Data/X].'"
-alias mp4="mv -f /mnt/Data/Downloads/*.mp4 $pulldir/Videos/Others && echo 'All mp4 files moved to [/mnt/Data/X].'"
+alias ts="mv -f /mnt/Data/Downloads/*.ts /mnt/Data/X && echo 'All ts files moved to /mnt/Data/X.'"
+alias mkv="mv -f /mnt/Data/Downloads/*.mkv /mnt/Data/Videos && echo 'All mkv files moved to [/mnt/Data/Videos].'"
+alias mp4="mv -f /mnt/Data/Downloads/*.mp4 /mnt/Data/Videos && echo 'All mp4 files moved to [/mnt/Data/Videos].'"
 
 # Zram
-#alias nzram="sudo nano /etc/default/zramd"
-#alias zram="zramctl"
+alias nzram="sudo nano /etc/default/zramd"
+alias zram="zramctl"
 
 # yt-dlp (youtube downloader)
 alias ytvd="echo 'Youtube video is going to download at [/tmp/yt-dl] ....' && cd /tmp/yt-dl && echo && ytv-best"
@@ -136,16 +137,36 @@ alias ytvm="mv -f /tmp/yt-dl/*.mp4 /mnt/Data/Downloads && echo 'All youtube down
 
 # Backup
 alias bakpkgs="~/.bakpkgs.sh"
-alias bakhom="sh /mnt/Personal/POS/backuphome"
+alias bakhom="sh $pos/backuphome.sh"
+alias bakdev="sh $pos/backdev.sh"
 
 # Restore
 alias rstpkgmain="sudo pacman -S --needed $bakdir/pkglist.txt"
 alias rstpkgopt="sudo pacman -S --asdeps --needed $bakdir/optdeplist.txt"
 alias rstpkgaur="paru -a -S --needed - < $bakdir/aurpkglist.txt"
 alias rstpkgs="rstpkgmain && rstpkgopt && rstpkgaur && echo 'All packages restored.'"
-alias cbin="cp -Rf /etc/skel/.bin ~/.bin && echo '.bin folder restored.'"
+alias cbin="rm -Rf ~/.bin && cp -Rf /etc/skel/.bin ~/.bin && echo '.bin folder restored.'"
 
 # Kernel
-#alias toxan="sh /mnt/Personal/POS/xanmod-kernel-new.sh"
-#alias rmxan="sh /mnt/Personal/POS/xanmod-kernel-remove.sh"
-#alias insxan="sudo pacman -U  --needed /mnt/Data/Kernel/$MyKernel*"
+alias toxan="sh $pos/xanmod-prebuilt.sh"
+alias insxan="sudo pacman -U --needed /mnt/Personal/Kernel/linux-xanmod*"
+alias insamd="sudo pacman -S $MyKernel $MyKernel-headers"
+alias rmvamd="sudo pacman -R $MyKernel $MyKernel-headers"
+
+# Nvidia
+alias tonvidia="sh $pos/nvidia.sh"
+
+# Build iso
+alias isodplasma="cd ~ && rm -Rf arco-plasma && git clone https://github.com/arcolinuxb/arco-plasma && cp -f /mnt/Personal/Linux/mypackages ~/arco-plasma/archiso && echo && echo 'Please meld pkgs first.'"
+alias isobplasma="cd ~/arco-plasma/installation-scripts && sh 30-build-the-iso-the-first-time.sh"
+alias isodgnome="cd ~ && rm -Rf arco-gnome && git clone https://github.com/arcolinuxb/arco-gnome && cp -f /mnt/Personal/Linux/mypackages ~/arco-gnome/archiso && echo && echo 'Please meld pkgs first.'"
+alias isobgnome="cd ~/arco-gnome/installation-scripts && sh 30-build-the-iso-the-first-time.sh"
+
+# Profile Cleaner
+alias pkc="pkill -e google-chrome-stable"
+alias pkf="pkill -e firefox"
+alias pkt="pkill -e thunderbird"
+alias pcc="pkc || profile-cleaner gc"
+alias pcf="pkf || profile-cleaner f"
+alias pct="pkt || profile-cleaner t"
+alias pcall="pcc && pcf && pct && echo && echo 'Profile cleaned for Google-Chrome, Firefox and Thunderbird.'"
