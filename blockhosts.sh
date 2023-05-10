@@ -6,91 +6,82 @@
 ###########################################################################################################
 # Author            : AKM                                                                                 #
 # Disribution       : Arch Linux                                                                          #
-# Requirement       : tool 'curl'                                                                      #
+# Requirement       : tool 'curl'                                                                         #
 ###########################################################################################################
-############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ##########################################
+############################   EDIT THE FOLLOWING ACCORDING YOUR NEED  ####################################
 ###########################################################################################################
 
-#   Any temporary download location (like /tmp or /var/tmp).
-tmpl="/tmp"
 ###########################################################################################################
-#####################  DO NOT EDIT THIS SECTION UNTIL YOU KNOW WHAT YOU DOING  ####################################
+#####################  DO NOT EDIT THIS SECTION UNTIL YOU KNOW WHAT YOU DOING  ############################
 ###########################################################################################################
-#   File name
+
+#   Temp file name
 file="StevenBlackHosts"
+#file="DanPolluckHosts"
+
 #   Target file
 target="/etc/hosts"
+
 #   System service
 service="NetworkManager.service"
+
 #   Web hosts file (Most Advanced 1Lac+ lines)
 filew="https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-# Compact hosts file 11k+ lines
-#filew="https://someonewhocares.org/hosts/zero"
-#   Requirement
-tool="curl"
+#filew="https://someonewhocares.org/hosts/zero/hosts"
+
 #   Checking hosts file existence
 filecheck="$target"
+
 # Adding hostname
 #HOSTNAME="$(uname -n)";
 
 
 #   Checking required tool and testing versions
-if pacman -Qi $tool &> /dev/null ; then
-
-
-echo "======================================================================================="
-echo "Please wait while we update [$target] file for you ...."
-echo "======================================================================================="
-
-sleep 1
-
+if pacman -Qi curl &> /dev/null ; then
+    sleep 1
 else
-
-echo "======================================================================================="
-echo "Installing missing package ...."
-echo "======================================================================================="
-
-sudo pacman -S  --noconfirm $tool
-
+    sudo pacman -S  --noconfirm curl
 fi
 
 #   Removing old and Downloading new hosts file
-sudo rm -f $tmpl/$file
-sleep 1
-$tool $filew -s -o $tmpl/$file
+rm -f /tmp/$file
+    sleep 1
+curl $filew -s -o /tmp/$file
 
 #   OR alternative command with
-#wget -q $filew -O /$tmpl
+#wget -q $filew -O /tmp/$file
 
 #   Comparing file versions
-cver="$(grep -r 'Date:' "${target}" | cut -c 9-25)";
+cver="$(grep -r 'Date:' "$target" | cut -c 9-25)";
 #cver="$(grep -r 'Last updated:' "${target}" | cut -c 17-50)";
-nver="$(grep -r 'Date:' "${tmpl}"/"${file}" | cut -c 9-25)";
-#nver="$(grep -r 'Last updated:' "${tmpl}"/"${file}" | cut -c 17-50)";
+nver="$(grep -r 'Date:' "/tmp/$file" | cut -c 9-25)";
+#nver="$(grep -r 'Last updated:' "/tmp/${file}" | cut -c 17-50)";
 
-if test -f "${filecheck}" && [ "${nver}" == "${cver}" ] ; then
+if test -f "$filecheck" && [ "$nver" == "$cver" ] ; then
+rm -f /tmp/$file
 echo
-
-echo "======================================================================================="
+echo "============================================================================================="
 echo "File [$target] has already updated to $nver. No need to update."
-echo "======================================================================================="
+echo "============================================================================================="
 
 else
 
 #   Some minor edits and deltions
-sudo sed -i '3,5d' /$tmpl/$file
-sudo sed -i '8,12d' /$tmpl/$file
-sudo sed -i '22,27d' /$tmpl/$file
-
-sudo sed -e 's|127.0.0.1 localhost|127.0.0.1 localhost akm-ms7c91|g' -i /$tmpl/$file
-sudo sed -e 's|::1 localhost|::1 localhost akm-ms7c91|g' -i /$tmpl/$file
-sudo sed -e 's|127.0.0.1 localhost akm-ms7c91.localdomain|127.0.0.1 localhost.localdomain|g' -i /$tmpl/$file
+#sudo sed -i '3,5d' //tmp/$file
+#sudo sed -i '8,12d' //tmp/$file
+#sudo sed -i '22,27d' //tmp/$file
+#sudo sed -e 's|127.0.0.1 localhost|127.0.0.1 localhost akm-ms7c91|g' -i //tmp/$file
+#sudo sed -e 's|::1 localhost|::1 localhost akm-ms7c91|g' -i //tmp/$file
+#sudo sed -e 's|127.0.0.1 localhost akm-ms7c91.localdomain|127.0.0.1 localhost.localdomain|g' -i //tmp/$file
+#sed -i '12,68d' /tmp/$file
+sleep 1
 
 #   Checking backup file status
 if [ -f "$target.bak" ]; then
 
-sudo cp -f $tmpl/$file $target
+sudo cp -f /tmp/$file $target
 sudo systemctl restart $service
+rm -f /tmp/$file
 echo
 echo "======================================================================================="
 echo "File [$target] successfully updated to $nver."
@@ -105,8 +96,9 @@ echo "==========================================================================
 echo "Hosts file backup created as [/etc/$file.bak]"
 echo "======================================================================================="
 
-sudo cp -f $tmpl/$file $target
+sudo cp -f /tmp/$file $target
 sudo systemctl restart $service
+rm -f /tmp/$file
 echo
 echo "======================================================================================="
 echo "File [$target] successfully updated to $nver."
